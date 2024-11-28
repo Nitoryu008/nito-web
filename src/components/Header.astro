@@ -1,6 +1,12 @@
 ---
-import { css } from "../../styled-system/css";
-import { flex, hstack, stack } from "../../styled-system/patterns";
+import { css, type Styles } from "../../styled-system/css";
+import {
+  center,
+  circle,
+  hstack,
+  stack,
+  vstack,
+} from "../../styled-system/patterns";
 
 const links = [
   {
@@ -21,53 +27,105 @@ const links = [
   },
 ];
 
-const header = hstack({
+const header = css({
   width: "100%",
   pos: "fixed",
   top: "0",
   left: "0",
-  z: "100",
-  justify: "space-between",
-  paddingInline: "sm",
-  paddingBlock: "xs",
+  paddingInline: "clamp({spacing.5},2vw,{spacing.6}) {spacing.3}",
+  paddingBlock: "3",
+});
+
+const nav = center({
+  pos: "fixed",
+  top: "0",
+  left: "100%",
+  width: "100%",
+  height: "100dvh",
+  fontFamily: "dots",
+  bg: "#ffffffbb",
+  _peerChecked: {
+    left: "0",
+  },
 });
 
 const nav_list = stack({
   direction: "column",
-  position: "fixed",
-  top: "0",
-  left: "0",
-  z: "90",
-  width: "100%",
-  height: "100%",
-  fontSize: "6vw",
+  fontSize: "min(9vw,{fontSizes.5xl})",
   align: "center",
   justify: "center",
-  gap: "lg",
+  gap: "6",
+});
+
+const drawer_circle = circle({
+  size: "2.5em",
+  bg: "white",
+  pos: "relative",
+  zIndex: "header",
+  boxShadow: "0 0 5px 0 {colors.lightgray}",
+  cursor: "pointer",
+});
+const line: Styles = {
+  content: "''",
+  display: "block",
+  pos: "absolute",
+  height: "0.15em",
+  width: "1.45em",
+  borderRadius: "20%",
+  bg: "dark",
+};
+const line_gap = "0.5em";
+const drawer_lines = vstack({
+  justify: "center",
+  fontSize: "clamp({fontSizes.lg},5vw,{fontSizes.2xl})",
+  "& span": {
+    ...line,
+    _before: { ...line, bottom: line_gap },
+    _after: { ...line, top: line_gap },
+  },
+  _peerChecked: {
+    "& span": {
+      bg: "transparent",
+      _before: { bottom: "0", transform: "rotate(45deg)" },
+      _after: { top: "0", transform: "rotate(-45deg)" },
+    },
+  },
 });
 ---
 
 <header class={header}>
-  <div>
-    <a class={css({ fontFamily: "metro", fontSize: "2xl" })}>NITO LAB.</a>
-  </div>
-  <div>
-    <input id="drawer_input" type="checkbox" class={css({ display: "none" })} />
-    <label for="drawer_input"><span></span></label>
-    <nav
-      class={css({
-        fontFamily: "dots",
-      })}
-    >
-      <ul class={nav_list}>
-        {
-          links.map(({ name, target }) => (
-            <li>
-              <a href={target}>{name}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+  <div class={hstack({ justify: "space-between" })}>
+    <div class={css({ pos: "relative", zIndex: "header" })}>
+      <a
+        class={css({
+          fontFamily: "metro",
+          fontSize: "clamp({fontSizes.3xl},6vw,{fontSizes.5xl})",
+        })}
+        href="/"
+      >
+        NITO LAB.
+      </a>
+    </div>
+    <div>
+      <input
+        id="drawer_input"
+        type="checkbox"
+        class:list={[css({ display: "none" }), "peer"]}
+      />
+      <label for="drawer_input" class:list={[drawer_circle, drawer_lines]}>
+        <span></span>
+      </label>
+      <nav class={nav}>
+        <ul class={nav_list}>
+          {
+            links.map(({ name, target }) => (
+              <li>
+                <a href={target}>{name}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
   </div>
 </header>

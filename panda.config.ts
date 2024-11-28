@@ -21,12 +21,12 @@ export default defineConfig({
           metro: { value: "Metro Retro NF, serif" },
           dots: { value: "Zen Dots, sans-serif" },
         },
-        spacing: {
-          xs: {value: "0.5rem"},
-          sm: { value: "1rem" },
-          md: { value: "1.5rem" },
-          lg: { value: "2rem" },
-          xl: { value: "2.5rem" },
+        colors: {
+          dark: { value: "#1E1E1E" },
+          lightgray: { value: "#999999" },
+        },
+        zIndex: {
+          header: { value: "100" },
         },
       },
     },
@@ -35,11 +35,16 @@ export default defineConfig({
   // The output directory for your css system
   outdir: "styled-system",
   globalFontface: {
-    MetroRetroNF: {
-      src: "url(/fonts/MetroRetroNF.ttf) format('ttf')",
+    "Metro Retro NF": {
+      src: ["url(/fonts/MetroRetroNF.woff) format('woff')"],
       fontWeight: 400,
       fontStyle: "normal",
       fontDisplay: "swap",
+    },
+  },
+  globalCss: {
+    html: {
+      color: "dark",
     },
   },
 });
