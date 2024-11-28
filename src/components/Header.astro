@@ -1,0 +1,73 @@
+---
+import { css } from "../../styled-system/css";
+import { flex, hstack, stack } from "../../styled-system/patterns";
+
+const links = [
+  {
+    name: "ABOUT",
+    target: "/about",
+  },
+  {
+    name: "BLOG",
+    target: "/blog",
+  },
+  {
+    name: "APPS",
+    target: "/apps",
+  },
+  {
+    name: "HISTORY",
+    target: "/history",
+  },
+];
+
+const header = hstack({
+  width: "100%",
+  pos: "fixed",
+  top: "0",
+  left: "0",
+  z: "100",
+  justify: "space-between",
+  paddingInline: "sm",
+  paddingBlock: "xs",
+});
+
+const nav_list = stack({
+  direction: "column",
+  position: "fixed",
+  top: "0",
+  left: "0",
+  z: "90",
+  width: "100%",
+  height: "100%",
+  fontSize: "6vw",
+  align: "center",
+  justify: "center",
+  gap: "lg",
+});
+---
+
+<header class={header}>
+  <div>
+    <a class={css({ fontFamily: "metro", fontSize: "2xl" })}>NITO LAB.</a>
+  </div>
+  <div>
+    <input id="drawer_input" type="checkbox" class={css({ display: "none" })} />
+    <label for="drawer_input"><span></span></label>
+    <nav
+      class={css({
+        fontFamily: "dots",
+      })}
+    >
+      <ul class={nav_list}>
+        {
+          links.map(({ name, target }) => (
+            <li>
+              <a href={target}>{name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
