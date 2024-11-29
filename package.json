@@ -1,28 +1,35 @@
 {
-  "name": "",
-  "type": "module",
+  "name": "nito-web-2024",
   "version": "0.0.1",
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@eslint/compat": "^1.2.3",
+    "@fontsource/zen-dots": "^5.1.0",
+    "astro": "^4.16.13",
+    "typescript": "5.6.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@pandacss/dev": "^0.48.0",
+    "@types/bun": "latest",
+    "eslint": "^9.15.0",
+    "globals": "^15.12.0",
+    "prettier": "^3.4.1",
+    "typescript-eslint": "^8.16.0"
+  },
   "scripts": {
     "prepare": "panda codegen",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format:fix": "prettier --cache --write .",
+    "format:check": "prettier --cache --check .",
+    "stylelint:fix": "stylelint --cache --fix **/*.{css,scss,sass,astro,jsx,tsx} --ignore-path .gitignore",
+    "stylelint:check": "stylelint --cache **/*.{css,scss,sass,astro,jsx,tsx} --ignore-path .gitignore",
+    "eslint:fix": "eslint --cache --fix .",
+    "eslint:check": "eslint --cache ."
   },
-  "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@fontsource/zen-dots": "^5.1.0",
-    "@typescript-eslint/eslint-plugin": "^8.15.0",
-    "@typescript-eslint/parser": "^8.15.0",
-    "astro": "^4.16.13",
-    "eslint": "^9.15.0",
-    "eslint-plugin-react": "^7.37.2",
-    "stylelint": "^16.10.0",
-    "stylelint-config-standard": "^36.0.1",
-    "typescript": "^5.6.3"
-  },
-  "devDependencies": {
-    "@pandacss/dev": "^0.48.0"
-  }
+  "type": "module"
 }
