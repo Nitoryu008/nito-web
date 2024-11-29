@@ -26,8 +26,6 @@
     "astro": "astro",
     "format:fix": "prettier --cache --write .",
     "format:check": "prettier --cache --check .",
-    "stylelint:fix": "stylelint --cache --fix **/*.{css,scss,sass,astro,jsx,tsx} --ignore-path .gitignore",
-    "stylelint:check": "stylelint --cache **/*.{css,scss,sass,astro,jsx,tsx} --ignore-path .gitignore",
     "eslint:fix": "eslint --cache --fix .",
     "eslint:check": "eslint --cache ."
   },
