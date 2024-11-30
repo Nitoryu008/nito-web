@@ -1,0 +1,69 @@
+---
+import { getImage } from "astro:assets";
+import { Image } from "astro:assets";
+import background from "../../assets/first_view/background.png";
+import icon from "../../assets/icon.png";
+import { DESCRIPTION } from "../../consts";
+
+import { css } from "../../../styled-system/css";
+import {
+  container,
+  center,
+  circle,
+  vstack,
+} from "../../../styled-system/patterns";
+import MoreButton from "../MoreButton.astro";
+
+const optimizedBackground = await getImage({ src: background, format: "webp" });
+
+const first_view = center({
+  width: "100%",
+  minHeight: "100dvh",
+  bgPosition: "bottom",
+  bgSize: "cover",
+});
+
+const cont = container({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  paddingInline: "10",
+  paddingBlock: "44",
+  gap: "20",
+});
+
+const about = vstack({
+  maxWidth: "50rem",
+  borderRadius: "3xl",
+  bg: "white",
+  p: "10",
+  gap: "8",
+});
+---
+
+<div
+  class={first_view}
+  style={{ backgroundImage: `url(${optimizedBackground.src})` }}
+>
+  <div class={cont}>
+    <div class={vstack({ gap: "10" })}>
+      <div class={circle({ size: "xs", bg: "white" })}>
+        <Image
+          src={icon}
+          alt="にとのアイコン"
+          class={circle({
+            size: "80%",
+            boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.25)",
+          })}
+        />
+      </div>
+      <p class={css({ fontFamily: "metro", fontSize: "7xl", color: "white" })}>
+        NITO
+      </p>
+    </div>
+    <div class={about}>
+      <p class={css({ fontSize: "4xl" })}>{DESCRIPTION}</p>
+      <MoreButton href="/about" />
+    </div>
+  </div>
+</div>

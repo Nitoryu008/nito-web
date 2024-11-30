@@ -20,10 +20,12 @@ export default defineConfig({
         fonts: {
           metro: { value: "Metro Retro NF, serif" },
           dots: { value: "Zen Dots, sans-serif" },
+          gothic: { value: "'Zen Maru Gothic', sans-serif" },
         },
         colors: {
           dark: { value: "#1E1E1E" },
           lightgray: { value: "#999999" },
+          gray: { value: "#DFDFDF" },
         },
         zIndex: {
           header: { value: "100" },
@@ -46,9 +48,13 @@ export default defineConfig({
     html: {
       color: "dark",
       fontSize: "2.3vw",
-      md: {
+      fontFamily: "gothic",
+      sm: {
         fontSize: "62.5%",
       },
+    },
+    body: {
+      fontSize: "2xl",
     },
   },
 });
