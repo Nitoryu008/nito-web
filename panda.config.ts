@@ -45,6 +45,10 @@ export default defineConfig({
   globalCss: {
     html: {
       color: "dark",
+      fontSize: "2.3vw",
+      md: {
+        fontSize: "62.5%",
+      },
     },
   },
 });

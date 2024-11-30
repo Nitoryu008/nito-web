@@ -32,8 +32,14 @@ const header = css({
   pos: "fixed",
   top: "0",
   left: "0",
-  paddingInline: "clamp({spacing.5},2vw,{spacing.6}) {spacing.3}",
-  paddingBlock: "3",
+  paddingLeft: "9",
+  paddingRight: "4",
+  paddingBlock: "4",
+  color: "dark",
+  mixBlendMode: "difference",
+  lg: {
+    paddingInline: "8",
+  },
 });
 
 const nav = center({
@@ -43,27 +49,41 @@ const nav = center({
   width: "100%",
   height: "100dvh",
   fontFamily: "dots",
+  fontSize: "6xl",
   bg: "#ffffffbb",
   _peerChecked: {
     left: "0",
   },
+  lg: {
+    pos: "relative",
+    left: "0",
+    fontSize: "3xl",
+    height: "auto",
+    bg: "transparent",
+  },
 });
 
 const nav_list = stack({
-  direction: "column",
-  fontSize: "min(9vw,{fontSizes.5xl})",
   align: "center",
   justify: "center",
-  gap: "6",
+  gap: "14",
+  lg: {
+    flexDirection: "row",
+    gap: "10",
+  },
 });
 
 const drawer_circle = circle({
-  size: "2.5em",
+  size: "3em",
   bg: "white",
   pos: "relative",
   zIndex: "header",
   boxShadow: "0 0 5px 0 {colors.lightgray}",
   cursor: "pointer",
+  fontSize: "3xl",
+  lg: {
+    display: "none",
+  },
 });
 const line: Styles = {
   content: "''",
@@ -77,7 +97,6 @@ const line: Styles = {
 const line_gap = "0.5em";
 const drawer_lines = vstack({
   justify: "center",
-  fontSize: "clamp({fontSizes.lg},5vw,{fontSizes.2xl})",
   "& span": {
     ...line,
     _before: { ...line, bottom: line_gap },
@@ -99,7 +118,7 @@ const drawer_lines = vstack({
       <a
         class={css({
           fontFamily: "metro",
-          fontSize: "clamp({fontSizes.3xl},6vw,{fontSizes.5xl})",
+          fontSize: "5xl",
         })}
         href="/"
       >
