@@ -1,0 +1,27 @@
+---
+import { css } from "../../styled-system/css";
+import { divider } from "../../styled-system/patterns";
+import { format } from "../util";
+
+interface Props {
+  date: Date;
+}
+const { date } = Astro.props;
+
+const blog_item = css({
+  border: "1px solid {colors.gray.100}",
+  borderRadius: "4xl",
+  width: "100%",
+  paddingInline: "7",
+});
+---
+
+<div class={blog_item}>
+  <time
+    class={css({ fontSize: "2xl", paddingBlock: "4", display: "inline-block" })}
+  >
+    {format(date)}
+  </time>
+  <div class={divider()}></div>
+  <p class={css({ paddingBlock: "6" })}><slot /></p>
+</div>

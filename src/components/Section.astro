@@ -1,0 +1,29 @@
+---
+import type { Styles } from "../../styled-system/css";
+import { center, container } from "../../styled-system/patterns";
+import Heading from "./Heading.astro";
+import MoreButton from "./MoreButton.astro";
+
+interface Props {
+  heading: string;
+  href: string;
+  class: Styles;
+}
+const { heading, href, class: className, ...rest } = Astro.props;
+const section = container({
+  gap: "20",
+  display: "flex",
+  flexDirection: "column",
+  paddingInline: "10",
+  paddingBlock: "32",
+  ...className,
+});
+---
+
+<section class={section} {...rest}>
+  <Heading>{heading}</Heading>
+  <slot />
+  <div class={center()}>
+    <MoreButton href={href} />
+  </div>
+</section>

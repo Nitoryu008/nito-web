@@ -25,7 +25,10 @@ export default defineConfig({
         colors: {
           dark: { value: "#1E1E1E" },
           lightgray: { value: "#999999" },
-          gray: { value: "#DFDFDF" },
+          gray: {
+            value: "#DFDFDF",
+            100: { value: "#ADADAD" },
+          },
         },
         zIndex: {
           header: { value: "100" },
@@ -54,7 +57,7 @@ export default defineConfig({
       },
     },
     body: {
-      fontSize: "2xl",
+      fontSize: "3xl",
     },
   },
 });
