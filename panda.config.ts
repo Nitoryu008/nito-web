@@ -25,14 +25,15 @@ export default defineConfig({
         colors: {
           black: { value: "#1E1E1E" },
           gray: {
-            100: { value: "#999999" },
+            50: { value: "#555" },
+            100: { value: "#999" },
             200: { value: "#ADADAD" },
             300: { value: "#DFDFDF" },
           },
           white: { value: "#FFFFFF" },
-          darkgreen: { value: "#010E01" },
+          darkgreen: { value: "#021402" },
           semi: {
-            white: { value: "#ffffffee" },
+            white: { value: "#fffe" },
             black: { value: "#010E01ee" },
           },
         },
@@ -61,9 +62,6 @@ export default defineConfig({
             dark: { value: "{colors.black}" },
             light: { value: "{colors.white}" },
           },
-          border: {
-            value: "{colors.gray.100}",
-          },
         },
         shadows: {
           normal: {
@@ -74,7 +72,15 @@ export default defineConfig({
           },
         },
         borders: {
-          normal: { value: "1px solid {colors.border}" },
+          normal: {
+            value: {
+              base: "1px solid {colors.gray.100}",
+              _dark: "1px solid {colors.gray.50}",
+            },
+          },
+          transparent: {
+            value: "1px solid transparent",
+          },
         },
       },
     },
