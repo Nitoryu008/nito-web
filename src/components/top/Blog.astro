@@ -1,4 +1,5 @@
 ---
+import { css } from "../../../styled-system/css";
 import { vstack } from "../../../styled-system/patterns";
 import BlogItem from "../BlogItem.astro";
 import Section from "../Section.astro";
@@ -6,8 +7,32 @@ import Section from "../Section.astro";
 const date_sample = new Date();
 ---
 
-<Section heading="BLOG" href="/blog" class={{ maxWidth: "5xl" }}>
+<Section heading="BLOG" href="/blog" class={css({ maxWidth: "5xl" })}>
   <ul class={vstack({ gap: "10", "& li": { width: "100%" } })}>
+    <li>
+      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
+    </li>
+    <li>
+      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
+    </li>
+    <li>
+      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
+    </li>
+    <li>
+      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
+    </li>
+    <li>
+      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
+    </li>
+    <li>
+      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
+    </li>
+    <li>
+      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
+    </li>
+    <li>
+      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
+    </li>
     <li>
       <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
     </li>

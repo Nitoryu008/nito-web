@@ -27,18 +27,50 @@ const links = [
   },
 ];
 
-const header = css({
+const header = hstack({
   width: "100%",
   pos: "fixed",
   top: "0",
   left: "0",
-  paddingLeft: "9",
-  paddingRight: "4",
+  zIndex: "header",
+  justify: "space-between",
+  paddingInline: "4",
   paddingBlock: "4",
   color: "dark",
-  mixBlendMode: "difference",
-  lg: {
+  transition: "all .5s",
+  "2xl": {
+    color: "white",
     paddingInline: "8",
+  },
+  //サイト名
+  "&>a": {
+    fontFamily: "metro",
+    transition: "all .5s",
+    fontSize: "5xl",
+    pos: "relative",
+    zIndex: "header",
+    color: "white",
+    paddingInline: "7",
+    paddingBlock: "1",
+    borderRadius: "full",
+  },
+  "2xlDown": {
+    "&[data-scrolled=true]>a": {
+      color: "dark",
+      bg: "white",
+      boxShadow: "0 0 10px 0 {colors.lightgray}",
+    },
+  },
+  _expanded: {
+    "&>a": {
+      color: "dark",
+    },
+    "2xlDown": {
+      "&[data-scrolled=true]>a": {
+        bg: "transparent",
+        boxShadow: "none",
+      },
+    },
   },
 });
 
@@ -50,14 +82,15 @@ const nav = center({
   height: "100dvh",
   fontFamily: "dots",
   fontSize: "6xl",
-  bg: "#ffffffbb",
-  _peerChecked: {
+  bg: "#ffffffdd",
+  _groupExpanded: {
     left: "0",
   },
-  lg: {
+  "2xl": {
     pos: "relative",
     left: "0",
     fontSize: "3xl",
+    width: "auto",
     height: "auto",
     bg: "transparent",
   },
@@ -67,7 +100,7 @@ const nav_list = stack({
   align: "center",
   justify: "center",
   gap: "14",
-  lg: {
+  "2xl": {
     flexDirection: "row",
     gap: "10",
   },
@@ -77,11 +110,11 @@ const drawer_circle = circle({
   size: "3em",
   bg: "white",
   pos: "relative",
-  zIndex: "header",
   boxShadow: "0 0 5px 0 {colors.lightgray}",
   cursor: "pointer",
+  zIndex: "header",
   fontSize: "3xl",
-  lg: {
+  "2xl": {
     display: "none",
   },
 });
@@ -102,7 +135,7 @@ const drawer_lines = vstack({
     _before: { ...line, bottom: line_gap },
     _after: { ...line, top: line_gap },
   },
-  _peerChecked: {
+  _groupExpanded: {
     "& span": {
       bg: "transparent",
       _before: { bottom: "0", transform: "rotate(45deg)" },
@@ -112,39 +145,83 @@ const drawer_lines = vstack({
 });
 ---
 
-<header class={header}>
-  <div class={hstack({ justify: "space-between" })}>
-    <div class={css({ pos: "relative", zIndex: "header" })}>
-      <a
-        class={css({
-          fontFamily: "metro",
-          fontSize: "5xl",
-        })}
-        href="/"
-      >
-        NITO LAB.
-      </a>
-    </div>
-    <div>
-      <input
-        id="drawer_input"
-        type="checkbox"
-        class:list={[css({ display: "none" }), "peer"]}
-      />
-      <label for="drawer_input" class:list={[drawer_circle, drawer_lines]}>
-        <span></span>
-      </label>
-      <nav class={nav}>
-        <ul class={nav_list}>
-          {
-            links.map(({ name, target }) => (
-              <li>
-                <a href={target}>{name}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
-    </div>
-  </div>
+<header
+  id="header"
+  aria-expanded="false"
+  data-scrolled="false"
+  class:list={[header, "group"]}
+>
+  <a href="/"> NITO LAB. </a>
+  <button
+    type="button"
+    aria-controls="header_nav"
+    aria-label="メニューを開く"
+    class:list={[drawer_circle, drawer_lines]}
+    id="menu_button"
+  >
+    <span></span>
+  </button>
+  <nav aria-hidden="true" class={nav} id="header_nav">
+    <ul class={nav_list}>
+      {
+        links.map(({ name, target }) => (
+          <li>
+            <a href={target}>{name}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 </header>
+
+<script>
+  const header = document.getElementById("header") as HTMLElement;
+  const button = document.getElementById("menu_button") as HTMLButtonElement;
+  const menu = document.getElementById("header_nav") as HTMLElement;
+
+  //メニュー開閉処理
+  let isMenuOpen = false;
+
+  const noscroll = (e: Event) => {
+    e.preventDefault();
+  };
+
+  function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+
+    header.setAttribute("aria-expanded", isMenuOpen.toString());
+    button.setAttribute(
+      "aria-label",
+      isMenuOpen ? "メニューを閉じる" : "メニューを開く"
+    );
+    menu.setAttribute("aria-hidden", (!isMenuOpen).toString());
+
+    //scroll無効/有効を切り替え
+
+    if (isMenuOpen) {
+      document.addEventListener("touchmove", noscroll, { passive: false });
+      document.addEventListener("wheel", noscroll, { passive: false });
+    } else {
+      document.removeEventListener("touchmove", noscroll);
+      document.removeEventListener("wheel", noscroll);
+    }
+  }
+
+  function handleKeydown(e: KeyboardEvent) {
+    if (e.key === "Escape" && isMenuOpen) {
+      toggleMenu();
+    }
+  }
+
+  button.addEventListener("click", toggleMenu);
+  document.addEventListener("keydown", handleKeydown);
+
+  //スクロール時にdata-scrolled属性を付与
+  function onScroll() {
+    const scrollY = window.scrollY;
+    header.setAttribute("data-scrolled", (scrollY > 0).toString());
+  }
+
+  window.addEventListener("scroll", onScroll);
+  window.addEventListener("load", onScroll);
+</script>

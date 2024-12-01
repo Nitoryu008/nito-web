@@ -1,11 +1,28 @@
 ---
-import { container } from "../../styled-system/patterns";
+import { getImage } from "astro:assets";
+import background from "../assets/first_view/background.png";
 import Blog from "../components/top/Blog.astro";
 import FirstView from "../components/top/FirstView.astro";
 import Layout from "../layouts/Layout.astro";
+
+import { css } from "../../styled-system/css";
+
+const optimizedBackground = await getImage({ src: background, format: "webp" });
 ---
 
 <Layout title="test">
+  <div
+    class={css({
+      pos: "fixed",
+      zIndex: "-100",
+      width: "100%",
+      height: "100dvh",
+      backgroundSize: "cover",
+      backgroundPosition: "bottom",
+    })}
+    style={{ backgroundImage: `url(${optimizedBackground.src})` }}
+  >
+  </div>
   <FirstView />
   <Blog />
 </Layout>

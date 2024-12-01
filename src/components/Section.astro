@@ -1,5 +1,4 @@
 ---
-import type { Styles } from "../../styled-system/css";
 import { center, container } from "../../styled-system/patterns";
 import Heading from "./Heading.astro";
 import MoreButton from "./MoreButton.astro";
@@ -7,7 +6,7 @@ import MoreButton from "./MoreButton.astro";
 interface Props {
   heading: string;
   href: string;
-  class: Styles;
+  class: string;
 }
 const { heading, href, class: className, ...rest } = Astro.props;
 const section = container({
@@ -16,11 +15,10 @@ const section = container({
   flexDirection: "column",
   paddingInline: "10",
   paddingBlock: "32",
-  ...className,
 });
 ---
 
-<section class={section} {...rest}>
+<section class:list={[section, className]} {...rest}>
   <Heading>{heading}</Heading>
   <slot />
   <div class={center()}>

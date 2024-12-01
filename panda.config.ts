@@ -52,6 +52,7 @@ export default defineConfig({
       color: "dark",
       fontSize: "2.3vw",
       fontFamily: "gothic",
+      scrollbarWidth: "none",
       sm: {
         fontSize: "62.5%",
       },
