@@ -23,15 +23,58 @@ export default defineConfig({
           gothic: { value: "'Zen Maru Gothic', sans-serif" },
         },
         colors: {
-          dark: { value: "#1E1E1E" },
-          lightgray: { value: "#999999" },
+          black: { value: "#1E1E1E" },
           gray: {
-            value: "#DFDFDF",
-            100: { value: "#ADADAD" },
+            100: { value: "#999999" },
+            200: { value: "#ADADAD" },
+            300: { value: "#DFDFDF" },
+          },
+          white: { value: "#FFFFFF" },
+          darkgreen: { value: "#010E01" },
+          semi: {
+            white: { value: "#ffffffee" },
+            black: { value: "#010E01ee" },
           },
         },
         zIndex: {
           header: { value: "100" },
+        },
+      },
+      semanticTokens: {
+        colors: {
+          bg: {
+            DEFAULT: {
+              value: { base: "{colors.white}", _dark: "{colors.darkgreen}" },
+            },
+            button: { value: "{colors.gray.300}" },
+            menu: {
+              value: {
+                base: "{colors.white}",
+                _dark: "{colors.darkgreen}",
+              },
+            },
+          },
+          text: {
+            DEFAULT: {
+              value: { base: "{colors.black}", _dark: "{colors.white}" },
+            },
+            dark: { value: "{colors.black}" },
+            light: { value: "{colors.white}" },
+          },
+          border: {
+            value: "{colors.gray.100}",
+          },
+        },
+        shadows: {
+          normal: {
+            value: {
+              base: "0 0 10px 0 {colors.gray.200}",
+              _dark: "0 0 10px 0 {colors.black}",
+            },
+          },
+        },
+        borders: {
+          normal: { value: "1px solid {colors.border}" },
         },
       },
     },
@@ -49,15 +92,15 @@ export default defineConfig({
   },
   globalCss: {
     html: {
-      color: "dark",
       fontSize: "2.3vw",
-      fontFamily: "gothic",
       scrollbarWidth: "none",
       sm: {
         fontSize: "62.5%",
       },
     },
     body: {
+      color: "text",
+      fontFamily: "gothic",
       fontSize: "3xl",
     },
   },

@@ -36,10 +36,10 @@ const header = hstack({
   justify: "space-between",
   paddingInline: "4",
   paddingBlock: "4",
-  color: "dark",
+  color: "text",
   transition: "all .5s",
   "2xl": {
-    color: "white",
+    color: "text.light",
     paddingInline: "8",
   },
   //サイト名
@@ -56,14 +56,14 @@ const header = hstack({
   },
   "2xlDown": {
     "&[data-scrolled=true]>a": {
-      color: "dark",
-      bg: "white",
-      boxShadow: "0 0 10px 0 {colors.lightgray}",
+      color: "text",
+      bg: "bg",
+      boxShadow: "normal",
     },
   },
   _expanded: {
     "&>a": {
-      color: "dark",
+      color: "text",
     },
     "2xlDown": {
       "&[data-scrolled=true]>a": {
@@ -82,7 +82,7 @@ const nav = center({
   height: "100dvh",
   fontFamily: "dots",
   fontSize: "6xl",
-  bg: "#ffffffdd",
+  bg: "bg.menu",
   _groupExpanded: {
     left: "0",
   },
@@ -108,14 +108,18 @@ const nav_list = stack({
 
 const drawer_circle = circle({
   size: "3em",
-  bg: "white",
+  bg: "bg",
   pos: "relative",
-  boxShadow: "0 0 5px 0 {colors.lightgray}",
+  boxShadow: "normal",
   cursor: "pointer",
   zIndex: "header",
   fontSize: "3xl",
   "2xl": {
     display: "none",
+  },
+  _groupExpanded: {
+    boxShadow: "none",
+    bg: "transparent",
   },
 });
 const line: Styles = {
@@ -125,7 +129,7 @@ const line: Styles = {
   height: "0.15em",
   width: "1.45em",
   borderRadius: "20%",
-  bg: "dark",
+  bg: "text",
 };
 const line_gap = "0.5em";
 const drawer_lines = vstack({
