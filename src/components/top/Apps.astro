@@ -9,54 +9,75 @@ const section = vstack({
   gap: "gap.section",
   paddingBlock: "py.section",
   overflow: "hidden",
+  pos: "relative",
 });
 
+const swiper_container = vstack({
+  gap: "16",
+});
 const swiper = css({
   width: "100%",
   cursor: "grab",
+  overflow: "visible",
 });
-const swiper_wrapper = css({});
 const swiper_slide = css({
-  maxWidth: "min({sizes.2xl}, 80vw)",
-  mx: "3vw",
+  maxWidth: "min({sizes.3xl}, 80vw)",
+  px: "3vw",
   md: {
-    mx: "20",
+    px: "20",
+  },
+});
+const swiper_pagination = css({
+  pos: "relative",
+  fontSize: "2xl",
+  "& .swiper-pagination-bullet": {
+    opacity: "0.5",
+    bg: "bg",
+    width: "1em",
+    height: "1em",
+    "&.swiper-pagination-bullet-active": {
+      opacity: "1",
+      bg: "orange",
+    },
   },
 });
 ---
 
 <Section heading="APPS" href="/apps" class={section}>
-  <div class:list={["swiper", swiper]}>
-    <div class:list={["swiper-wrapper", swiper_wrapper]}>
-      {
-        [...Array(10)].map(() => (
-          <div class:list={["swiper-slide", swiper_slide]}>
-            <AppItem image={toplock} name="TopLock 2.1.0" href="">
-              ウィンドウを常に前面に固定できるアプリです。フルスクリーン化することも可能です。
-            </AppItem>
-          </div>
-        ))
-      }
+  <div class={swiper_container}>
+    <div class:list={["swiper", swiper]}>
+      <div class:list={["swiper-wrapper"]}>
+        {
+          [...Array(2)].map(() => (
+            <div class:list={["swiper-slide", swiper_slide]}>
+              <AppItem image={toplock} name="TopLock 2.1.0" href="">
+                ウィンドウを常に前面に固定できるアプリです。フルスクリーン化することも可能です。
+              </AppItem>
+            </div>
+          ))
+        }
+      </div>
     </div>
-  </div>
-  <div>
-    <div class:list={["swiper-pagination"]}></div>
+    <div class:list={["swiper-pagination", swiper_pagination]}></div>
   </div>
 </Section>
 
 <script>
   import Swiper from "swiper";
   import { Autoplay, Pagination } from "swiper/modules";
-  import "swiper/css";
   Swiper.use([Autoplay, Pagination]);
 
   const swiper = new Swiper(".swiper", {
     speed: 1200,
     slidesPerView: "auto",
     centeredSlides: true,
+    //loop: true,
     pagination: {
       el: ".swiper-pagination",
       clickable: true,
     },
+    /*autoplay: {
+      delay: 1000,
+    },*/
   });
 </script>

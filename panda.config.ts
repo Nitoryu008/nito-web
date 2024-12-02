@@ -32,6 +32,7 @@ export default defineConfig({
           },
           white: { value: "#FFFFFF" },
           darkgreen: { value: "#021402" },
+          orange: { value: "#d38819" },
           semi: {
             white: { value: "#fffe" },
             black: { value: "#010E01ee" },
