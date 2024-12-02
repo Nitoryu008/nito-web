@@ -23,7 +23,10 @@ export default defineConfig({
           gothic: { value: "'Zen Maru Gothic', sans-serif" },
         },
         colors: {
-          black: { value: "#1E1E1E" },
+          black: {
+            DEFAULT: { value: "#1E1E1E" },
+            100: { value: "#272727" },
+          },
           gray: {
             50: { value: "#555" },
             100: { value: "#999" },
@@ -55,6 +58,7 @@ export default defineConfig({
                 _dark: "{colors.darkgreen}",
               },
             },
+            footer: { value: "{colors.black.100}" },
           },
           text: {
             DEFAULT: {

@@ -4,6 +4,8 @@ import "@fontsource/zen-maru-gothic";
 
 import "../index.css";
 import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
 interface Props {
   title: string;
 }
@@ -24,6 +26,7 @@ const { title } = Astro.props;
   <body>
     <Header />
     <slot />
+    <Footer />
   </body>
 </html>
 
