@@ -1,0 +1,30 @@
+---
+import { container } from "../../../styled-system/patterns";
+import HistoryItem from "../HistoryItem.astro";
+import Section from "../Section.astro";
+
+const date = new Date();
+
+const section = container({
+  gap: "gap.section",
+  display: "flex",
+  flexDirection: "column",
+  paddingInline: "px.container",
+  paddingBlock: "py.section",
+  maxWidth: "max.width.container",
+});
+---
+
+<Section heading="HISTORY" href="/history" class={section}>
+  <ul>
+    {
+      [...Array(5)].map(() => (
+        <li>
+          <HistoryItem date={date}>
+            WebサイトをリニューアルWebサイトをリニューアル
+          </HistoryItem>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

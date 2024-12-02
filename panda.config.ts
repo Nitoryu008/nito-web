@@ -95,6 +95,13 @@ export default defineConfig({
             section: { value: "{spacing.20}" },
           },
         },
+        sizes: {
+          max: {
+            width: {
+              container: { value: "{sizes.5xl}" },
+            },
+          },
+        },
       },
     },
   },

@@ -1,0 +1,23 @@
+---
+import { stack } from "../../styled-system/patterns";
+import { format } from "../util";
+
+interface Props {
+  date: Date;
+}
+const { date } = Astro.props;
+
+const history_item = stack({
+  gap: "2",
+  padding: "8",
+  color: "bg",
+  fontWeight: "medium",
+  borderBottom: "normal",
+  borderColor: "gray.100",
+});
+---
+
+<div class={history_item}>
+  <time>{format(date)}</time>
+  <p><slot /></p>
+</div>

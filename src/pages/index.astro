@@ -7,6 +7,7 @@ import Layout from "../layouts/Layout.astro";
 
 import { css } from "../../styled-system/css";
 import Apps from "../components/top/Apps.astro";
+import History from "../components/top/History.astro";
 
 const optimizedBackground = await getImage({ src: background, format: "webp" });
 ---
@@ -27,4 +28,5 @@ const optimizedBackground = await getImage({ src: background, format: "webp" });
   <FirstView />
   <Blog />
   <Apps />
+  <History />
 </Layout>
