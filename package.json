@@ -28,7 +28,9 @@
     "format:fix": "prettier --cache --write .",
     "format:check": "prettier --cache --check .",
     "eslint:fix": "eslint --cache --fix .",
-    "eslint:check": "eslint --cache ."
+    "eslint:check": "eslint --cache .",
+    "check": "bun format:check && bun eslint:check",
+    "fix": "bun format:fix && bun eslint:fix"
   },
   "type": "module"
 }
