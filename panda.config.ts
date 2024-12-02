@@ -82,6 +82,18 @@ export default defineConfig({
             value: "1px solid transparent",
           },
         },
+        spacing: {
+          px: {
+            menu: { value: "{spacing.4}" },
+            container: { value: "{spacing.10}" },
+          },
+          py: {
+            section: { value: "{spacing.32}" },
+          },
+          gap: {
+            section: { value: "{spacing.20}" },
+          },
+        },
       },
     },
   },

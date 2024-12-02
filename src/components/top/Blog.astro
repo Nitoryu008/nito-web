@@ -1,13 +1,21 @@
 ---
-import { css } from "../../../styled-system/css";
-import { vstack } from "../../../styled-system/patterns";
+import { container, vstack } from "../../../styled-system/patterns";
 import BlogItem from "../BlogItem.astro";
 import Section from "../Section.astro";
 
 const date_sample = new Date();
+
+const section = container({
+  gap: "gap.section",
+  display: "flex",
+  flexDirection: "column",
+  paddingInline: "px.container",
+  paddingBlock: "py.section",
+  maxWidth: "5xl",
+});
 ---
 
-<Section heading="BLOG" href="/blog" class={css({ maxWidth: "5xl" })}>
+<Section heading="BLOG" href="/blog" class={section}>
   <ul class={vstack({ gap: "10", "& li": { width: "100%" } })}>
     <li>
       <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>

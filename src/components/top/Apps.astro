@@ -1,0 +1,62 @@
+---
+import AppItem from "../AppItem.astro";
+import toplock from "../../assets/apps/toplock.png";
+import Section from "../Section.astro";
+import { css } from "../../../styled-system/css";
+import { vstack } from "../../../styled-system/patterns";
+
+const section = vstack({
+  gap: "gap.section",
+  paddingBlock: "py.section",
+  overflow: "hidden",
+});
+
+const swiper = css({
+  width: "100%",
+  cursor: "grab",
+});
+const swiper_wrapper = css({});
+const swiper_slide = css({
+  maxWidth: "min({sizes.2xl}, 80vw)",
+  mx: "3vw",
+  md: {
+    mx: "20",
+  },
+});
+---
+
+<Section heading="APPS" href="/apps" class={section}>
+  <div class:list={["swiper", swiper]}>
+    <div class:list={["swiper-wrapper", swiper_wrapper]}>
+      {
+        [...Array(10)].map(() => (
+          <div class:list={["swiper-slide", swiper_slide]}>
+            <AppItem image={toplock} name="TopLock 2.1.0" href="">
+              ウィンドウを常に前面に固定できるアプリです。フルスクリーン化することも可能です。
+            </AppItem>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <div>
+    <div class:list={["swiper-pagination"]}></div>
+  </div>
+</Section>
+
+<script>
+  import Swiper from "swiper";
+  import { Autoplay, Pagination } from "swiper/modules";
+  import "swiper/css";
+  Swiper.use([Autoplay, Pagination]);
+
+  const swiper = new Swiper(".swiper", {
+    speed: 1200,
+    slidesPerView: "auto",
+    centeredSlides: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>

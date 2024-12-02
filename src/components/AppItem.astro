@@ -1,0 +1,29 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import { vstack } from "../../styled-system/patterns";
+import { css } from "../../styled-system/css";
+
+interface Props {
+  image: ImageMetadata;
+  name: string;
+  href: string;
+}
+const { image, name, href } = Astro.props;
+
+const app_item = vstack({
+  bg: "bg",
+  border: "normal",
+  borderRadius: "4xl",
+  gap: "10",
+  maxWidth: "2xl",
+  paddingInline: "10",
+  paddingBlock: "14",
+});
+---
+
+<a class={app_item} href={href}>
+  <Image src={image} alt={name} class={css({ width: "30%" })} />
+  <p class={css({ fontFamily: "dots", fontSize: "4xl" })}>{name}</p>
+  <p><slot /></p>
+</a>
