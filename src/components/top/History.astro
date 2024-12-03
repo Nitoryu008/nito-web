@@ -1,5 +1,7 @@
 ---
+import { css } from "../../../styled-system/css";
 import { container } from "../../../styled-system/patterns";
+import Fluid from "../Fluid.astro";
 import HistoryItem from "../HistoryItem.astro";
 import Section from "../Section.astro";
 
@@ -12,6 +14,14 @@ const section = container({
   paddingInline: "px.container",
   paddingBlock: "py.section",
   maxWidth: "max.width.container",
+  pos: "relative",
+});
+const fluid_container = css({
+  pos: "absolute",
+  height: "90%",
+  width: "120%",
+  zIndex: "-1",
+  left: "-10%",
 });
 ---
 
@@ -27,4 +37,5 @@ const section = container({
       ))
     }
   </ul>
+  <div class={fluid_container}><Fluid /></div>
 </Section>

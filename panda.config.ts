@@ -16,6 +16,12 @@ export default defineConfig({
   // Useful for theme customization
   theme: {
     extend: {
+      keyframes: {
+        fluid_animation: {
+          "0%, 100%": { borderRadius: "59% 41% 21% 79% / 62% 53% 47% 38%" },
+          "50%": { borderRadius: "26% 74% 52% 48% / 52% 32% 68% 48%" },
+        },
+      },
       tokens: {
         fonts: {
           metro: { value: "Metro Retro NF, serif" },
@@ -38,7 +44,7 @@ export default defineConfig({
           orange: { value: "#d38819" },
           semi: {
             white: { value: "#fffe" },
-            black: { value: "#010E01ee" },
+            black: { value: "#010E01cc" },
           },
         },
         zIndex: {
@@ -59,6 +65,7 @@ export default defineConfig({
               },
             },
             footer: { value: "{colors.black.100}" },
+            fluid: { value: "{colors.semi.black}" },
           },
           text: {
             DEFAULT: {
@@ -105,6 +112,9 @@ export default defineConfig({
               container: { value: "{sizes.5xl}" },
             },
           },
+        },
+        animations: {
+          fluid: { value: "fluid_animation 10s ease 0s infinite normal" },
         },
       },
     },
