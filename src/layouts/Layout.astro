@@ -5,12 +5,13 @@ import "@fontsource/zen-maru-gothic";
 import "../index.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-
 import BaseHead, {
   type Props as BaseProps,
 } from "../components/BaseHead.astro";
+import bgImg from "../assets/bg/textured-stripes.png";
 
 import { css } from "../../styled-system/css";
+import { getImage } from "astro:assets";
 
 export type Props = BaseProps;
 
@@ -19,6 +20,12 @@ const { ...head } = Astro.props;
 const body = css({
   minHeight: "100dvh",
 });
+const optimizedBgImg = await getImage({ src: bgImg, format: "webp" });
+const fabric = css({
+  backgroundImage: `var(--background-url)`,
+  backgroundRepeat: "repeat",
+});
+
 const container = css({
   paddingBlock: "64",
 });
@@ -29,7 +36,10 @@ const container = css({
   <head>
     <BaseHead {...head} />
   </head>
-  <body class={body}>
+  <body
+    class:list={[body, fabric]}
+    style={{ "--background-url": `url(${optimizedBgImg.src})` }}
+  >
     <Header />
     <div class={container}>
       <slot />
