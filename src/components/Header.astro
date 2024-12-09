@@ -1,12 +1,6 @@
 ---
-import { css, type Styles } from "../../styled-system/css";
-import {
-  center,
-  circle,
-  hstack,
-  stack,
-  vstack,
-} from "../../styled-system/patterns";
+import { css, cva, type Styles } from "../../styled-system/css";
+import { center, circle, hstack, vstack } from "../../styled-system/patterns";
 
 const links = [
   {
@@ -31,18 +25,22 @@ const header = hstack({
   width: "100%",
   zIndex: "header",
   justify: "space-between",
-  padding: "5",
-  pos: "fixed",
+  paddingInline: "5",
+  paddingBlock: "8",
+  pos: "absolute",
 });
 
-const site_name = css({
-  fontFamily: "metro",
-  fontSize: "6xl",
-  zIndex: "header",
-  paddingLeft: "7",
-  opacity: "0",
-  _groupExpanded: {
-    opacity: "1",
+const site_name = cva({
+  base: {
+    fontFamily: "metro",
+    fontSize: "6xl",
+    paddingLeft: "7",
+  },
+  variants: {
+    color: {
+      light: { color: "text.light" },
+      dark: { color: "text.dark" },
+    },
   },
 });
 
@@ -66,6 +64,9 @@ const nav_list = center({
 });
 
 const drawer_circle = circle({
+  pos: "fixed",
+  top: "5",
+  right: "5",
   size: "3em",
   bg: "bg",
   cursor: "pointer",
@@ -105,7 +106,12 @@ const drawer_lines = vstack({
 ---
 
 <header id="header" aria-expanded="false" class:list={[header, "group"]}>
-  <a href="/" class={site_name}> NITO LAB. </a>
+  <a
+    href="/"
+    class={site_name({ color: Astro.url.pathname == "/" ? "light" : "dark" })}
+  >
+    NITO LAB.
+  </a>
   <button
     type="button"
     aria-controls="header_nav"
