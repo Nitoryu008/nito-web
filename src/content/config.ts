@@ -9,6 +9,22 @@ const blogCollection = defineCollection({
   }),
 });
 
+const linkCollection = defineCollection({
+  type: "data",
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      icon: z.object({
+        normal: image(),
+        inverted: image(),
+      }),
+      id: z.string(),
+      link: z.string(),
+      color: z.string(),
+    }),
+});
+
 export const collections = {
   blog: blogCollection,
+  link: linkCollection,
 };

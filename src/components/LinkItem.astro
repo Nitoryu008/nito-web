@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import { css } from "../../styled-system/css";
+
+type Icon = {
+  normal: ImageMetadata;
+  inverted: ImageMetadata;
+};
+
+interface Props {
+  name: string;
+  icon: Icon;
+  id: string;
+  link: string;
+  color: string;
+}
+
+const { name, icon, id, link, color } = Astro.props;
+
+const link_item = css({
+  display: "grid",
+  gridTemplateColumns: "10% 30% auto",
+  gap: "8",
+  alignItems: "center",
+  border: "1px solid var(--color)",
+  borderRadius: "3xl",
+  padding: "8",
+  _hover: {
+    bg: "var(--color)",
+    color: "text.light",
+  },
+});
+---
+
+<a href={link} class:list={[link_item, "group"]} style={{ "--color": color }}>
+  <Image
+    src={icon.normal}
+    alt={name}
+    class={css({ _groupHover: { display: "none" } })}
+  />
+  <Image
+    src={icon.inverted}
+    alt={name}
+    class={css({ display: "none", _groupHover: { display: "unset" } })}
+  />
+  <p>{name}</p>
+  <p>{id}</p>
+</a>

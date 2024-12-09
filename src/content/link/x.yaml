@@ -1,0 +1,7 @@
+name: X/Twitter
+icon:
+  normal: /src/assets/links/logo-black.png
+  inverted: /src/assets/links/logo-white.png
+id: "@nito_008"
+link: https://x.com/@nito_008
+color: "#000000"

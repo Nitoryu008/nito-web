@@ -1,0 +1,25 @@
+---
+import { css } from "../../styled-system/css";
+import { container } from "../../styled-system/patterns";
+import Heading from "../components/Heading.astro";
+import Layout, { type Props as LayoutProps } from "./Layout.astro";
+
+export type Props = LayoutProps & {
+  title: string[];
+};
+
+const props = Astro.props;
+
+const cont = container({
+  maxWidth: "max.width.container",
+  paddingInline: "px.container",
+  paddingBottom: "48",
+});
+---
+
+<Layout {...props}>
+  <div class={cont}>
+    <Heading class={css({ marginBottom: "20" })}>{props.title[0]}</Heading>
+    <slot />
+  </div>
+</Layout>

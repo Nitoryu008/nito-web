@@ -1,13 +1,17 @@
 ---
 import { css } from "../../styled-system/css";
-import { center } from "../../styled-system/patterns";
 
 const heading = css({
   fontFamily: "dots",
   fontSize: "6xl",
   textAlign: "center",
-  color: "white",
 });
+
+interface Props {
+  class?: string;
+}
+
+const { class: className, ...rest } = Astro.props;
 ---
 
-<h1 class={heading}><slot /></h1>
+<h1 class:list={[heading, className]} {...rest}><slot /></h1>

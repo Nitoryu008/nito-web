@@ -15,13 +15,20 @@ const section = container({
   paddingBlock: "py.section",
   maxWidth: "max.width.container",
   pos: "relative",
+  overflowX: "hidden",
+  sm: {
+    overflowX: "unset",
+  },
 });
 const fluid_container = css({
   pos: "absolute",
   height: "90%",
   width: "120%",
+  minWidth: "6xl",
   zIndex: "-1",
-  left: "-10%",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
 });
 ---
 

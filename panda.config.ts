@@ -37,14 +37,15 @@ export default defineConfig({
             50: { value: "#555" },
             100: { value: "#999" },
             200: { value: "#ADADAD" },
-            300: { value: "#DFDFDF" },
+            300: { value: "#DADADA" },
           },
           white: { value: "#FFFFFF" },
+          lightgreen: { value: "#F7FFF9" },
           darkgreen: { value: "#021402" },
           orange: { value: "#d38819" },
           semi: {
             white: { value: "#fffe" },
-            black: { value: "#010E01cc" },
+            black: { value: "#010E01bb" },
           },
         },
         zIndex: {
@@ -66,6 +67,7 @@ export default defineConfig({
             },
             footer: { value: "{colors.black.100}" },
             fluid: { value: "{colors.semi.black}" },
+            home: { value: "{colors.lightgreen}" },
           },
           text: {
             DEFAULT: {
@@ -78,7 +80,7 @@ export default defineConfig({
         shadows: {
           normal: {
             value: {
-              base: "0 0 10px 0 {colors.gray.200}",
+              base: "0 0 10px 0 {colors.gray.300}",
               _dark: "0 0 10px 0 {colors.black}",
             },
           },
@@ -96,7 +98,6 @@ export default defineConfig({
         },
         spacing: {
           px: {
-            menu: { value: "{spacing.4}" },
             container: { value: "{spacing.10}" },
           },
           py: {
@@ -104,6 +105,9 @@ export default defineConfig({
           },
           gap: {
             section: { value: "{spacing.20}" },
+          },
+          pos: {
+            menu: { value: "{spacing.5}" },
           },
         },
         sizes: {
@@ -114,7 +118,7 @@ export default defineConfig({
           },
         },
         animations: {
-          fluid: { value: "fluid_animation 10s ease 0s infinite normal" },
+          fluid: { value: "fluid_animation 20s ease 0s infinite normal" },
         },
       },
     },
@@ -140,8 +144,10 @@ export default defineConfig({
     },
     body: {
       color: "text",
+      bg: "bg",
       fontFamily: "gothic",
       fontSize: "3xl",
+      overflowX: "hidden",
     },
   },
 });

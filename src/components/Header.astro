@@ -29,56 +29,21 @@ const links = [
 
 const header = hstack({
   width: "100%",
-  pos: "fixed",
-  top: "0",
-  left: "0",
   zIndex: "header",
   justify: "space-between",
-  paddingInline: "px.menu",
-  paddingBlock: "4",
-  transition: "all 1s",
-  color: "text",
-  lg: {
-    color: "text.light",
-    paddingInline: "8",
-  },
-  _after: {
-    content: "''",
-    width: "100%",
-    height: "0%",
-    bg: "linear-gradient(#000b 0%, #0000 100%)",
-    pos: "absolute",
-    top: "0",
-    left: "0",
-    display: "block",
-    zIndex: "-1",
-    opacity: "0",
-    transition: ".3s",
-  },
-  _expanded: {
-    "&>a": {
-      color: "text",
-    },
-  },
-  "&[data-scrolled=true]": {
-    _after: {
-      opacity: "1",
-      height: "150%",
-    },
-  },
+  padding: "5",
+  pos: "fixed",
 });
 
 const site_name = css({
   fontFamily: "metro",
-  transition: "all .5s",
-  fontSize: "5xl",
-  pos: "relative",
+  fontSize: "6xl",
   zIndex: "header",
-  color: "white",
-  paddingInline: "7",
-  paddingBlock: "1",
-  borderRadius: "full",
-  border: "transparent",
+  paddingLeft: "7",
+  opacity: "0",
+  _groupExpanded: {
+    opacity: "1",
+  },
 });
 
 const nav = center({
@@ -93,38 +58,20 @@ const nav = center({
   _groupExpanded: {
     left: "0",
   },
-  lg: {
-    pos: "relative",
-    left: "0",
-    fontSize: "3xl",
-    width: "auto",
-    height: "auto",
-    bg: "transparent",
-  },
 });
 
-const nav_list = stack({
-  align: "center",
-  justify: "center",
-  gap: "14",
-  lg: {
-    flexDirection: "row",
-    gap: "10",
-  },
+const nav_list = center({
+  flexDirection: "column",
+  gap: "10",
 });
 
 const drawer_circle = circle({
   size: "3em",
   bg: "bg",
-  pos: "relative",
-  boxShadow: "normal",
   cursor: "pointer",
   zIndex: "header",
-  fontSize: "3xl",
+  fontSize: "20px",
   border: "normal",
-  lg: {
-    display: "none",
-  },
   _groupExpanded: {
     boxShadow: "none",
     bg: "transparent",
@@ -134,9 +81,9 @@ const line: Styles = {
   content: "''",
   display: "block",
   pos: "absolute",
-  height: "0.15em",
+  height: "0.16em",
   width: "1.45em",
-  borderRadius: "20%",
+  borderRadius: "2em",
   bg: "text",
 };
 const line_gap = "0.5em";
@@ -157,12 +104,7 @@ const drawer_lines = vstack({
 });
 ---
 
-<header
-  id="header"
-  aria-expanded="false"
-  data-scrolled="false"
-  class:list={[header, "group"]}
->
+<header id="header" aria-expanded="false" class:list={[header, "group"]}>
   <a href="/" class={site_name}> NITO LAB. </a>
   <button
     type="button"
@@ -175,6 +117,7 @@ const drawer_lines = vstack({
   </button>
   <nav aria-hidden="true" class={nav} id="header_nav">
     <ul class={nav_list}>
+      <li><a href="/">TOP</a></li>
       {
         links.map(({ name, target }) => (
           <li>
@@ -227,13 +170,4 @@ const drawer_lines = vstack({
 
   button.addEventListener("click", toggleMenu);
   document.addEventListener("keydown", handleKeydown);
-
-  //スクロール時にdata-scrolled属性を付与
-  function onScroll() {
-    const scrollY = window.scrollY;
-    header.setAttribute("data-scrolled", (scrollY > 0).toString());
-  }
-
-  window.addEventListener("scroll", onScroll);
-  window.addEventListener("load", onScroll);
 </script>

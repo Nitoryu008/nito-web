@@ -2,8 +2,8 @@
 import { DEFAULT_SITE_DESCRIPTION } from "../consts";
 import { DEFAULT_OG_IMAGE, SITE_NAME, TWITTER_ACCOUNT } from "../consts";
 
-interface Props {
-  title?: string;
+export interface Props {
+  title?: string[];
   description?: string;
   pageType?: "website" | "article" | "profile";
   ogImage?: string;
@@ -11,17 +11,21 @@ interface Props {
 }
 
 const {
-  title = SITE_NAME,
+  title,
   description = DEFAULT_SITE_DESCRIPTION,
   pageType = "website",
   ogImage = DEFAULT_OG_IMAGE,
   ogAlt = SITE_NAME,
 } = Astro.props;
+
+const page_title = title
+  ? [SITE_NAME, ...title.slice()].reverse().join(" | ")
+  : SITE_NAME;
 ---
 
 <meta charset="UTF-8" />
 
-<meta name="title" content={title} />
+<meta name="title" content={page_title} />
 <meta name="description" content={description} />
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -29,13 +33,13 @@ const {
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
-<title>{title}</title>
+<title>{page_title}</title>
 
 <!-- OGP -->
 
 <meta property="og:type" content={pageType} />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
+<meta property="og:title" content={page_title} />
 <meta property="og:description" content={description} />
 <meta property="og:site_name" content={SITE_NAME} />
 <meta property="og:locale" content="ja_JP" />

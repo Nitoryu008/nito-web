@@ -1,18 +1,27 @@
 ---
-import { css } from "../../styled-system/css";
-import { stack } from "../../styled-system/patterns";
+import { css, cva } from "../../styled-system/css";
 
-const footer = stack({
-  justify: "space-between",
-  direction: "column",
-  color: "text.light",
-  bg: "#27272700",
-  fontFamily: "dots",
-  fontSize: "3xl",
-  padding: "10",
-  textAlign: "center",
-  lg: {
-    flexDirection: "row",
+const footer = cva({
+  base: {
+    display: "flex",
+    justifyContent: "space-between",
+    direction: "column",
+    fontFamily: "dots",
+    fontSize: "3xl",
+    padding: "10",
+    textAlign: "center",
+    color: "text.light",
+    lg: {
+      flexDirection: "row",
+    },
+  },
+  variants: {
+    page: {
+      top: {},
+      other: {
+        bg: "bg.footer",
+      },
+    },
   },
 });
 const inline_block = css({
@@ -23,7 +32,7 @@ const underline = css({
 });
 ---
 
-<footer class={footer}>
+<footer class={footer({ page: Astro.url.pathname == "/" ? "top" : "other" })}>
   <p>
     <span class={inline_block}>(C)opyright 2024 NITO</span>
     <span class={inline_block}>All Rights Reserved.</span>

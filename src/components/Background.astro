@@ -1,0 +1,21 @@
+---
+import { getImage } from "astro:assets";
+import background from "../assets/first_view/background.png";
+import { css } from "../../styled-system/css";
+
+const optimizedBackground = await getImage({ src: background, format: "webp" });
+---
+
+<div
+  class={css({
+    pos: "fixed",
+    zIndex: "-100",
+    top: "0",
+    width: "100%",
+    height: "100lvh",
+    backgroundSize: "cover",
+    backgroundPosition: "bottom",
+  })}
+  style={{ backgroundImage: `url(${optimizedBackground.src})` }}
+>
+</div>

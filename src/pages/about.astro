@@ -1,0 +1,83 @@
+---
+import { Image } from "astro:assets";
+import icon from "../assets/icon.png";
+import PageLayout from "../layouts/PageLayout.astro";
+import { circle, vstack } from "../../styled-system/patterns";
+import { css } from "../../styled-system/css";
+import { DESCRIPTION } from "../consts";
+import Heading from "../components/Heading.astro";
+import { getCollection } from "astro:content";
+import LinkItem from "../components/LinkItem.astro";
+
+const links = await getCollection("link");
+
+const container = vstack({
+  gap: "32",
+  fontSize: "4xl",
+});
+
+const heading = css({
+  fontWeight: "bold",
+  paddingBottom: "1",
+  pos: "relative",
+  _before: {
+    content: "''",
+    pos: "absolute",
+    bottom: "0",
+    width: "85%",
+    borderBottom: "1px solid {colors.text.dark}",
+  },
+  _after: {
+    content: "''",
+    pos: "absolute",
+    bottom: "-3px",
+    left: "85%",
+    width: "3",
+    height: "3",
+    bg: "text.dark",
+    transform: "rotate(45deg)",
+  },
+});
+
+const profile_item = vstack({ gap: "5", alignItems: "stretch" });
+---
+
+<PageLayout title={["ABOUT"]} pageType="profile">
+  <div class={container}>
+    <div class={vstack({ gap: "14" })}>
+      <Image
+        src={icon}
+        alt="にとのアイコンです"
+        class={circle({ size: "xs" })}
+      />
+      <p class={css({ fontFamily: "metro", fontSize: "7xl", lineHeight: "1" })}>
+        NITO
+      </p>
+      <p>
+        {DESCRIPTION}
+      </p>
+    </div>
+    <div
+      class={vstack({ gap: "10", alignItems: "stretch", alignSelf: "stretch" })}
+    >
+      <div class={profile_item}>
+        <h2 class={heading}># 趣味、好きなもの</h2>
+        <p>プログラミング、ベース、自作PC、音ゲー</p>
+      </div>
+      <div class={profile_item}>
+        <h2 class={heading}># 触ったことのある言語・技術</h2>
+        <p>C#、Java、Lua、TypeScript、Astro、Vue.jsなど</p>
+      </div>
+    </div>
+    <Heading>LINKS</Heading>
+    <ul class={vstack({ gap: "12", alignItems: "stretch" })}>
+      {
+        links.map((item) => (
+          <li>
+            <LinkItem {...item.data} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</PageLayout>

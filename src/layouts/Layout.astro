@@ -5,23 +5,35 @@ import "@fontsource/zen-maru-gothic";
 import "../index.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import BaseHead from "../components/BaseHead.astro";
 
-interface Props {
-  title: string;
-}
+import BaseHead, {
+  type Props as BaseProps,
+} from "../components/BaseHead.astro";
 
-const { title } = Astro.props;
+import { css } from "../../styled-system/css";
+
+export type Props = BaseProps;
+
+const { ...head } = Astro.props;
+
+const body = css({
+  minHeight: "100dvh",
+});
+const container = css({
+  paddingTop: "52",
+});
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead />
+    <BaseHead {...head} />
   </head>
-  <body>
+  <body class={body}>
     <Header />
-    <slot />
+    <div class={container}>
+      <slot />
+    </div>
     <Footer />
   </body>
 </html>
