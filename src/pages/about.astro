@@ -14,6 +14,7 @@ const links = await getCollection("link");
 const container = vstack({
   gap: "32",
   fontSize: "4xl",
+  paddingTop: "14",
 });
 
 const heading = css({
@@ -24,14 +25,14 @@ const heading = css({
     content: "''",
     pos: "absolute",
     bottom: "0",
-    width: "85%",
+    width: "90%",
     borderBottom: "1px solid {colors.text.dark}",
   },
   _after: {
     content: "''",
     pos: "absolute",
     bottom: "-3px",
-    left: "85%",
+    left: "90%",
     width: "3",
     height: "3",
     bg: "text.dark",
@@ -39,7 +40,7 @@ const heading = css({
   },
 });
 
-const profile_item = vstack({ gap: "5", alignItems: "stretch" });
+const profile_item = vstack({ gap: "6", alignItems: "stretch" });
 ---
 
 <PageLayout title={["ABOUT"]} pageType="profile">
@@ -58,15 +59,15 @@ const profile_item = vstack({ gap: "5", alignItems: "stretch" });
       </p>
     </div>
     <div
-      class={vstack({ gap: "10", alignItems: "stretch", alignSelf: "stretch" })}
+      class={vstack({ gap: "16", alignItems: "stretch", alignSelf: "stretch" })}
     >
       <div class={profile_item}>
         <h2 class={heading}># 趣味、好きなもの</h2>
-        <p>プログラミング、ベース、自作PC、音ゲー</p>
+        <p>プログラミング、自作PC、音ゲー</p>
       </div>
       <div class={profile_item}>
         <h2 class={heading}># 触ったことのある言語・技術</h2>
-        <p>C#、Java、Lua、TypeScript、Astro、Vue.jsなど</p>
+        <p>C#, Java, Lua, TypeScript, Vue.js, Astro, etc...</p>
       </div>
     </div>
     <Heading>LINKS</Heading>
