@@ -1,12 +1,11 @@
 ---
 import AppItem from "../AppItem.astro";
 import toplock from "../../assets/apps/toplock.png";
-import Section from "../Section.astro";
+import Section from "./TopSection.astro";
 import { css } from "../../../styled-system/css";
 import { vstack } from "../../../styled-system/patterns";
 
-const section = vstack({
-  gap: "gap.section",
+const section = css({
   paddingBlock: "py.section",
   overflow: "hidden",
   pos: "relative",

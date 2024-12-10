@@ -103,9 +103,6 @@ export default defineConfig({
           py: {
             section: { value: "{spacing.32}" },
           },
-          gap: {
-            section: { value: "{spacing.20}" },
-          },
           pos: {
             menu: { value: "{spacing.5}" },
           },

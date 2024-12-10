@@ -6,6 +6,7 @@ import Layout, { type Props as LayoutProps } from "./Layout.astro";
 
 export type Props = LayoutProps & {
   title: string[];
+  class?: string;
 };
 
 const props = Astro.props;
@@ -17,8 +18,7 @@ const cont = container({
 ---
 
 <Layout {...props}>
-  <div class={cont}>
-    <Heading class={css({ marginBottom: "20" })}>{props.title[0]}</Heading>
+  <div class:list={[cont, props.class]}>
     <slot />
   </div>
 </Layout>

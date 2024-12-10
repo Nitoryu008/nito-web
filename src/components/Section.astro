@@ -1,21 +1,17 @@
 ---
 import { css } from "../../styled-system/css";
-import { center } from "../../styled-system/patterns";
 import Heading from "./Heading.astro";
-import MoreButton from "./MoreButton.astro";
 
 interface Props {
   heading: string;
   href: string;
   class?: string;
 }
+
 const { heading, href, class: className, ...rest } = Astro.props;
 ---
 
 <section class:list={[className]} {...rest}>
-  <Heading class={css({ color: "text.light" })}>{heading}</Heading>
+  <Heading class={css({ color: "text.dark" })}>{heading}</Heading>
   <slot />
-  <div class={center()}>
-    <MoreButton href={href} />
-  </div>
 </section>

@@ -11,12 +11,6 @@ import LinkItem from "../components/LinkItem.astro";
 
 const links = await getCollection("link");
 
-const container = vstack({
-  gap: "32",
-  fontSize: "4xl",
-  paddingTop: "14",
-});
-
 const heading = css({
   fontWeight: "bold",
   paddingBottom: "1",
@@ -44,41 +38,35 @@ const profile_item = vstack({ gap: "6", alignItems: "stretch" });
 ---
 
 <PageLayout title={["ABOUT"]} pageType="profile">
-  <div class={container}>
-    <div class={vstack({ gap: "14" })}>
-      <Image
-        src={icon}
-        alt="にとのアイコンです"
-        class={circle({ size: "xs" })}
-      />
-      <p class={css({ fontFamily: "metro", fontSize: "7xl", lineHeight: "1" })}>
-        NITO
-      </p>
-      <p>
-        {DESCRIPTION}
-      </p>
-    </div>
-    <div
-      class={vstack({ gap: "16", alignItems: "stretch", alignSelf: "stretch" })}
-    >
-      <div class={profile_item}>
-        <h2 class={heading}># 趣味、好きなもの</h2>
-        <p>プログラミング、自作PC、音ゲー</p>
-      </div>
-      <div class={profile_item}>
-        <h2 class={heading}># 触ったことのある言語・技術</h2>
-        <p>C#, Java, Lua, TypeScript, Vue.js, Astro, etc...</p>
-      </div>
-    </div>
-    <Heading>LINKS</Heading>
-    <ul class={vstack({ gap: "12", alignItems: "stretch" })}>
-      {
-        links.map((item) => (
-          <li>
-            <LinkItem {...item.data} />
-          </li>
-        ))
-      }
-    </ul>
+  <div class={vstack({ gap: "14" })}>
+    <Image src={icon} alt="にとのアイコンです" class={circle({ size: "xs" })} />
+    <p class={css({ fontFamily: "metro", fontSize: "7xl", lineHeight: "1" })}>
+      NITO
+    </p>
+    <p>
+      {DESCRIPTION}
+    </p>
   </div>
+  <div
+    class={vstack({ gap: "16", alignItems: "stretch", alignSelf: "stretch" })}
+  >
+    <div class={profile_item}>
+      <h2 class={heading}># 趣味、好きなもの</h2>
+      <p>プログラミング、自作PC、音ゲー</p>
+    </div>
+    <div class={profile_item}>
+      <h2 class={heading}># 触ったことのある言語・技術</h2>
+      <p>C#, Java, Lua, TypeScript, Vue.js, Astro, etc...</p>
+    </div>
+  </div>
+  <Heading>LINKS</Heading>
+  <ul class={vstack({ gap: "12", alignItems: "stretch" })}>
+    {
+      links.map((item) => (
+        <li>
+          <LinkItem {...item.data} />
+        </li>
+      ))
+    }
+  </ul>
 </PageLayout>

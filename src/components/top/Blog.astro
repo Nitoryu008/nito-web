@@ -1,14 +1,11 @@
 ---
 import { container, vstack } from "../../../styled-system/patterns";
 import BlogItem from "../BlogItem.astro";
-import Section from "../Section.astro";
+import Section from "./TopSection.astro";
 
 const date_sample = new Date();
 
 const section = container({
-  gap: "gap.section",
-  display: "flex",
-  flexDirection: "column",
   paddingInline: "px.container",
   paddingBlock: "py.section",
   maxWidth: "max.width.container",
