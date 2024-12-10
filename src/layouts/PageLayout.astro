@@ -1,12 +1,9 @@
 ---
-import { css } from "../../styled-system/css";
 import { container } from "../../styled-system/patterns";
-import Heading from "../components/Heading.astro";
 import Layout, { type Props as LayoutProps } from "./Layout.astro";
 
 export type Props = LayoutProps & {
   title: string[];
-  class?: string;
 };
 
 const props = Astro.props;
@@ -18,7 +15,7 @@ const cont = container({
 ---
 
 <Layout {...props}>
-  <div class:list={[cont, props.class]}>
+  <div class={cont}>
     <slot />
   </div>
 </Layout>

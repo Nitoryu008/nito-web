@@ -1,7 +1,7 @@
 ---
 import AppItem from "../AppItem.astro";
 import toplock from "../../assets/apps/toplock.png";
-import Section from "./TopSection.astro";
+import TopSection from "./TopSection.astro";
 import { css } from "../../../styled-system/css";
 import { vstack } from "../../../styled-system/patterns";
 
@@ -42,7 +42,7 @@ const swiper_pagination = css({
 });
 ---
 
-<Section heading="APPS" href="/apps" class={section}>
+<TopSection heading="APPS" href="/apps" class={section}>
   <div class={swiper_container}>
     <div class:list={["swiper", swiper]}>
       <div class:list={["swiper-wrapper"]}>
@@ -59,7 +59,7 @@ const swiper_pagination = css({
     </div>
     <div class:list={["swiper-pagination", swiper_pagination]}></div>
   </div>
-</Section>
+</TopSection>
 
 <script>
   import Swiper from "swiper";

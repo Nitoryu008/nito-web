@@ -19,16 +19,10 @@ const { ...head } = Astro.props;
 
 const body = css({
   minHeight: "100dvh",
-});
-const optimizedBgImg = await getImage({ src: bgImg, format: "webp" });
-const fabric = css({
   backgroundImage: `var(--background-url)`,
   backgroundRepeat: "repeat",
 });
-
-const container = css({
-  paddingBlock: "64",
-});
+const optimizedBgImg = await getImage({ src: bgImg, format: "webp" });
 ---
 
 <!doctype html>
@@ -37,17 +31,13 @@ const container = css({
     <BaseHead {...head} />
   </head>
   <body
-    class:list={[body, fabric]}
+    class={body}
     style={{ "--background-url": `url(${optimizedBgImg.src})` }}
   >
     <Header />
-    <div class={container}>
+    <div class={css({ paddingBlock: "64" })}>
       <slot />
     </div>
     <Footer />
   </body>
 </html>
-
-<script>
-  //import "../darkmode";
-</script>

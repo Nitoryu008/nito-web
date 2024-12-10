@@ -4,14 +4,14 @@ import Heading from "./Heading.astro";
 
 interface Props {
   heading: string;
-  href: string;
-  class?: string;
 }
 
-const { heading, href, class: className, ...rest } = Astro.props;
+const { heading, ...rest } = Astro.props;
 ---
 
-<section class:list={[className]} {...rest}>
-  <Heading class={css({ color: "text.dark" })}>{heading}</Heading>
+<section {...rest}>
+  <Heading class={css({ color: "text.dark", marginBottom: "28" })}
+    >{heading}</Heading
+  >
   <slot />
 </section>

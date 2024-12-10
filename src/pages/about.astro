@@ -5,9 +5,9 @@ import PageLayout from "../layouts/PageLayout.astro";
 import { circle, vstack } from "../../styled-system/patterns";
 import { css } from "../../styled-system/css";
 import { DESCRIPTION } from "../consts";
-import Heading from "../components/Heading.astro";
 import { getCollection } from "astro:content";
 import LinkItem from "../components/LinkItem.astro";
+import Section from "../components/Section.astro";
 
 const links = await getCollection("link");
 
@@ -38,35 +38,55 @@ const profile_item = vstack({ gap: "6", alignItems: "stretch" });
 ---
 
 <PageLayout title={["ABOUT"]} pageType="profile">
-  <div class={vstack({ gap: "14" })}>
-    <Image src={icon} alt="にとのアイコンです" class={circle({ size: "xs" })} />
-    <p class={css({ fontFamily: "metro", fontSize: "7xl", lineHeight: "1" })}>
-      NITO
-    </p>
-    <p>
-      {DESCRIPTION}
-    </p>
+  <div class={vstack({ gap: "52", fontSize: "4xl" })}>
+    <Section heading="ABOUT">
+      <div class={vstack({ gap: "32", alignItems: "stretch" })}>
+        <div class={vstack({ gap: "14" })}>
+          <Image
+            src={icon}
+            alt="にとのアイコンです"
+            class={circle({ size: "xs" })}
+          />
+          <p
+            class={css({
+              fontFamily: "metro",
+              fontSize: "7xl",
+              lineHeight: "1",
+            })}
+          >
+            NITO
+          </p>
+          <p>
+            {DESCRIPTION}
+          </p>
+        </div>
+        <div
+          class={vstack({
+            gap: "16",
+            alignItems: "stretch",
+          })}
+        >
+          <div class={profile_item}>
+            <h2 class={heading}># 趣味、好きなもの</h2>
+            <p>プログラミング、自作PC、音ゲー、ベース</p>
+          </div>
+          <div class={profile_item}>
+            <h2 class={heading}># 触ったことのある言語・技術</h2>
+            <p>C#, Java, Lua, TypeScript, Vue.js, Astro, etc...</p>
+          </div>
+        </div>
+      </div>
+    </Section>
+    <Section heading="LINKS">
+      <ul class={vstack({ gap: "12", alignItems: "stretch" })}>
+        {
+          links.map((item) => (
+            <li>
+              <LinkItem {...item.data} />
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
   </div>
-  <div
-    class={vstack({ gap: "16", alignItems: "stretch", alignSelf: "stretch" })}
-  >
-    <div class={profile_item}>
-      <h2 class={heading}># 趣味、好きなもの</h2>
-      <p>プログラミング、自作PC、音ゲー</p>
-    </div>
-    <div class={profile_item}>
-      <h2 class={heading}># 触ったことのある言語・技術</h2>
-      <p>C#, Java, Lua, TypeScript, Vue.js, Astro, etc...</p>
-    </div>
-  </div>
-  <Heading>LINKS</Heading>
-  <ul class={vstack({ gap: "12", alignItems: "stretch" })}>
-    {
-      links.map((item) => (
-        <li>
-          <LinkItem {...item.data} />
-        </li>
-      ))
-    }
-  </ul>
 </PageLayout>

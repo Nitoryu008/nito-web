@@ -1,7 +1,7 @@
 ---
 import { container, vstack } from "../../../styled-system/patterns";
 import BlogItem from "../BlogItem.astro";
-import Section from "./TopSection.astro";
+import TopSection from "./TopSection.astro";
 
 const date_sample = new Date();
 
@@ -12,7 +12,7 @@ const section = container({
 });
 ---
 
-<Section heading="BLOG" href="/blog" class={section}>
+<TopSection heading="BLOG" href="/blog" class={section}>
   <ul class={vstack({ gap: "10", "& li": { width: "100%" } })}>
     <li>
       <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
@@ -48,4 +48,4 @@ const section = container({
       <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
     </li>
   </ul>
-</Section>
+</TopSection>
