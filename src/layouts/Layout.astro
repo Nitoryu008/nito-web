@@ -21,6 +21,7 @@ const body = css({
   minHeight: "100dvh",
   backgroundImage: `var(--background-url)`,
   backgroundRepeat: "repeat",
+  pos: "relative",
 });
 const optimizedBgImg = await getImage({ src: bgImg, format: "webp" });
 ---
@@ -35,7 +36,7 @@ const optimizedBgImg = await getImage({ src: bgImg, format: "webp" });
     style={{ "--background-url": `url(${optimizedBgImg.src})` }}
   >
     <Header />
-    <div class={css({ paddingBlock: "64" })}>
+    <div class={css({ paddingTop: "64", paddingBottom: "96" })}>
       <slot />
     </div>
     <Footer />

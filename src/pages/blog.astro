@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+import Section from "../components/Section.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import BlogItem from "../components/BlogItem.astro";
+
+const blog = await getCollection("blog");
+---
+
+<PageLayout title={["BLOG"]}>
+  <Section heading="BLOG">
+    <ul>
+      {
+        blog.map((item) => (
+          <li>
+            {
+              <a href={`/blog/${item.slug}`}>
+                <BlogItem date={item.data.pubDate}>{item.data.title}</BlogItem>
+              </a>
+            }
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+</PageLayout>

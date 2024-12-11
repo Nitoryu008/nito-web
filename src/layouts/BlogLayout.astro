@@ -1,5 +1,65 @@
 ---
+import type { InferEntrySchema } from "astro:content";
+import Section from "../components/Section.astro";
+import { format } from "../util";
+import { container } from "../../styled-system/patterns";
 import Layout from "./Layout.astro";
+import { css } from "../../styled-system/css";
+
+interface Props {
+  frontmatter: InferEntrySchema<"blog">;
+}
+
+const { frontmatter } = Astro.props;
+
+const title = css({
+  marginBottom: "10",
+  paddingBottom: "6",
+  pos: "relative",
+  borderBottom: "1px solid {colors.text.dark}",
+  fontSize: "4xl",
+  wordBreak: "keep-all",
+});
+
+const content = css({
+  "& p": {
+    marginBottom: "8",
+  },
+});
 ---
 
-<Layout title={["BLOG"]} />
+<Layout title={["BLOG"]}>
+  <div
+    class={container({
+      paddingInline: "px.container",
+    })}
+  >
+    <Section heading="BLOG">
+      <div
+        class={css({
+          bg: "bg",
+          border: "normal",
+          borderRadius: "3xl",
+          padding: "10",
+        })}
+      >
+        <time
+          datetime={frontmatter.pubDate.toISOString()}
+          class={css({
+            display: "block",
+            marginBottom: "2",
+            color: "text.gray",
+          })}
+        >
+          {format(frontmatter.pubDate)}
+        </time>
+        <h2 class={title}>
+          {frontmatter.title}
+        </h2>
+        <div class={content}>
+          <slot />
+        </div>
+      </div>
+    </Section>
+  </div>
+</Layout>

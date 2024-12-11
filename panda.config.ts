@@ -42,7 +42,6 @@ export default defineConfig({
           white: { value: "#FFFFFF" },
           lightgreen: { value: "#F7FFF9" },
           darkgreen: { value: "#021402" },
-          orange: { value: "#d38819" },
           semi: {
             white: { value: "#fffe" },
             black: { value: "#010E01bb" },
@@ -75,6 +74,7 @@ export default defineConfig({
             },
             dark: { value: "{colors.black}" },
             light: { value: "{colors.white}" },
+            gray: { value: "{colors.gray.50}" },
           },
         },
         shadows: {

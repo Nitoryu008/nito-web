@@ -12,7 +12,10 @@ const footer = cva({
     textAlign: "center",
     color: "text.light",
     gap: "5",
-    lg: {
+    pos: "absolute",
+    bottom: "0",
+    width: "100%",
+    sm: {
       flexDirection: "row",
     },
   },
@@ -34,10 +37,7 @@ const underline = css({
 ---
 
 <footer class={footer({ page: Astro.url.pathname == "/" ? "top" : "other" })}>
-  <p>
-    <span class={inline_block}>(C)opyright 2024 NITO</span>
-    <span class={inline_block}>All Rights Reserved.</span>
-  </p>
+  <span class={inline_block}>(C)opyright 2024 NITO</span>
   <span class={inline_block}>
     Source Code on <a href="" class={underline}>GitHub</a>.
   </span>

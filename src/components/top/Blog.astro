@@ -1,9 +1,10 @@
 ---
+import { getCollection } from "astro:content";
 import { container, vstack } from "../../../styled-system/patterns";
 import BlogItem from "../BlogItem.astro";
 import TopSection from "./TopSection.astro";
 
-const date_sample = new Date();
+const blog = await getCollection("blog");
 
 const section = container({
   paddingInline: "px.container",
@@ -14,38 +15,14 @@ const section = container({
 
 <TopSection heading="BLOG" href="/blog" class={section}>
   <ul class={vstack({ gap: "10", "& li": { width: "100%" } })}>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
-    <li>
-      <BlogItem date={date_sample}>Webサイトをリニューアルしました</BlogItem>
-    </li>
+    {
+      blog.map((item) => (
+        <li>
+          <a href={`/blog/${item.slug}`}>
+            <BlogItem date={item.data.pubDate}>{item.data.title}</BlogItem>
+          </a>
+        </li>
+      ))
+    }
   </ul>
 </TopSection>

@@ -10,8 +10,8 @@ const { heading, ...rest } = Astro.props;
 ---
 
 <section {...rest}>
-  <Heading class={css({ color: "text.dark", marginBottom: "28" })}
-    >{heading}</Heading
-  >
+  <Heading class={css({ color: "text.dark", marginBottom: "28" })}>
+    {heading}
+  </Heading>
   <slot />
 </section>
