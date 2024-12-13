@@ -1,12 +1,16 @@
 ---
+import { css } from "../../styled-system/css";
+import HistoryItem from "../components/HistoryItem.astro";
 import Section from "../components/Section.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 ---
 
 <PageLayout title={["HISTORY"]}>
   <Section heading="HISTORY">
-    <ul>
-      {}
+    <ul class={css({ color: "text.dark" })}>
+      <li>
+        <HistoryItem date={new Date("2024-12-14")}>サイトを公開</HistoryItem>
+      </li>
     </ul>
   </Section>
 </PageLayout>

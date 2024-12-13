@@ -5,14 +5,13 @@ import Fluid from "../Fluid.astro";
 import HistoryItem from "../HistoryItem.astro";
 import TopSection from "./TopSection.astro";
 
-const date = new Date();
-
 const section = container({
   paddingInline: "px.container",
   paddingBlock: "py.section",
   maxWidth: "max.width.container",
   pos: "relative",
   overflowX: "hidden",
+  color: "text.light",
   sm: {
     overflowX: "unset",
   },
@@ -31,15 +30,9 @@ const fluid_container = css({
 
 <TopSection heading="HISTORY" href="/history" class={section}>
   <ul>
-    {
-      [...Array(5)].map(() => (
-        <li>
-          <HistoryItem date={date}>
-            WebサイトをリニューアルWebサイトをリニューアル
-          </HistoryItem>
-        </li>
-      ))
-    }
+    <li>
+      <HistoryItem date={new Date("2024-12-14")}>サイトを公開</HistoryItem>
+    </li>
   </ul>
   <div class={fluid_container}><Fluid /></div>
 </TopSection>
