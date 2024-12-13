@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import Section from "../components/Section.astro";
+import WorkItem from "../components/WorkItem.astro";
+import Layout from "../layouts/Layout.astro";
+import { container } from "../../styled-system/patterns";
+
+const works = await getCollection("work");
+---
+
+<Layout title={["WORKS"]}>
+  <Section heading="WORKS">
+    <ul
+      class={container({
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(35rem, 1fr))",
+        gap: "12",
+        maxWidth: "8xl",
+        paddingInline: "px.container",
+      })}
+    >
+      {
+        works.map((item) => (
+          <li>
+            <WorkItem
+              name={item.data.name}
+              image={item.data.icon}
+              href={item.data.url ? item.data.url : `/works/${item.slug}`}
+            >
+              {item.data.description}
+            </WorkItem>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+</Layout>

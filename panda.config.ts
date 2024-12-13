@@ -27,6 +27,7 @@ export default defineConfig({
           metro: { value: "Metro Retro NF, serif" },
           dots: { value: "Zen Dots, sans-serif" },
           gothic: { value: "'Zen Maru Gothic', sans-serif" },
+          mplus: { value: "'M PLUS 1p', sans-serif" },
         },
         colors: {
           black: {

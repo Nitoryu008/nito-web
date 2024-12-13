@@ -1,15 +1,8 @@
 ---
-import AppItem from "../AppItem.astro";
-import toplock from "../../assets/apps/toplock.png";
-import TopSection from "./TopSection.astro";
+import { getCollection } from "astro:content";
 import { css } from "../../../styled-system/css";
 import { vstack } from "../../../styled-system/patterns";
-
-const section = css({
-  paddingBlock: "py.section",
-  overflow: "hidden",
-  pos: "relative",
-});
+import WorkItem from ".././WorkItem.astro";
 
 const swiper_container = vstack({
   gap: "16",
@@ -22,6 +15,7 @@ const swiper = css({
 const swiper_slide = css({
   maxWidth: "min({sizes.3xl}, 80vw)",
   px: "3vw",
+  height: "auto",
   md: {
     px: "20",
   },
@@ -36,30 +30,34 @@ const swiper_pagination = css({
     height: "1em",
     "&.swiper-pagination-bullet-active": {
       opacity: "1",
-      bg: "orange",
+      bg: "#637c25",
     },
   },
 });
+
+const works = await getCollection("work");
 ---
 
-<TopSection heading="APPS" href="/apps" class={section}>
-  <div class={swiper_container}>
-    <div class:list={["swiper", swiper]}>
-      <div class:list={["swiper-wrapper"]}>
-        {
-          [...Array(2)].map(() => (
-            <div class:list={["swiper-slide", swiper_slide]}>
-              <AppItem image={toplock} name="TopLock 2.1.0" href="">
-                ウィンドウを常に前面に固定できるアプリです。フルスクリーン化することも可能です。
-              </AppItem>
-            </div>
-          ))
-        }
-      </div>
+<div class={swiper_container}>
+  <div class:list={["swiper", swiper]}>
+    <div class:list={["swiper-wrapper"]}>
+      {
+        works.map((item) => (
+          <div class:list={["swiper-slide", swiper_slide]}>
+            <WorkItem
+              image={item.data.icon}
+              name={item.data.name}
+              href={item.data.url ? item.data.url : `/works/${item.slug}`}
+            >
+              {item.data.description}
+            </WorkItem>
+          </div>
+        ))
+      }
     </div>
-    <div class:list={["swiper-pagination", swiper_pagination]}></div>
   </div>
-</TopSection>
+  <div class:list={["swiper-pagination", swiper_pagination]}></div>
+</div>
 
 <script>
   import Swiper from "swiper";

@@ -6,10 +6,10 @@ interface Props {
   heading: string;
 }
 
-const { heading, ...rest } = Astro.props;
+const { heading } = Astro.props;
 ---
 
-<section {...rest}>
+<section>
   <Heading class={css({ color: "text.dark", marginBottom: "28" })}>
     {heading}
   </Heading>

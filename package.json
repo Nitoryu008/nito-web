@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "3.1.9",
+    "@fontsource/m-plus-1p": "^5.1.0",
     "@fontsource/zen-dots": "^5.1.0",
     "@fontsource/zen-maru-gothic": "^5.1.0",
     "astro": "^4.16.13",

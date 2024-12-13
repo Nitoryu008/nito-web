@@ -9,6 +9,17 @@ const blogCollection = defineCollection({
   }),
 });
 
+const workCollection = defineCollection({
+  type: "content",
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      description: z.string(),
+      icon: image(),
+      url: z.string().url().optional(),
+    }),
+});
+
 const linkCollection = defineCollection({
   type: "data",
   schema: ({ image }) =>
@@ -27,4 +38,5 @@ const linkCollection = defineCollection({
 export const collections = {
   blog: blogCollection,
   link: linkCollection,
+  work: workCollection,
 };

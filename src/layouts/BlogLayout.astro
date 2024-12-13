@@ -5,6 +5,7 @@ import { format } from "../util";
 import { container } from "../../styled-system/patterns";
 import Layout from "./Layout.astro";
 import { css } from "../../styled-system/css";
+import { markdown } from "../recipes/markdown";
 
 interface Props {
   frontmatter: InferEntrySchema<"blog">;
@@ -20,45 +21,30 @@ const title = css({
   fontSize: "4xl",
   wordBreak: "keep-all",
 });
-
-const content = css({
-  "& p": {
-    marginBottom: "8",
-  },
-});
 ---
 
-<Layout title={["BLOG"]}>
+<Layout title={["BLOG", frontmatter.title]} pageType="article">
   <div
     class={container({
       paddingInline: "px.container",
     })}
   >
     <Section heading="BLOG">
-      <div
+      <time
+        datetime={frontmatter.pubDate.toISOString()}
         class={css({
-          bg: "bg",
-          border: "normal",
-          borderRadius: "3xl",
-          padding: "10",
+          display: "block",
+          marginBottom: "2",
+          color: "text.gray",
         })}
       >
-        <time
-          datetime={frontmatter.pubDate.toISOString()}
-          class={css({
-            display: "block",
-            marginBottom: "2",
-            color: "text.gray",
-          })}
-        >
-          {format(frontmatter.pubDate)}
-        </time>
-        <h2 class={title}>
-          {frontmatter.title}
-        </h2>
-        <div class={content}>
-          <slot />
-        </div>
+        {format(frontmatter.pubDate)}
+      </time>
+      <h2 class={title}>
+        {frontmatter.title}
+      </h2>
+      <div class={markdown({ type: "blog" })}>
+        <slot />
       </div>
     </Section>
   </div>

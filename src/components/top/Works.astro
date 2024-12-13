@@ -1,0 +1,15 @@
+---
+import TopSection from "./TopSection.astro";
+import { css } from "../../../styled-system/css";
+import WorkSlider from "./WorkSlider.astro";
+
+const section = css({
+  paddingBlock: "py.section",
+  overflow: "hidden",
+  pos: "relative",
+});
+---
+
+<TopSection heading="WORKS" href="/apps" class={section}>
+  <WorkSlider />
+</TopSection>
