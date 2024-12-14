@@ -30,7 +30,11 @@ const swiper_pagination = css({
     height: "1em",
     "&.swiper-pagination-bullet-active": {
       opacity: "1",
-      bg: "#637c25",
+      bg: "#d4ff0b",
+    },
+    transition: "transform 0.5s {easings.easeOutExpo}",
+    _hover: {
+      transform: "scale(1.1)",
     },
   },
 });
@@ -76,5 +80,23 @@ const works = await getCollection("work");
     /*autoplay: {
       delay: 1000,
     },*/
+  });
+
+  import { gsap } from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".swiper-slide", {
+    y: "10%",
+    opacity: "0",
+    ease: "expo.out",
+    scrollTrigger: {
+      trigger: ".swiper-slide",
+      start: "center bottom",
+    },
+    stagger: {
+      from: "start",
+      amount: 0.5,
+    },
   });
 </script>

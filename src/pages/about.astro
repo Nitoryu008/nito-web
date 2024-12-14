@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import icon from "../assets/icon.png";
 import PageLayout from "../layouts/PageLayout.astro";
-import { circle, vstack } from "../../styled-system/patterns";
+import { bg_extend, circle, vstack } from "../../styled-system/patterns";
 import { css } from "../../styled-system/css";
 import { DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
@@ -48,13 +48,13 @@ const profile_item = vstack({ gap: "6", alignItems: "stretch" });
             class={circle({ size: "xs" })}
           />
           <p
-            class={css({
+            class={bg_extend({
               fontFamily: "metro",
               fontSize: "7xl",
-              lineHeight: "1",
+              lineHeight: "0.9",
             })}
           >
-            NITO
+            <span>NITO</span>
           </p>
           <p>
             {DESCRIPTION}

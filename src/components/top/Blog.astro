@@ -10,6 +10,7 @@ const section = container({
   paddingInline: "px.container",
   paddingBlock: "py.section",
   maxWidth: "max.width.container",
+  overflowX: "hidden",
 });
 ---
 
@@ -17,7 +18,7 @@ const section = container({
   <ul class={vstack({ gap: "10", "& li": { width: "100%" } })}>
     {
       blog.map((item) => (
-        <li>
+        <li class="blog_item">
           <a href={`/blog/${item.slug}`}>
             <BlogItem date={item.data.pubDate}>{item.data.title}</BlogItem>
           </a>
@@ -26,3 +27,23 @@ const section = container({
     }
   </ul>
 </TopSection>
+
+<script>
+  import { gsap } from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".blog_item", {
+    x: "10%",
+    opacity: "0",
+    ease: "expo.out",
+    scrollTrigger: {
+      trigger: ".blog_item",
+      start: "center bottom-=200",
+    },
+    stagger: {
+      from: "start",
+      amount: 0.5,
+    },
+  });
+</script>

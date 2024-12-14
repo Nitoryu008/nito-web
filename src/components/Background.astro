@@ -6,6 +6,8 @@ import { css } from "../../styled-system/css";
 const optimizedBackground = await getImage({ src: background, format: "webp" });
 ---
 
+<link rel="preload" href={optimizedBackground.src} as="image" slot="head" />
+
 <div
   class={css({
     pos: "fixed",
@@ -15,6 +17,7 @@ const optimizedBackground = await getImage({ src: background, format: "webp" });
     height: "100lvh",
     backgroundSize: "cover",
     backgroundPosition: "bottom",
+    backgroundColor: "bg.top",
   })}
   style={{ backgroundImage: `url(${optimizedBackground.src})` }}
 >

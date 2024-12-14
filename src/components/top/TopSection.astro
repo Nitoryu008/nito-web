@@ -13,7 +13,7 @@ interface Props {
 const { heading, href, class: className, ...rest } = Astro.props;
 
 const section = vstack({
-  gap: "20",
+  gap: "32",
   alignItems: "stretch",
 });
 ---
@@ -21,7 +21,34 @@ const section = vstack({
 <section class:list={[section, className]} {...rest}>
   <Heading class={css({ color: "text.light" })}>{heading}</Heading>
   <slot />
-  <div class={center()}>
+  <div class:list={["more_button", center({ opacity: "0" })]}>
     <MoreButton href={href} />
   </div>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const buttons = gsap.utils.toArray(".more_button") as HTMLHeadingElement[];
+  buttons.forEach((target) => {
+    gsap.fromTo(
+      target,
+      {
+        scale: "1.1",
+        autoAlpha: 0,
+      },
+      {
+        scale: "1",
+        autoAlpha: 1,
+        ease: "power4.out",
+        duration: 1,
+        scrollTrigger: {
+          trigger: target,
+          start: "center bottom-=150",
+        },
+      }
+    );
+  });
+</script>

@@ -26,8 +26,10 @@ const link_item = css({
   borderRadius: "3xl",
   padding: "8",
   bg: "bg",
+  transition: "transform 0.3s {easings.easeOutExpo}",
   _hover: {
     bg: "var(--color)",
+    transform: "scale(1.025)",
     color: "text.light",
   },
 });

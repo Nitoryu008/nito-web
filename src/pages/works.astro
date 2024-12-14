@@ -14,14 +14,14 @@ const works = await getCollection("work");
       class={container({
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(35rem, 1fr))",
-        gap: "12",
+        gap: "16",
         maxWidth: "8xl",
         paddingInline: "px.container",
       })}
     >
       {
         works.map((item) => (
-          <li>
+          <li class="work_item">
             <WorkItem
               name={item.data.name}
               image={item.data.icon}
@@ -35,3 +35,23 @@ const works = await getCollection("work");
     </ul>
   </Section>
 </Layout>
+
+<script>
+  import { gsap } from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".work_item", {
+    y: "15%",
+    opacity: "0",
+    ease: "expo.out",
+    scrollTrigger: {
+      trigger: ".work_item",
+      start: "center bottom",
+    },
+    stagger: {
+      from: "start",
+      amount: 0.5,
+    },
+  });
+</script>

@@ -1,4 +1,5 @@
 import { defineConfig } from "@pandacss/dev";
+import { bg_extend } from "./src/patterns/animation";
 
 export default defineConfig({
   // Whether to use css reset
@@ -21,6 +22,21 @@ export default defineConfig({
           "0%, 100%": { borderRadius: "59% 41% 21% 79% / 62% 53% 47% 38%" },
           "50%": { borderRadius: "26% 74% 52% 48% / 52% 32% 68% 48%" },
         },
+        bg_extend_animation: {
+          "0%": {
+            clipPath: "inset(0 100% 0 0)",
+          },
+          "50%": {
+            clipPath: "inset(0)",
+          },
+          "100%": {
+            clipPath: "inset(0 0 0 103%)",
+          },
+        },
+        appear_animation: {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
       },
       tokens: {
         fonts: {
@@ -30,68 +46,53 @@ export default defineConfig({
           mplus: { value: "'M PLUS 1p', sans-serif" },
         },
         colors: {
-          black: {
-            DEFAULT: { value: "#1E1E1E" },
-            100: { value: "#272727" },
-          },
-          gray: {
-            50: { value: "#555" },
-            100: { value: "#999" },
-            200: { value: "#ADADAD" },
-            300: { value: "#DADADA" },
-          },
+          black: { value: "#1E1E1E" },
           white: { value: "#FFFFFF" },
-          lightgreen: { value: "#F7FFF9" },
-          darkgreen: { value: "#021402" },
-          semi: {
-            white: { value: "#fffe" },
-            black: { value: "#010E01bb" },
-          },
         },
         zIndex: {
           header: { value: "100" },
+          loading: { value: "1000" },
+        },
+        easings: {
+          easeInExpo: { value: "cubic-bezier(0.95, 0.05, 0.795, 0.035)" },
+          easeOutExpo: { value: "cubic-bezier(0.19, 1, 0.22, 1)" },
+          easeInOutExpo: { value: "cubic-bezier(1, 0, 0, 1)" },
+          easeOutCirc: { value: "cubic-bezier(0.075, 0.82, 0.165, 1)" },
         },
       },
       semanticTokens: {
         colors: {
           bg: {
             DEFAULT: {
-              value: { base: "{colors.white}", _dark: "{colors.darkgreen}" },
+              value: { base: "{colors.white}" },
             },
-            button: { value: "{colors.gray.300}" },
+            button: { value: "#DADADA" },
             menu: {
               value: {
-                base: "{colors.white}",
-                _dark: "{colors.darkgreen}",
+                base: "#FFFFFF",
               },
             },
-            footer: { value: "{colors.black.100}" },
-            fluid: { value: "{colors.semi.black}" },
-            home: { value: "{colors.lightgreen}" },
+            footer: { value: "#272727" },
+            fluid: { value: "#010E01bb" },
+            top: { value: "#0d1304" },
           },
           text: {
             DEFAULT: {
-              value: { base: "{colors.black}", _dark: "{colors.white}" },
+              value: "{colors.black}",
             },
             dark: { value: "{colors.black}" },
             light: { value: "{colors.white}" },
-            gray: { value: "{colors.gray.50}" },
+            gray: { value: "#555" },
           },
         },
         shadows: {
           normal: {
-            value: {
-              base: "0 0 10px 0 {colors.gray.300}",
-              _dark: "0 0 10px 0 {colors.black}",
-            },
+            value: "0 0 10px 0 #DADADA",
           },
         },
         borders: {
           normal: {
-            value: {
-              base: "1px solid {colors.gray.100}",
-              _dark: "1px solid {colors.gray.50}",
-            },
+            value: "1px solid #999",
           },
           transparent: {
             value: "1px solid transparent",
@@ -104,9 +105,6 @@ export default defineConfig({
           py: {
             section: { value: "{spacing.32}" },
           },
-          pos: {
-            menu: { value: "{spacing.5}" },
-          },
         },
         sizes: {
           max: {
@@ -117,8 +115,19 @@ export default defineConfig({
         },
         animations: {
           fluid: { value: "fluid_animation 20s ease 0s infinite normal" },
+          bg_extend: {
+            value: "bg_extend_animation 1s {easings.easeOutCirc} forwards",
+          },
+          appear: {
+            value: "appear_animation 0.8s {easings.easeOutExpo} forwards",
+          },
         },
       },
+    },
+  },
+  patterns: {
+    extend: {
+      bg_extend,
     },
   },
 
@@ -146,6 +155,7 @@ export default defineConfig({
       fontFamily: "gothic",
       fontSize: "3xl",
       overflowX: "hidden",
+      width: "100vw",
     },
   },
 });

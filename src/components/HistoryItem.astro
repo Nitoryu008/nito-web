@@ -1,5 +1,5 @@
 ---
-import { stack } from "../../styled-system/patterns";
+import { divider, stack } from "../../styled-system/patterns";
 import { format } from "../util";
 
 interface Props {
@@ -11,12 +11,46 @@ const history_item = stack({
   gap: "2",
   padding: "8",
   fontWeight: "medium",
-  borderBottom: "normal",
-  borderColor: "gray.100",
+  transformOrigin: "left",
 });
 ---
 
-<div class={history_item}>
+<div class:list={["history_item", history_item]}>
   <time>{format(date)}</time>
   <p><slot /></p>
 </div>
+<div class:list={["history_item_line", divider()]}></div>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".history_item", {
+    x: "-1rem",
+    scrollTrigger: {
+      trigger: ".history_item",
+      start: "center bottom",
+    },
+    stagger: {
+      from: "start",
+      amount: 0.2,
+    },
+  });
+
+  gsap.from(".history_item_line", {
+    scaleX: "0",
+    transformOrigin: "left",
+    duration: "1",
+    ease: "power4.out",
+    scrollTrigger: {
+      trigger: ".history_item",
+      start: "center bottom",
+    },
+    stagger: {
+      from: "start",
+      amount: 0.2,
+    },
+  });
+</script>

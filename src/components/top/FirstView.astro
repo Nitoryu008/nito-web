@@ -4,9 +4,13 @@ import icon from "../../assets/icon.png";
 import { DESCRIPTION } from "../../consts";
 
 import { css } from "../../../styled-system/css";
-import { container, circle, vstack } from "../../../styled-system/patterns";
+import {
+  container,
+  circle,
+  vstack,
+  bg_extend,
+} from "../../../styled-system/patterns";
 import MoreButton from "../MoreButton.astro";
-
 const cont = container({
   display: "flex",
   flexDirection: "column",
@@ -23,12 +27,18 @@ const about = vstack({
   gap: "8",
   bg: "bg",
   border: "normal",
+  opacity: "0",
 });
 ---
 
 <div class={cont}>
-  <div class={vstack({ gap: "10" })}>
-    <div class={circle({ size: "xs", bg: "bg", border: "normal" })}>
+  <div class={vstack({ gap: "20" })}>
+    <div
+      class:list={[
+        "first_view_anime",
+        circle({ size: "xs", bg: "bg", border: "normal", opacity: "0" }),
+      ]}
+    >
       <Image
         src={icon}
         alt="にとのアイコン"
@@ -40,17 +50,43 @@ const about = vstack({
       />
     </div>
     <p
-      class={css({
+      class={bg_extend({
         fontFamily: "metro",
         fontSize: "7xl",
         color: "text.light",
+        lineHeight: "0.8",
+        display: "none",
       })}
+      data-on-load="block"
     >
-      NITO
+      <span> NITO </span>
     </p>
   </div>
-  <div class={about}>
-    <p class={css({ fontSize: "4xl" })}>{DESCRIPTION}</p>
+  <div class:list={[about, "first_view_anime"]}>
+    <p class={css({ fontSize: "4xl", "& span": { display: "inline-block" } })}>
+      {DESCRIPTION}
+    </p>
     <MoreButton href="/about" />
   </div>
 </div>
+
+<script>
+  import { gsap } from "gsap";
+
+  window.addEventListener("load", () => {
+    gsap.fromTo(
+      ".first_view_anime",
+      {
+        scale: "1.05",
+        autoAlpha: 0,
+      },
+      {
+        scale: "1",
+        autoAlpha: 1,
+        ease: "expo.out",
+        duration: 1,
+        delay: 0.5,
+      }
+    );
+  });
+</script>

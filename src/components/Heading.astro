@@ -5,6 +5,9 @@ const heading = css({
   fontFamily: "dots",
   fontSize: "6xl",
   textAlign: "center",
+  overflow: "hidden",
+  lineHeight: "1",
+  opacity: "0",
 });
 
 interface Props {
@@ -14,4 +17,40 @@ interface Props {
 const { class: className, ...rest } = Astro.props;
 ---
 
-<h1 class:list={[heading, className]} {...rest}><slot /></h1>
+<h1 class:list={["heading", heading, className]} {...rest}>
+  <slot />
+</h1>
+
+<script>
+  import { gsap, Expo } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { splitText } from "../util";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  window.addEventListener("load", () => {
+    const headings = gsap.utils.toArray(".heading") as HTMLHeadingElement[];
+    headings.forEach((target) => {
+      const text = splitText(target);
+
+      gsap.set(target, {
+        opacity: 1,
+      });
+      gsap.set(text, {
+        y: "100%",
+        display: "inline-block",
+      });
+      gsap.to(text, {
+        y: 0,
+        ease: Expo.easeOut,
+        stagger: {
+          each: 0.1,
+        },
+        scrollTrigger: {
+          trigger: target,
+          start: "center bottom",
+        },
+      });
+    });
+  });
+</script>

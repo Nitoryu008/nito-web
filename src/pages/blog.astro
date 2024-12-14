@@ -3,16 +3,17 @@ import { getCollection } from "astro:content";
 import Section from "../components/Section.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import BlogItem from "../components/BlogItem.astro";
+import { vstack } from "../../styled-system/patterns";
 
 const blog = await getCollection("blog");
 ---
 
 <PageLayout title={["BLOG"]}>
   <Section heading="BLOG">
-    <ul>
+    <ul class={vstack({ gap: "8", alignItems: "stretch" })}>
       {
         blog.map((item) => (
-          <li>
+          <li class="blog_item">
             {
               <a href={`/blog/${item.slug}`}>
                 <BlogItem date={item.data.pubDate}>{item.data.title}</BlogItem>
@@ -24,3 +25,18 @@ const blog = await getCollection("blog");
     </ul>
   </Section>
 </PageLayout>
+
+<script>
+  import { gsap } from "gsap";
+
+  gsap.from(".blog_item", {
+    x: "10%",
+    opacity: "0",
+    ease: "expo.out",
+    stagger: {
+      from: "start",
+      amount: 0.5,
+    },
+    delay: 0.5,
+  });
+</script>

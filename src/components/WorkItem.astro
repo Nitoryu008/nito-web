@@ -11,7 +11,7 @@ interface Props {
 }
 const { image, name, href } = Astro.props;
 
-const app_item = vstack({
+const work_item = vstack({
   bg: "bg",
   border: "normal",
   borderRadius: "4xl",
@@ -19,10 +19,14 @@ const app_item = vstack({
   paddingInline: "10",
   paddingBlock: "14",
   height: "100%",
+  transition: "transform 0.3s {easings.easeOutExpo}",
+  _hover: {
+    transform: "scale(1.025)",
+  },
 });
 ---
 
-<a class={app_item} href={href}>
+<a class={work_item} href={href}>
   <Image
     src={image}
     alt={name}

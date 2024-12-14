@@ -13,6 +13,8 @@ import bgImg from "../assets/bg/textured-stripes.png";
 
 import { css } from "../../styled-system/css";
 import { getImage } from "astro:assets";
+import Loading from "../components/Loading.astro";
+import Background from "../components/Background.astro";
 
 export type Props = BaseProps;
 
@@ -28,18 +30,31 @@ const optimizedBgImg = await getImage({ src: bgImg, format: "webp" });
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ja">
   <head>
     <BaseHead {...head} />
+    <slot name="head" />
   </head>
   <body
     class={body}
     style={{ "--background-url": `url(${optimizedBgImg.src})` }}
   >
+    {
+      Astro.url.pathname == "/" && (
+        <>
+          <Loading />
+          <Background />
+        </>
+      )
+    }
     <Header />
-    <div class={css({ paddingTop: "64", paddingBottom: "96" })}>
+    <main class={css({ paddingTop: "64", paddingBottom: "96" })}>
       <slot />
-    </div>
+    </main>
     <Footer />
   </body>
 </html>
+
+<script>
+  import "../onload";
+</script>
