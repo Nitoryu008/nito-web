@@ -3,25 +3,33 @@ import type { PatternConfig } from "@pandacss/dev";
 export const bg_extend: PatternConfig = {
   description: "Bg Extend Animation",
   transform(props) {
+    const { ...rest } = props;
+
     return {
       position: "relative",
       overflow: "hidden",
       opacity: 0,
-      animation: "appear",
+      _loaded: {
+        animation: "appear",
+      },
       _before: {
         content: "''",
         position: "absolute",
         width: "100%",
         height: "100%",
         background: "currentcolor",
-        animation: "bg_extend",
+        _loaded: {
+          animation: "bg_extend",
+        },
       },
-      "& span": {
+      "& > span": {
         opacity: 0,
-        animation: "appear",
-        animationDelay: "0.5s",
+        _loaded: {
+          animation: "appear",
+          animationDelay: "0.48s",
+        },
       },
-      ...props,
+      ...rest,
     };
   },
 };

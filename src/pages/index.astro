@@ -5,9 +5,33 @@ import Layout from "../layouts/Layout.astro";
 
 import History from "../components/top/History.astro";
 import Works from "../components/top/Works.astro";
+import { css } from "../../styled-system/css";
+
+import { getImage } from "astro:assets";
+import background from "../assets/first_view/background.png";
+
+const optimizedBackground = await getImage({ src: background, format: "webp" });
 ---
 
-<Layout>
+<Layout
+  class={css({
+    bg: "bg.top",
+  })}
+>
+  <div
+    class={css({
+      pos: "fixed",
+      zIndex: "-100",
+      top: "0",
+      width: "100%",
+      height: "100lvh",
+      backgroundSize: "cover",
+      backgroundPosition: "bottom",
+      backgroundColor: "bg.top",
+    })}
+    style={{ backgroundImage: `url(${optimizedBackground.src})` }}
+  >
+  </div>
   <FirstView />
   <Blog />
   <Works />

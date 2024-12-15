@@ -3,9 +3,9 @@ import type { InferEntrySchema } from "astro:content";
 import Section from "../components/Section.astro";
 import { format } from "../util";
 import { container } from "../../styled-system/patterns";
-import Layout from "./Layout.astro";
 import { css } from "../../styled-system/css";
 import { markdown } from "../recipes/markdown";
+import PageLayout from "./PageLayout.astro";
 
 interface Props {
   frontmatter: InferEntrySchema<"blog">;
@@ -23,29 +23,23 @@ const title = css({
 });
 ---
 
-<Layout title={["BLOG", frontmatter.title]} pageType="article">
-  <div
-    class={container({
-      paddingInline: "px.container",
-    })}
-  >
-    <Section heading="BLOG">
-      <time
-        datetime={frontmatter.pubDate.toISOString()}
-        class={css({
-          display: "block",
-          marginBottom: "2",
-          color: "text.gray",
-        })}
-      >
-        {format(frontmatter.pubDate)}
-      </time>
-      <h2 class={title}>
-        {frontmatter.title}
-      </h2>
-      <div class={markdown({ type: "blog" })}>
-        <slot />
-      </div>
-    </Section>
-  </div>
-</Layout>
+<PageLayout title={["BLOG", frontmatter.title]} pageType="article">
+  <Section heading="BLOG">
+    <time
+      datetime={frontmatter.pubDate.toISOString()}
+      class={css({
+        display: "block",
+        marginBottom: "2",
+        color: "text.gray",
+      })}
+    >
+      {format(frontmatter.pubDate)}
+    </time>
+    <h2 class={title}>
+      {frontmatter.title}
+    </h2>
+    <div class={markdown({ type: "blog" })}>
+      <slot />
+    </div>
+  </Section>
+</PageLayout>

@@ -31,24 +31,26 @@ const section = vstack({
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
 
-  const buttons = gsap.utils.toArray(".more_button") as HTMLHeadingElement[];
-  buttons.forEach((target) => {
-    gsap.fromTo(
-      target,
-      {
-        scale: "1.1",
-        autoAlpha: 0,
-      },
-      {
-        scale: "1",
-        autoAlpha: 1,
-        ease: "power4.out",
-        duration: 1,
-        scrollTrigger: {
-          trigger: target,
-          start: "center bottom-=150",
+  window.addEventListener("load", () => {
+    const buttons = gsap.utils.toArray(".more_button") as HTMLHeadingElement[];
+    buttons.forEach((target) => {
+      gsap.fromTo(
+        target,
+        {
+          scale: "1.1",
+          autoAlpha: 0,
         },
-      }
-    );
+        {
+          scale: "1",
+          autoAlpha: 1,
+          ease: "power4.out",
+          duration: 1,
+          scrollTrigger: {
+            trigger: target,
+            start: "center bottom-=150",
+          },
+        }
+      );
+    });
   });
 </script>

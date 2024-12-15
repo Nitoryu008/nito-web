@@ -28,65 +28,48 @@ const about = vstack({
   bg: "bg",
   border: "normal",
   opacity: "0",
+  _loaded: {
+    animation: "slide_in",
+  },
+});
+
+const image_wrapper = circle({
+  size: "xs",
+  bg: "bg",
+  border: "normal",
+  opacity: "0",
+  _loaded: {
+    animation: "slide_in",
+  },
+});
+
+const icon_img = circle({
+  size: "80%",
+  boxShadow: "normal",
+  textAlign: "center",
+});
+
+const name = bg_extend({
+  fontFamily: "metro",
+  fontSize: "7xl",
+  color: "text.light",
+  lineHeight: "0.8",
 });
 ---
 
 <div class={cont}>
   <div class={vstack({ gap: "20" })}>
-    <div
-      class:list={[
-        "first_view_anime",
-        circle({ size: "xs", bg: "bg", border: "normal", opacity: "0" }),
-      ]}
-    >
-      <Image
-        src={icon}
-        alt="にとのアイコン"
-        class={circle({
-          size: "80%",
-          boxShadow: "normal",
-          textAlign: "center",
-        })}
-      />
+    <div class={image_wrapper}>
+      <Image src={icon} alt="にとのアイコン" class={icon_img} />
     </div>
-    <p
-      class={bg_extend({
-        fontFamily: "metro",
-        fontSize: "7xl",
-        color: "text.light",
-        lineHeight: "0.8",
-        display: "none",
-      })}
-      data-on-load="block"
-    >
+    <p class={name}>
       <span> NITO </span>
     </p>
   </div>
-  <div class:list={[about, "first_view_anime"]}>
-    <p class={css({ fontSize: "4xl", "& span": { display: "inline-block" } })}>
+  <div class={about}>
+    <p class={css({ fontSize: "4xl" })}>
       {DESCRIPTION}
     </p>
     <MoreButton href="/about" />
   </div>
 </div>
-
-<script>
-  import { gsap } from "gsap";
-
-  window.addEventListener("load", () => {
-    gsap.fromTo(
-      ".first_view_anime",
-      {
-        scale: "1.05",
-        autoAlpha: 0,
-      },
-      {
-        scale: "1",
-        autoAlpha: 1,
-        ease: "expo.out",
-        duration: 1,
-        delay: 0.5,
-      }
-    );
-  });
-</script>

@@ -9,6 +9,7 @@ const loading = cva({
     left: "0",
     width: "100vw",
     height: "100lvh",
+    display: "none",
   },
   variants: {
     color: {
@@ -29,9 +30,15 @@ const loading = cva({
   import { gsap } from "gsap";
 
   window.addEventListener("load", () => {
-    gsap.to("#loading", {
-      autoAlpha: 0,
-      ease: "expo.out",
-    });
+    gsap.fromTo(
+      "#loading",
+      {
+        display: "block",
+      },
+      {
+        autoAlpha: 0,
+        ease: "expo.out",
+      }
+    );
   });
 </script>

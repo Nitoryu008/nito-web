@@ -37,6 +37,10 @@ export default defineConfig({
           from: { opacity: "0" },
           to: { opacity: "1" },
         },
+        slide_in_animation: {
+          from: { opacity: "0", scale: "1.05" },
+          to: { opacity: "1", scale: "1" },
+        },
       },
       tokens: {
         fonts: {
@@ -83,6 +87,7 @@ export default defineConfig({
             dark: { value: "{colors.black}" },
             light: { value: "{colors.white}" },
             gray: { value: "#555" },
+            link: { value: "#5d7104" },
           },
         },
         shadows: {
@@ -121,6 +126,9 @@ export default defineConfig({
           appear: {
             value: "appear_animation 0.8s {easings.easeOutExpo} forwards",
           },
+          slide_in: {
+            value: "slide_in_animation 1s {easings.easeOutExpo} 0.5s forwards",
+          },
         },
       },
     },
@@ -130,7 +138,11 @@ export default defineConfig({
       bg_extend,
     },
   },
-
+  conditions: {
+    extend: {
+      loaded: ".loaded &",
+    },
+  },
   // The output directory for your css system
   outdir: "styled-system",
   globalFontface: {

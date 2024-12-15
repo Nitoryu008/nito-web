@@ -16,6 +16,7 @@ const swiper_slide = css({
   maxWidth: "min({sizes.3xl}, 80vw)",
   px: "3vw",
   height: "auto",
+  opacity: "0",
   md: {
     px: "20",
   },
@@ -72,31 +73,36 @@ const works = await getCollection("work");
     speed: 1200,
     slidesPerView: "auto",
     centeredSlides: true,
-    //loop: true,
     pagination: {
       el: ".swiper-pagination",
       clickable: true,
     },
-    /*autoplay: {
-      delay: 1000,
-    },*/
   });
 
   import { gsap } from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.from(".swiper-slide", {
-    y: "10%",
-    opacity: "0",
-    ease: "expo.out",
-    scrollTrigger: {
-      trigger: ".swiper-slide",
-      start: "center bottom",
-    },
-    stagger: {
-      from: "start",
-      amount: 0.5,
-    },
+  window.addEventListener("load", () => {
+    gsap.fromTo(
+      ".swiper-slide",
+      {
+        y: "10%",
+        opacity: "0",
+      },
+      {
+        y: "0%",
+        opacity: "1",
+        ease: "expo.out",
+        scrollTrigger: {
+          trigger: ".swiper-slide",
+          start: "center bottom",
+        },
+        stagger: {
+          from: "start",
+          amount: 0.2,
+        },
+      }
+    );
   });
 </script>

@@ -38,14 +38,25 @@ const profile_item = vstack({ gap: "6", alignItems: "stretch" });
 ---
 
 <PageLayout title={["ABOUT"]} pageType="profile">
-  <div class={vstack({ gap: "52", fontSize: "4xl" })}>
+  <div
+    class={vstack({
+      gap: "52",
+      fontSize: "4xl",
+      maxWidth: "max.width.container",
+      marginInline: "auto",
+    })}
+  >
     <Section heading="ABOUT">
       <div class={vstack({ gap: "32", alignItems: "stretch" })}>
         <div class={vstack({ gap: "14" })}>
           <Image
             src={icon}
             alt="にとのアイコンです"
-            class={circle({ size: "xs" })}
+            class={circle({
+              size: "xs",
+              opacity: "0",
+              _loaded: { animation: "slide_in", animationDelay: "0.3s" },
+            })}
           />
           <p
             class={bg_extend({

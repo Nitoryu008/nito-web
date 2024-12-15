@@ -2,9 +2,9 @@
 import type { InferEntrySchema } from "astro:content";
 import Section from "../components/Section.astro";
 import { markdown } from "../recipes/markdown";
-import Layout from "./Layout.astro";
 import { container } from "../../styled-system/patterns";
 import { css } from "../../styled-system/css";
+import PageLayout from "./PageLayout.astro";
 
 interface Props {
   frontmatter: InferEntrySchema<"work">;
@@ -20,17 +20,15 @@ const heading = css({
 });
 ---
 
-<Layout
+<PageLayout
   title={["WORKS", frontmatter.name]}
   description={frontmatter.description}
   pageType="article"
 >
-  <div class={container({ paddingInline: "px.container" })}>
-    <Section heading="WORKS">
-      <h2 class={heading}>{frontmatter.name}</h2>
-      <div class={markdown({ type: "work" })}>
-        <slot />
-      </div>
-    </Section>
-  </div>
-</Layout>
+  <Section heading="WORKS">
+    <h2 class={heading}>{frontmatter.name}</h2>
+    <div class={markdown({ type: "work" })}>
+      <slot />
+    </div>
+  </Section>
+</PageLayout>

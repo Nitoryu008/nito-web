@@ -2,13 +2,13 @@
 import { getCollection } from "astro:content";
 import Section from "../components/Section.astro";
 import WorkItem from "../components/WorkItem.astro";
-import Layout from "../layouts/Layout.astro";
 import { container } from "../../styled-system/patterns";
+import PageLayout from "../layouts/PageLayout.astro";
 
 const works = await getCollection("work");
 ---
 
-<Layout title={["WORKS"]}>
+<PageLayout title={["WORKS"]}>
   <Section heading="WORKS">
     <ul
       class={container({
@@ -17,6 +17,7 @@ const works = await getCollection("work");
         gap: "16",
         maxWidth: "8xl",
         paddingInline: "px.container",
+        paddingBottom: "20",
       })}
     >
       {
@@ -34,24 +35,26 @@ const works = await getCollection("work");
       }
     </ul>
   </Section>
-</Layout>
+</PageLayout>
 
 <script>
   import { gsap } from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.from(".work_item", {
-    y: "15%",
-    opacity: "0",
-    ease: "expo.out",
-    scrollTrigger: {
-      trigger: ".work_item",
-      start: "center bottom",
-    },
-    stagger: {
-      from: "start",
-      amount: 0.5,
-    },
+  window.addEventListener("load", () => {
+    gsap.from(".work_item", {
+      y: "15%",
+      opacity: "0",
+      ease: "expo.out",
+      scrollTrigger: {
+        trigger: ".work_item",
+        start: "center bottom",
+      },
+      stagger: {
+        from: "start",
+        amount: 0.2,
+      },
+    });
   });
 </script>

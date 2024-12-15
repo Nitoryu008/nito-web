@@ -10,7 +10,14 @@ const blog = await getCollection("blog");
 
 <PageLayout title={["BLOG"]}>
   <Section heading="BLOG">
-    <ul class={vstack({ gap: "8", alignItems: "stretch" })}>
+    <ul
+      class={vstack({
+        gap: "8",
+        alignItems: "stretch",
+        maxWidth: "max.width.container",
+        marginInline: "auto",
+      })}
+    >
       {
         blog.map((item) => (
           <li class="blog_item">
@@ -29,14 +36,16 @@ const blog = await getCollection("blog");
 <script>
   import { gsap } from "gsap";
 
-  gsap.from(".blog_item", {
-    x: "10%",
-    opacity: "0",
-    ease: "expo.out",
-    stagger: {
-      from: "start",
-      amount: 0.5,
-    },
-    delay: 0.5,
+  window.addEventListener("load", () => {
+    gsap.from(".blog_item", {
+      x: "10%",
+      opacity: "0",
+      ease: "expo.out",
+      stagger: {
+        from: "start",
+        amount: 0.2,
+      },
+      delay: 0.5,
+    });
   });
 </script>

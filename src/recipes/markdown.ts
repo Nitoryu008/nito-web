@@ -31,6 +31,10 @@ export const markdown = cva({
         transform: "rotate(45deg)",
       },
     },
+    "& a": {
+      textDecoration: "underline",
+      color: "text.link",
+    },
   },
   variants: {
     type: {

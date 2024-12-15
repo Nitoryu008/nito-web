@@ -10,11 +10,7 @@ const section = container({
   paddingBlock: "py.section",
   maxWidth: "max.width.container",
   pos: "relative",
-  overflowX: "hidden",
   color: "text.light",
-  sm: {
-    overflowX: "unset",
-  },
 });
 const fluid_container = css({
   pos: "absolute",
@@ -31,7 +27,7 @@ const fluid_container = css({
 <TopSection heading="HISTORY" href="/history" class={section}>
   <ul>
     <li>
-      <HistoryItem date={new Date("2024-12-14")}>サイトを公開</HistoryItem>
+      <HistoryItem date={new Date("2024-12-15")}>サイトを公開</HistoryItem>
     </li>
   </ul>
   <div class={fluid_container}><Fluid /></div>

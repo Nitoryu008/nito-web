@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { container, vstack } from "../../../styled-system/patterns";
 import BlogItem from "../BlogItem.astro";
 import TopSection from "./TopSection.astro";
+import { css } from "../../../styled-system/css";
 
 const blog = await getCollection("blog");
 
@@ -10,7 +11,6 @@ const section = container({
   paddingInline: "px.container",
   paddingBlock: "py.section",
   maxWidth: "max.width.container",
-  overflowX: "hidden",
 });
 ---
 
@@ -33,17 +33,19 @@ const section = container({
   import ScrollTrigger from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.from(".blog_item", {
-    x: "10%",
-    opacity: "0",
-    ease: "expo.out",
-    scrollTrigger: {
-      trigger: ".blog_item",
-      start: "center bottom-=200",
-    },
-    stagger: {
-      from: "start",
-      amount: 0.5,
-    },
+  window.addEventListener("load", () => {
+    gsap.from(".blog_item", {
+      x: "10%",
+      opacity: "0",
+      ease: "expo.out",
+      scrollTrigger: {
+        trigger: ".blog_item",
+        start: "center bottom-=200",
+      },
+      stagger: {
+        from: "start",
+        amount: 0.2,
+      },
+    });
   });
 </script>

@@ -9,24 +9,20 @@ import Footer from "../components/Footer.astro";
 import BaseHead, {
   type Props as BaseProps,
 } from "../components/BaseHead.astro";
-import bgImg from "../assets/bg/textured-stripes.png";
 
 import { css } from "../../styled-system/css";
-import { getImage } from "astro:assets";
-import Loading from "../components/Loading.astro";
-import Background from "../components/Background.astro";
 
-export type Props = BaseProps;
+export type Props = BaseProps & {
+  style?: string;
+  class?: string;
+};
 
-const { ...head } = Astro.props;
+const { style, class: className, ...head } = Astro.props;
 
 const body = css({
   minHeight: "100dvh",
-  backgroundImage: `var(--background-url)`,
-  backgroundRepeat: "repeat",
   pos: "relative",
 });
-const optimizedBgImg = await getImage({ src: bgImg, format: "webp" });
 ---
 
 <!doctype html>
@@ -35,26 +31,35 @@ const optimizedBgImg = await getImage({ src: bgImg, format: "webp" });
     <BaseHead {...head} />
     <slot name="head" />
   </head>
-  <body
-    class={body}
-    style={{ "--background-url": `url(${optimizedBgImg.src})` }}
-  >
-    {
-      Astro.url.pathname == "/" && (
-        <>
-          <Loading />
-          <Background />
-        </>
-      )
-    }
-    <Header />
-    <main class={css({ paddingTop: "64", paddingBottom: "96" })}>
-      <slot />
-    </main>
-    <Footer />
+  <body class:list={[body, className]} style={style}>
+    <div
+      id="global_wrapper"
+      class={css({
+        opacity: "0",
+        _loaded: {
+          opacity: "1",
+        },
+      })}
+    >
+      <Header />
+      <main
+        class={css({
+          paddingTop: "64",
+          paddingBottom: "96",
+          overflowX: "hidden",
+        })}
+      >
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>
 
 <script>
-  import "../onload";
+  import "../externalLink";
+
+  window.addEventListener("load", () => {
+    document.body.classList.add("loaded");
+  });
 </script>

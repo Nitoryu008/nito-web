@@ -27,30 +27,35 @@ const history_item = stack({
 
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.from(".history_item", {
-    x: "-1rem",
-    scrollTrigger: {
-      trigger: ".history_item",
-      start: "center bottom",
-    },
-    stagger: {
-      from: "start",
-      amount: 0.2,
-    },
-  });
+  window.addEventListener("load", () => {
+    gsap.from(".history_item", {
+      x: "-1rem",
+      opacity: "0",
+      scrollTrigger: {
+        trigger: ".history_item",
+        start: "center bottom",
+      },
+      stagger: {
+        from: "start",
+        amount: 0.2,
+      },
+      delay: 0.2,
+    });
 
-  gsap.from(".history_item_line", {
-    scaleX: "0",
-    transformOrigin: "left",
-    duration: "1",
-    ease: "power4.out",
-    scrollTrigger: {
-      trigger: ".history_item",
-      start: "center bottom",
-    },
-    stagger: {
-      from: "start",
-      amount: 0.2,
-    },
+    gsap.from(".history_item_line", {
+      scaleX: "0",
+      transformOrigin: "left",
+      duration: "1",
+      ease: "expo.out",
+      scrollTrigger: {
+        trigger: ".history_item_line",
+        start: "center bottom",
+      },
+      stagger: {
+        from: "start",
+        amount: 0.2,
+      },
+      delay: 0.2,
+    });
   });
 </script>

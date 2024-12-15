@@ -1,6 +1,9 @@
 ---
 import { container } from "../../styled-system/patterns";
 import Layout, { type Props as LayoutProps } from "./Layout.astro";
+import bgImg from "../assets/bg/textured-stripes.png";
+import { getImage } from "astro:assets";
+import { css } from "../../styled-system/css";
 
 export type Props = LayoutProps & {
   title: string[];
@@ -9,14 +12,20 @@ export type Props = LayoutProps & {
 const props = Astro.props;
 
 const cont = container({
-  maxWidth: "max.width.container",
   paddingInline: "px.container",
-  overflowX: "hidden",
   paddingBottom: "10",
 });
+const optimizedBgImg = await getImage({ src: bgImg, format: "webp" });
 ---
 
-<Layout {...props}>
+<Layout
+  class={css({
+    backgroundImage: `var(--background-url)`,
+    backgroundRepeat: "repeat",
+  })}
+  style={`--background-url: url(${optimizedBgImg.src})`}
+  {...props}
+>
   <div class={cont}>
     <slot />
   </div>
