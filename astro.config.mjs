@@ -4,7 +4,7 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://nito_008.com/",
+  site: "https://nito008.com/",
   redirects: {
     "/apps": "/works",
   },
