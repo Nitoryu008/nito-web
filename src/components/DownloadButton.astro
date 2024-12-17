@@ -1,0 +1,31 @@
+---
+import { linkOverlay } from "../../styled-system/patterns";
+import { css } from "../../styled-system/css";
+
+const { href } = Astro.props;
+
+interface Props {
+  href: string;
+}
+
+const button = css({
+  pos: "relative",
+  display: "inline-block",
+  fontFamily: "dots",
+  fontSize: "3xl",
+  color: "text.dark",
+  bg: "bg.button",
+  paddingInline: "10",
+  paddingBlock: "5",
+  borderRadius: "full",
+  transition: "transform 0.3s {easings.easeOutExpo}",
+  _hover: {
+    transform: "scale(1.05)",
+  },
+});
+---
+
+<div class={button}>
+  <a href={href} class={linkOverlay({ zIndex: "10" })}></a>
+  <span>DOWNLOAD</span>
+</div>

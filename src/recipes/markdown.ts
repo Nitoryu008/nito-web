@@ -35,6 +35,10 @@ export const markdown = cva({
       textDecoration: "underline",
       color: "text.link",
     },
+    "& > div": {
+      marginBottom: "12",
+      textAlign: "center",
+    },
   },
   variants: {
     type: {
