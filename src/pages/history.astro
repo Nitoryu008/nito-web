@@ -3,19 +3,19 @@ import { css } from "../../styled-system/css";
 import HistoryItem from "../components/HistoryItem.astro";
 import Section from "../components/Section.astro";
 import PageLayout from "../layouts/PageLayout.astro";
+import { histories } from "../utils/historyGenerator";
 ---
 
 <PageLayout title={["HISTORY"]}>
   <Section heading="HISTORY">
     <ul class={css({ color: "text.dark" })}>
-      <li>
-        <HistoryItem date={new Date("2024-12-17")}>
-          ダウンロードリンクを追加
-        </HistoryItem>
-      </li>
-      <li>
-        <HistoryItem date={new Date("2024-12-15")}>サイトを公開</HistoryItem>
-      </li>
+      {
+        histories.map((item) => (
+          <li>
+            <HistoryItem date={item.date}>{item.title}</HistoryItem>
+          </li>
+        ))
+      }
     </ul>
   </Section>
 </PageLayout>

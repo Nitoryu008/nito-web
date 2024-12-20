@@ -4,7 +4,7 @@ import { container } from "../../../styled-system/patterns";
 import Fluid from "../Fluid.astro";
 import HistoryItem from "../HistoryItem.astro";
 import TopSection from "./TopSection.astro";
-import "../../utils/historyGenerator";
+import { histories } from "../../utils/historyGenerator";
 
 const section = container({
   paddingInline: "px.container",
@@ -27,14 +27,13 @@ const fluid_container = css({
 
 <TopSection heading="HISTORY" href="/history" class={section}>
   <ul>
-    <li>
-      <li>
-        <HistoryItem date={new Date("2024-12-17")}>
-          ダウンロードリンクを追加
-        </HistoryItem>
-      </li>
-      <HistoryItem date={new Date("2024-12-15")}>サイトを公開</HistoryItem>
-    </li>
+    {
+      histories.map((item) => (
+        <li>
+          <HistoryItem date={item.date}>{item.title}</HistoryItem>
+        </li>
+      ))
+    }
   </ul>
   <div class={fluid_container}><Fluid /></div>
 </TopSection>
