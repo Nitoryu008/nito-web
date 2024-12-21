@@ -22,7 +22,12 @@ const title = css({
 });
 ---
 
-<PageLayout title={["BLOG", frontmatter.title]} pageType="article">
+<PageLayout
+  title={["BLOG", frontmatter.title]}
+  pageType="article"
+  ogImage={frontmatter.image}
+  ogAlt={frontmatter.title}
+>
   <Section heading="BLOG">
     <time
       datetime={frontmatter.pubDate.toISOString()}
