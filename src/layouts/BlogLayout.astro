@@ -1,7 +1,7 @@
 ---
 import type { InferEntrySchema } from "astro:content";
 import Section from "../components/Section.astro";
-import { format } from "../util";
+import { format } from "../utils";
 import { css } from "../../styled-system/css";
 import { markdown } from "../recipes/markdown";
 import PageLayout from "./PageLayout.astro";
@@ -18,11 +18,16 @@ const title = css({
   pos: "relative",
   borderBottom: "1px solid {colors.text.dark}",
   fontSize: "4xl",
-  wordBreak: "keep-all",
+  textWrap: "unset",
 });
 ---
 
-<PageLayout title={["BLOG", frontmatter.title]} pageType="article">
+<PageLayout
+  title={["BLOG", frontmatter.title]}
+  pageType="article"
+  ogImage={frontmatter.image}
+  ogAlt={frontmatter.title}
+>
   <Section heading="BLOG">
     <time
       datetime={frontmatter.pubDate.toISOString()}

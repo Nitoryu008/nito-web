@@ -1,0 +1,195 @@
+---
+title: AstroでPullRequestから更新履歴を自動生成してみた
+pubDate: 2024-12-21
+image: "/blog/history_auto_generation_og.png"
+---
+
+人は愚かなので、自分のサイトに更新履歴という項目を作ったとしても、必ずしも毎回更新履歴をupdateできるとは限らない。
+
+ついうっかり忘れてしまう、もしくは面倒でやらないといったことは往々にしてあるだろう。
+自分もそのうちの一人になるだろうことが容易に予想できたので、どうせなら自動化してしまおう。
+
+最初は、[Astroで更新履歴を自動生成してみた](https://azumino.pages.dev/blog/20231225-changes/)という記事を参考に、Gitのコミットから生成しようとしていたが、せっかくGitHubを使っているのでPull Request駆動で生成するようにしてみた。
+
+## アクセストークンを発行する
+
+Pull Requestの情報を得るには[GitHub Rest API](https://docs.github.com/ja/rest/pulls/pulls?apiVersion=2022-11-28)を使う。
+
+このAPIを使うには、あらかじめアクセストークンを発行しておく必要がある。今回はFine-grained personal access tokenを使うことにする。[ここから](https://github.com/settings/personal-access-tokens)発行画面に飛ぶ。
+
+Repository access→Only select repositoriesを選択し、Pull Requestを取得したいリポジトリを指定する。
+
+![Only select repositoriesを選択するとSelect repositoriesというプルダウンが出てくるのでここからリポジトリを指定する。](../../assets/blog/history-auto-generation/repository-access.png)
+
+そして、Permissions→Repository permissions→Pull requestsをAccess: Read-onlyに設定する。（このとき、Metadataも自動的にRead-onlyになる。）
+
+![](../../assets/blog/history-auto-generation/permissions.png)
+
+トークンは.envに追加しておく。
+
+```python
+GITHUB_ACCESS_TOKEN=[取得したトークン]
+```
+
+## GitHub APIをしばく
+
+トークンが発行できたら、APIを叩いていく。[Octokit](https://github.com/octokit)というSDKが用意されているのでインストールする。
+
+```sh
+npm install @octokit/core
+```
+
+APIを呼び出すには`octokit.request`を使う。第一引数に使いたいAPI、第二引数にAPIに渡す引数をオブジェクトで指定する。
+
+```ts
+const octokit = new Octokit({ auth: import.meta.env.GITHUB_ACCESS_TOKEN });
+
+let response = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
+  owner: "OWNER",
+  repo: "REPO",
+  headers: {
+    "X-GitHub-Api-Version": "2022-11-28",
+  },
+  state: "all",
+  base: "main",
+});
+```
+
+`state`引数に`all`を指定することで既にクローズされたPull Requestも取得している。
+
+また、`base`引数で`main`をベースブランチとするPull Requestのみにフィルターしている。
+
+### 全てのPull Requestを取得する
+
+GitHub Rest APIではPull Requestの数が多い場合[ページごとに分けて返す](https://docs.github.com/en/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28)仕様になっているので、全てのPull Requestを取得するには少し工夫が必要である。
+
+```ts
+const octokit = new Octokit({ auth: import.meta.env.GITHUB_ACCESS_TOKEN });
+
+let response;
+let page = 1;
+const LAST_PAGE_PATTERN = /rel="last"/;
+
+do {
+  response = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
+    owner: "OWNER",
+    repo: "REPO",
+    headers: {
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+    state: "all",
+    base: "main",
+    per_page: 100, //１ページ当たりのPull Requestの数（MAX:100）
+    page: page++,
+  });
+
+  //responseに対する処理が入る
+} while (LAST_PAGE_PATTERN.test(response.headers.link as string));
+```
+
+`response.headers.link`には次のような文字列が入っている。
+
+> `<https://api.github.com/repositories/000000000/pulls?state=all&base=main&per_page=1&page=1>; rel="prev", <https://api.github.com/repositories/000000000/pulls?state=all&base=main&per_page=1&page=3>; rel="next", <https://api.github.com/repositories/000000000/pulls?state=all&base=main&per_page=1&page=5>; rel="last", <https://api.github.com/repositories/000000000/pulls?state=all&base=main&per_page=1&page=1>; rel="first"`
+
+これは、前、次、最初、最後のページへのURLをまとめたものである。ただし、今のページで最後だった場合は最後のページへのURLは含まれない。
+
+これを利用して、`response.headers.link`に`rel="last"` が含まれるかどうかで最後に到達したかを判定している。（もっといい方法がありそうな気もするが...）
+
+## フィルターして整理
+
+次に、取得した`response`からマージ済みのものをフィルターする。`item.merged_at`はマージされた日時をISO形式で表すが、マージされていなければ`null`なのでこれを使ってマージされたかどうか判定する。
+
+```ts
+type HistoryItem = {
+  date: Date;
+  title: string;
+};
+
+const historyItems: HistoryItem[] = new Array(0);
+
+response.data.forEach((item) => {
+  if (item.merged_at) {
+    historyItems.push({
+      date: new Date(item.merged_at),
+      title: item.title,
+    });
+  }
+});
+```
+
+最後に、マージされた日時が新しい順になるようソートする。
+
+```ts
+historyItems.sort((a, b) => {
+  return b.date.getTime() - a.date.getTime();
+});
+```
+
+## 完成
+
+```ts
+import { Octokit } from "@octokit/core";
+
+const octokit = new Octokit({ auth: import.meta.env.GITHUB_ACCESS_TOKEN });
+
+type HistoryItem = {
+  date: Date;
+  title: string;
+};
+
+const historyItems: HistoryItem[] = new Array(0);
+const LAST_PAGE_PATTERN = /rel="last"/;
+
+let response;
+let page = 1;
+
+do {
+  response = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
+    owner: "OWNER",
+    repo: "REPO",
+    headers: {
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+    state: "all",
+    base: "main",
+    per_page: 100,
+    page: page++,
+  });
+
+  response.data.forEach((item) => {
+    if (item.merged_at) {
+      historyItems.push({
+        date: new Date(item.merged_at),
+        title: item.title,
+      });
+    }
+  });
+} while (LAST_PAGE_PATTERN.test(response.headers.link as string));
+
+historyItems.sort((a, b) => {
+  return b.date.getTime() - a.date.getTime();
+});
+
+export const histories = historyItems;
+```
+
+```astro
+---
+//...略
+import HistoryItem from "../HistoryItem.astro";
+import { histories } from "../../utils/historyGenerator";
+//...略
+---
+
+<ul>
+  {
+    histories.map((item) => (
+      <li>
+        <HistoryItem date={item.date}>{item.title}</HistoryItem>
+      </li>
+    ))
+  }
+</ul>
+```
+
+**自動化ってすばらしい。**
