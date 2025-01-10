@@ -158,7 +158,7 @@ export default defineConfig({
       fontSize: "2.3vw",
       scrollbarWidth: "none",
       sm: {
-        fontSize: "62.5%",
+        fontSize: "55%",
       },
     },
     body: {
