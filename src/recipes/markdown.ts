@@ -65,6 +65,55 @@ export const markdown = cva({
         margin: "0",
       },
     },
+    "& .rlc-container": {
+      display: "flex",
+      justifyContent: "space-between",
+      height: "15rem",
+      color: "text",
+      bg: "bg",
+      border: "normal",
+      borderRadius: "3xl",
+      textDecoration: "none",
+      overflow: "hidden",
+      marginBottom: "10",
+      "& .rlc-info": {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "7",
+        gap: "0",
+        marginBottom: "0",
+        "& .rlc-title": {
+          fontWeight: "600",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        },
+        "& .rlc-description": {
+          fontSize: "2xl",
+          color: "gray",
+        },
+        "& .rlc-url-container": {
+          fontSize: "2xl",
+          flexShrink: "0",
+          "& .rlc-favicon": {
+            display: "none",
+            flexShrink: "0",
+          },
+        },
+        "& div": {
+          marginBottom: "0",
+        },
+      },
+      "& .rlc-image-container": {
+        height: "100%",
+        aspectRatio: "1.91/1",
+        "& img": {
+          height: "100%",
+          objectFit: "contain",
+        },
+      },
+    },
   },
   variants: {
     type: {
