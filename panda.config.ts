@@ -13,6 +13,14 @@ export default defineConfig({
 
   // Files to exclude
   exclude: [],
+  utilities: {
+    extend: {
+      WebkitBoxOrient: {
+        values: { type: "string" },
+        className: "--webkit-box-orient",
+      },
+    },
+  },
 
   // Useful for theme customization
   theme: {

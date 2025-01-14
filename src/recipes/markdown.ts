@@ -75,30 +75,32 @@ export const markdown = cva({
       borderRadius: "3xl",
       textDecoration: "none",
       overflow: "hidden",
-      marginBottom: "10",
       "& .rlc-info": {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        padding: "7",
+        padding: "8",
         gap: "0",
         marginBottom: "0",
+        width: "100%",
         "& .rlc-title": {
           fontWeight: "600",
           textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
           overflow: "hidden",
+          lineClamp: "1",
         },
         "& .rlc-description": {
           fontSize: "2xl",
           color: "gray",
+          lineClamp: "2",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
         },
         "& .rlc-url-container": {
           fontSize: "2xl",
           flexShrink: "0",
           "& .rlc-favicon": {
             display: "none",
-            flexShrink: "0",
           },
         },
         "& div": {
@@ -118,12 +120,12 @@ export const markdown = cva({
   variants: {
     type: {
       blog: {
-        "& p, pre, div, blockquote": {
+        "& p, pre, div, blockquote, .rlc-container": {
           marginBottom: "8",
         },
       },
       work: {
-        "& p, pre, div, blockquote": {
+        "& p, pre, div, blockquote, .rlc-container": {
           marginBottom: "12",
         },
       },
