@@ -164,7 +164,8 @@ export default defineConfig({
   globalCss: {
     html: {
       fontSize: "2.3vw",
-      scrollbarWidth: "none",
+      scrollBehavior: "smooth",
+      scrollPaddingTop: "15vh",
       sm: {
         fontSize: "55%",
       },
@@ -175,7 +176,10 @@ export default defineConfig({
       fontFamily: "gothic",
       fontSize: "3xl",
       overflowX: "hidden",
-      width: "100vw",
+      width: "100%",
+    },
+    time: {
+      fontWeight: "400",
     },
   },
 });

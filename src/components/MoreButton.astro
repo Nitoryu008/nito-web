@@ -11,10 +11,8 @@ interface Props {
 }
 
 const button = center({
-  inline: true,
-  pos: "relative",
   fontFamily: "dots",
-  fontSize: "3xl",
+  fontSize: "2.1rem",
   color: "text.dark",
   bg: "bg.button",
   gap: "6",
@@ -22,10 +20,17 @@ const button = center({
   paddingRight: "6",
   paddingBlock: "3",
   borderRadius: "full",
-  verticalAlign: "middle",
   transition: "transform 0.3s {easings.easeOutExpo}",
   _hover: {
-    transform: "scale(1.05)",
+    color: "text.gray",
+    "& img": {
+      transform: "translateX(5px)",
+    },
+  },
+  "& a": {
+    display: "flex",
+    alignItems: "center",
+    gap: "5",
   },
 });
 const arrow = css({
@@ -33,18 +38,13 @@ const arrow = css({
   width: "auto",
   animation: "arrow",
   display: "inline-block",
+  transition: "transform 0.3s {easings.easeOutExpo}",
 });
 ---
 
-<div class={button}>
-  <a href={href} class={linkOverlay({ zIndex: "10" })}></a>
-  <p
-    class={css({
-      pos: "relative",
-      top: "0.1em",
-    })}
-  >
-    MORE
-  </p>
-  <Image src={arrowImg} alt="" class={arrow} />
-</div>
+<a href={href}>
+  <div class={button}>
+    <p>MORE</p>
+    <Image src={arrowImg} alt="" class={arrow} />
+  </div>
+</a>

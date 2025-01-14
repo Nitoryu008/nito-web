@@ -15,8 +15,20 @@ const blog_item = css({
   paddingInline: "7",
   background: "bg",
   transition: "transform 0.3s {easings.easeOutExpo}",
+  "& > div": {
+    transition: "all 0.3s {easings.easeOutExpo}",
+    pos: "relative",
+    right: "0",
+    left: "auto",
+  },
   _hover: {
-    transform: "scale(1.025)",
+    color: "text.gray",
+    "& > p": {
+      textDecoration: "underline",
+    },
+    "& > div": {
+      width: "90%",
+    },
   },
 });
 ---
@@ -31,6 +43,6 @@ const blog_item = css({
   >
     {format(date)}
   </time>
-  <div class={divider()}></div>
-  <p class={css({ paddingBlock: "6" })}><slot /></p>
+  <div class={divider({})}></div>
+  <p class={css({ paddingBlock: "6", fontWeight: "500" })}><slot /></p>
 </div>

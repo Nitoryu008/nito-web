@@ -2,13 +2,13 @@ import { cva } from "../../styled-system/css";
 
 export const markdown = cva({
   base: {
-    "& img": {
+    "& > img": {
       display: "block",
       marginInline: "auto",
     },
     "& h2": {
       fontSize: "4xl",
-      fontWeight: "bold",
+      fontWeight: "700",
       paddingBottom: "3",
       marginTop: "20",
       marginBottom: "10",
@@ -39,9 +39,12 @@ export const markdown = cva({
       borderBottom: "normal",
       pos: "relative",
     },
-    "& a": {
+    "& > a": {
       textDecoration: "underline",
       color: "text.link",
+      _hover: {
+        color: "text.gray",
+      },
     },
     "& > div": {
       textAlign: "center",
@@ -51,6 +54,9 @@ export const markdown = cva({
     },
     "& pre": {
       padding: "8",
+    },
+    "& code": {
+      fontWeight: "700",
     },
     "& blockquote": {
       lineBreak: "anywhere",
@@ -67,14 +73,23 @@ export const markdown = cva({
     },
     "& .rlc-container": {
       display: "flex",
+      flexDirection: "column-reverse",
+      width: "100%",
       justifyContent: "space-between",
-      height: "15rem",
       color: "text",
       bg: "bg",
       border: "normal",
+      borderColor: "lightgray",
       borderRadius: "3xl",
       textDecoration: "none",
       overflow: "hidden",
+      transition: "border .3s",
+      _hover: {
+        borderColor: "gray",
+        "& .rlc-title": {
+          textDecoration: "underline",
+        },
+      },
       "& .rlc-info": {
         display: "flex",
         flexDirection: "column",
@@ -108,11 +123,20 @@ export const markdown = cva({
         },
       },
       "& .rlc-image-container": {
-        height: "100%",
         aspectRatio: "1.91/1",
         "& img": {
-          height: "100%",
+          width: "100%",
           objectFit: "contain",
+        },
+      },
+      sm: {
+        height: "15rem",
+        flexDirection: "row",
+        "& .rlc-image-container": {
+          "& img": {
+            height: "100%",
+            objectFit: "cover",
+          },
         },
       },
     },
@@ -120,12 +144,12 @@ export const markdown = cva({
   variants: {
     type: {
       blog: {
-        "& p, pre, div, blockquote, .rlc-container": {
+        "& > p, > pre, > div, > blockquote, > .rlc-container": {
           marginBottom: "8",
         },
       },
       work: {
-        "& p, pre, div, blockquote, .rlc-container": {
+        "& > p, > pre, > div, > blockquote, > .rlc-container": {
           marginBottom: "12",
         },
       },
