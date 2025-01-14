@@ -4,24 +4,13 @@ import Heading from "./Heading.astro";
 
 interface Props {
   heading: string;
-  href?: string;
 }
 
-const { heading, href } = Astro.props;
-if (href) {
-  console.log(href);
-}
+const { heading } = Astro.props;
 ---
 
 <section>
-  <Heading
-    class={css({
-      color: "text.dark",
-      marginBottom: "28",
-      position: "relative",
-    })}
-    href={href}
-  >
+  <Heading class={css({ color: "text.dark", marginBottom: "28" })}>
     {heading}
   </Heading>
   <slot />

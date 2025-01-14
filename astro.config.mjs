@@ -1,6 +1,6 @@
+// @ts-check
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
-import rlc from "remark-link-card";
 
 // https://astro.build/config
 export default defineConfig({
@@ -9,7 +9,4 @@ export default defineConfig({
     "/apps": "/works",
   },
   integrations: [mdx()],
-  markdown: {
-    remarkPlugins: [rlc],
-  },
 });

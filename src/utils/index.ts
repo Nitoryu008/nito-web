@@ -12,7 +12,7 @@ export function splitText(target: string | Element) {
     target = document.querySelector(target) as Element;
   }
 
-  const text = target.textContent?.trim() as string;
+  const text = target.textContent as string;
 
   const newTextContent = [...text]
     .map((char) => `<span>${char}</span>`)

@@ -12,22 +12,13 @@ const heading = css({
 
 interface Props {
   class?: string;
-  href?: string;
 }
 
-const { class: className, href, ...rest } = Astro.props;
+const { class: className, ...rest } = Astro.props;
 ---
 
 <h1 class:list={["heading", heading, className]} {...rest}>
-  {
-    href ? (
-      <a href={href}>
-        <slot />
-      </a>
-    ) : (
-      <slot />
-    )
-  }
+  <slot />
 </h1>
 
 <script>
@@ -38,10 +29,9 @@ const { class: className, href, ...rest } = Astro.props;
   gsap.registerPlugin(ScrollTrigger);
 
   window.addEventListener("load", () => {
-    const headings = gsap.utils.toArray(".heading") as HTMLElement[];
+    const headings = gsap.utils.toArray(".heading") as HTMLHeadingElement[];
     headings.forEach((target) => {
-      let text;
-      text = splitText(target.hasChildNodes() ? target.children[0] : target);
+      const text = splitText(target);
 
       gsap.set(target, {
         opacity: 1,
