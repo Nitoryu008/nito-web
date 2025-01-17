@@ -5,20 +5,23 @@ import { format } from "../utils";
 import { css } from "../../styled-system/css";
 import { markdown } from "../recipes/markdown";
 import PageLayout from "./PageLayout.astro";
+import type { MarkdownHeading } from "astro";
 
 interface Props {
   frontmatter: InferEntrySchema<"blog">;
+  headings: MarkdownHeading[];
 }
 
 const { frontmatter } = Astro.props;
 
 const title = css({
-  marginBottom: "10",
+  marginBottom: "20",
   paddingBottom: "6",
   pos: "relative",
   borderBottom: "1px solid {colors.text.dark}",
   fontSize: "4xl",
   textWrap: "unset",
+  fontWeight: "700",
 });
 ---
 
@@ -42,8 +45,8 @@ const title = css({
     <h2 class={title}>
       {frontmatter.title}
     </h2>
-    <div class={markdown({ type: "blog" })}>
+    <article class={markdown({ type: "blog" })}>
       <slot />
-    </div>
+    </article>
   </Section>
 </PageLayout>

@@ -13,6 +13,14 @@ export default defineConfig({
 
   // Files to exclude
   exclude: [],
+  utilities: {
+    extend: {
+      WebkitBoxOrient: {
+        values: { type: "string" },
+        className: "--webkit-box-orient",
+      },
+    },
+  },
 
   // Useful for theme customization
   theme: {
@@ -156,7 +164,8 @@ export default defineConfig({
   globalCss: {
     html: {
       fontSize: "2.3vw",
-      scrollbarWidth: "none",
+      scrollBehavior: "smooth",
+      scrollPaddingTop: "10rem",
       sm: {
         fontSize: "55%",
       },
@@ -167,7 +176,10 @@ export default defineConfig({
       fontFamily: "gothic",
       fontSize: "3xl",
       overflowX: "hidden",
-      width: "100vw",
+      width: "100%",
+    },
+    time: {
+      fontWeight: "400",
     },
   },
 });
