@@ -165,7 +165,7 @@ export default defineConfig({
     html: {
       fontSize: "2.3vw",
       scrollBehavior: "smooth",
-      scrollPaddingTop: "15vh",
+      scrollPaddingTop: "10rem",
       sm: {
         fontSize: "55%",
       },

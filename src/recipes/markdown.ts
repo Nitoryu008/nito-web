@@ -2,16 +2,17 @@ import { cva } from "../../styled-system/css";
 
 export const markdown = cva({
   base: {
-    "& > img": {
+    "& > p > img": {
       display: "block",
       marginInline: "auto",
     },
-    "& h2": {
+    "& > h2": {
       fontSize: "4xl",
       fontWeight: "700",
       paddingBottom: "3",
-      marginTop: "20",
-      marginBottom: "10",
+      marginTop: "32",
+      paddingLeft: "12",
+      marginBottom: "20",
       pos: "relative",
       textWrap: "unset",
       paddingRight: "0",
@@ -19,6 +20,8 @@ export const markdown = cva({
       _before: {
         content: "'＃'",
         paddingRight: "2",
+        pos: "absolute",
+        left: "0",
       },
       _after: {
         content: "''",
@@ -31,26 +34,27 @@ export const markdown = cva({
         transform: "rotate(45deg)",
       },
     },
-    "& h3": {
+    "& > h3": {
       fontSize: "4xl",
       fontWeight: "bold",
       paddingBottom: "3",
-      marginBottom: "10",
+      marginTop: "24",
+      marginBottom: "20",
       borderBottom: "normal",
       pos: "relative",
     },
-    "& > a": {
+    "& > a, & > p a": {
       textDecoration: "underline",
       color: "text.link",
       _hover: {
         color: "text.gray",
       },
     },
-    "& > div": {
-      textAlign: "center",
-    },
-    "& p": {
+    "& > p": {
       lineHeight: "1.7",
+    },
+    "& > p + p": {
+      marginTop: "8",
     },
     "& pre": {
       padding: "8",
@@ -95,7 +99,6 @@ export const markdown = cva({
         flexDirection: "column",
         justifyContent: "space-between",
         padding: "8",
-        gap: "0",
         marginBottom: "0",
         width: "100%",
         "& .rlc-title": {
@@ -114,6 +117,7 @@ export const markdown = cva({
         "& .rlc-url-container": {
           fontSize: "2xl",
           flexShrink: "0",
+          lineClamp: "1",
           "& .rlc-favicon": {
             display: "none",
           },
@@ -138,21 +142,13 @@ export const markdown = cva({
             objectFit: "cover",
           },
         },
+        "& .rlc-info": {
+          width: "65%",
+        },
       },
     },
-  },
-  variants: {
-    type: {
-      blog: {
-        "& > p, > pre, > div, > blockquote, > .rlc-container": {
-          marginBottom: "8",
-        },
-      },
-      work: {
-        "& > p, > pre, > div, > blockquote, > .rlc-container": {
-          marginBottom: "12",
-        },
-      },
+    "& > p > img, > pre, > div, > blockquote, > .rlc-container": {
+      marginBlock: "20",
     },
   },
 });

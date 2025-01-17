@@ -4,6 +4,8 @@ pubDate: 2024-12-21
 image: "/blog/history_auto_generation_og.png"
 ---
 
+import Contents from "../../components/Contents.astro";
+
 人は愚かなので、自分のサイトに更新履歴という項目を作ったとしても、必ずしも毎回更新履歴をupdateできるとは限らない。
 
 ついうっかり忘れてしまう、もしくは面倒でやらないといったことは往々にしてあるだろう。
@@ -11,10 +13,11 @@ image: "/blog/history_auto_generation_og.png"
 
 最初は、[Astroで更新履歴を自動生成してみた](https://azumino.pages.dev/blog/20231225-changes/)という記事を参考に、Gitのコミットから生成しようとしていたが、せっかくGitHubを使っているのでPull Request駆動で生成するようにしてみた。
 
+<Contents headings={getHeadings()}></Contents>
+
 ## アクセストークンを発行する
 
 Pull Requestの情報を得るには[GitHub Rest API](https://docs.github.com/ja/rest/pulls/pulls?apiVersion=2022-11-28)を使う。
-
 このAPIを使うには、あらかじめアクセストークンを発行しておく必要がある。今回はFine-grained personal access tokenを使うことにする。[ここから](https://github.com/settings/personal-access-tokens)発行画面に飛ぶ。
 
 Repository access→Only select repositoriesを選択し、Pull Requestを取得したいリポジトリを指定する。

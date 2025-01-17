@@ -12,32 +12,16 @@ interface Props {
   headings: MarkdownHeading[];
 }
 
-const { frontmatter, headings } = Astro.props;
+const { frontmatter } = Astro.props;
 
 const title = css({
-  marginBottom: "16",
+  marginBottom: "20",
   paddingBottom: "6",
   pos: "relative",
   borderBottom: "1px solid {colors.text.dark}",
   fontSize: "4xl",
   textWrap: "unset",
   fontWeight: "700",
-});
-
-const headingStyle = css({
-  marginBottom: "16",
-  "& li": {
-    padding: "4",
-    color: "#777",
-    borderRadius: "xl",
-    _hover: {
-      bg: "#CCC",
-      color: "text",
-    },
-  },
-  "& .heading-3": {
-    marginLeft: "8",
-  },
 });
 ---
 
@@ -61,20 +45,8 @@ const headingStyle = css({
     <h2 class={title}>
       {frontmatter.title}
     </h2>
-    <ul class={headingStyle}>
-      {
-        headings.map(
-          ({ depth, slug, text }) =>
-            (depth == 2 || depth == 3) && (
-              <li class={`heading-${depth}`}>
-                <a href={`#${slug}`}>{text}</a>
-              </li>
-            )
-        )
-      }
-    </ul>
-    <div class={markdown({ type: "blog" })}>
+    <article class={markdown({ type: "blog" })}>
       <slot />
-    </div>
+    </article>
   </Section>
 </PageLayout>

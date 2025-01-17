@@ -10,6 +10,13 @@ export default defineConfig({
   },
   integrations: [mdx()],
   markdown: {
-    remarkPlugins: [rlc],
+    remarkPlugins: [
+      [
+        rlc,
+        {
+          cache: true,
+        },
+      ],
+    ],
   },
 });
