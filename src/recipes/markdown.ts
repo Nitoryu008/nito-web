@@ -51,7 +51,7 @@ export const markdown = cva({
       },
     },
     "& > p": {
-      lineHeight: "1.7",
+      lineHeight: "2",
     },
     "& > p + p": {
       marginTop: "8",
@@ -147,8 +147,20 @@ export const markdown = cva({
         },
       },
     },
-    "& > p > img, > pre, > div, > blockquote, > .rlc-container": {
+    "& > p > img, > pre, > div, > blockquote, > .rlc-container, > table": {
       marginBlock: "20",
+    },
+    "& table": {
+      borderCollapse: "collapse",
+      "& th, td": {
+        padding: "7",
+        borderBottom: "normal",
+      },
+      "& thead": {
+        "& th, td": {
+          borderBottomWidth: "2px",
+        },
+      },
     },
   },
 });

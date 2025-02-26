@@ -1,0 +1,80 @@
+---
+title: ドメインをお名前.comからCloudflare Registrarに移管した
+pubDate: 2025-02-26
+image: "blog/change_registrar.png"
+---
+
+import Contents from "../../components/Contents.astro";
+
+<Contents headings={getHeadings()} />
+
+## はじめに
+
+お名前.comからCloudflare Registrarにドメインを移管しました。ドメインをとった時は有名どころがいいかと思いお名前.comにしたんですが、Cloudflareのサービスと連携することが多く、どうせならレジストラもCloudflareにしてしまった方が楽だと思い移管を決めました。
+
+調べたところによると、Cloudflareの方が更新料が安いらしく、何もしなくてもWhoisの公開情報を秘匿してくれるようです。移管しない理由がありませんね。
+
+## お名前.com側での操作
+
+お名前.com Naviにログインし、[ドメイン>利用ドメイン一覧](https://navi.onamae.com/domain)から移管したいドメインを選択。
+
+![](../../assets/blog/change-registrar/select_domain.png)
+
+AuthCodeを表示してコピーする。
+
+![](../../assets/blog/change-registrar/show_authcode.png)
+
+Whois情報公開代行を設定している場合は下のような画面が表示されるのでリンク先で設定を解除する。
+（解除すると移管が完了するまでWhois情報が全世界に公開されるので注意。）
+
+![](../../assets/blog/change-registrar/remove_whois_settings.png)
+
+## Cloudflare側での操作
+
+Cloudflareダッシュボードを開き、ドメイン登録 > ドメインの移管から移管したいドメインを選択。
+
+今回はCloudflare Pagesで独自ドメインを使っていたため、特に設定せずとも一覧に表示されました。
+もし移管したいドメインでまだCloudflareを利用していない場合は、Cloudflareダッシュボードの右上にある 追加 > 既存のドメイン からドメインをCloudflareに追加しましょう。
+
+![](../../assets/blog/change-registrar/transfer_domain.png)
+
+ドメインを確認する を押して次に進むと、Authcodeを要求されるのでコピーしておいたAuthcodeを入力。最後に連絡先や支払い情報を登録したら移管手続きは完了です。
+
+私はPayPal支払いにしたんですが、最初Braveブラウザで登録しようとしたときにhCaptchaがエラーになって登録できませんでした。Braveの場合はBraveシールドをオフにするとうまくいきました。広告ブロッカー等を利用している場合もオフにした方がいいかもしれません。
+
+## トランスファー申請の承認
+
+しばらくするとお名前.comから「トランスファー申請に関する確認のご連絡」というメールが来るので、メールに記載されたURLをクリックして承認を押します。
+
+[参考記事](https://zenn.dev/muchoco/articles/9039762136e15c)では15分くらいでメールが来ると書いてありましたが、私の場合は1~2時間くらいかかりました。
+なかなかメールが来ないので、Cloudflare側で一回キャンセルしてしまいやり直す羽目に。メールが来なくてもキャンセルせずに気長に待ちましょう。
+
+一回目の確認メールで承認したからか、二回目の移管申請ではメール確認なしで移管が完了しました。
+
+ドメインの移管状況はお名前.com Naviの[ドメイン > ドメイン機能一覧 > ドメイン移管状況の確認](https://navi.onamae.com/domain/setting/transfer/list?btn_id=newnavi_domain_setting_new_01_transferstatus)から確認することもできます。
+（かなりラグがあるので参考程度に。）
+
+## 移管完了
+
+Cloudflareダッシュボードで ドメイン登録 > ドメインの管理を開き、ステータスがアクティブになっていればOK。自動更新も忘れずにON。
+
+![](../../assets/blog/change-registrar/transfer_ok.png)
+
+お名前.com関連のDNSレコードは使わないのですべて消し飛ばしていきます。
+
+![](../../assets/blog/change-registrar/onamae_dns.png)
+
+## 移管料・更新料
+
+さて気になるのが移管にかかる費用ですね。移管料と1年ごとの更新料はこんな感じ。（ドメインによって異なる場合があります。）
+
+|        | ドル   | 円     |
+| :----- | :----- | :----- |
+| 移管料 | $11.48 | ￥1793 |
+| 更新料 | $10.44 | ￥1553 |
+
+（円は2025/02/26時点での為替相場）
+
+お名前.comだと更新料が2181円だったので、1年間で628円の節約に成功しました。３年経てば移管料の元も取れそうです。
+
+Cloudflare、素晴らしい。
