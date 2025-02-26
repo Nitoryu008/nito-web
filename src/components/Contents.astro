@@ -46,7 +46,7 @@ const ContentsStyle = css({
     {
       headings.map(
         ({ depth, slug, text }) =>
-          (depth == 2 || depth == 3) && (
+          [2, 3].includes(depth) && (
             <li class={`heading-${depth}`}>
               <a href={`#${slug}`}>{text}</a>
             </li>
