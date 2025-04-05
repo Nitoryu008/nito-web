@@ -1,7 +1,5 @@
 ---
-import { Image } from "astro:assets";
-import arrowImg from "../assets/arrow.svg";
-import { center, linkOverlay } from "../../styled-system/patterns";
+import { center } from "../../styled-system/patterns";
 import { css } from "../../styled-system/css";
 
 const { href } = Astro.props;
@@ -45,6 +43,6 @@ const arrow = css({
 <a href={href}>
   <div class={button}>
     <p>MORE</p>
-    <Image src={arrowImg} alt="" class={arrow} />
+    <img src="images/arrow.svg" class={arrow} />
   </div>
 </a>

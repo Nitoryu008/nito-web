@@ -110,10 +110,7 @@ const ContentsStyle = css({
           // open属性を付与
           el.setAttribute("open", "true");
           // アコーディオンを開くときの処理
-          const openingAnim = contents.animate(
-            openingAnimation(contents),
-            animTiming
-          );
+          contents.animate(openingAnimation(contents), animTiming);
         }
       });
     });
