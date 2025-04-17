@@ -43,7 +43,7 @@ export const markdown = cva({
       borderBottom: "normal",
       pos: "relative",
     },
-    "& > a, & > p a": {
+    "& > a, & > p a, & > ul a, & > ol a": {
       textDecoration: "underline",
       color: "text.link",
       _hover: {
@@ -147,9 +147,10 @@ export const markdown = cva({
         },
       },
     },
-    "& > p > img, > pre, > div, > blockquote, > .rlc-container, > table": {
-      marginBlock: "20",
-    },
+    "& > p > img, > pre, > div, > blockquote, > .rlc-container, > table, > ul, > ol":
+      {
+        marginBlock: "16",
+      },
     "& table": {
       borderCollapse: "collapse",
       "& th, td": {
@@ -161,6 +162,14 @@ export const markdown = cva({
           borderBottomWidth: "2px",
         },
       },
+    },
+    "& > ul": {
+      marginLeft: "10",
+      listStyleType: "disc",
+    },
+    "& > ol": {
+      marginLeft: "7",
+      listStyleType: "decimal",
     },
   },
 });
