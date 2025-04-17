@@ -43,7 +43,7 @@ export const markdown = cva({
       borderBottom: "normal",
       pos: "relative",
     },
-    "& > a, & > p a": {
+    "& > a, & > p a, & > ul a, & > ol a": {
       textDecoration: "underline",
       color: "text.link",
       _hover: {
