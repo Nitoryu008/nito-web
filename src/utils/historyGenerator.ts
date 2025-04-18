@@ -43,7 +43,7 @@ do {
           headers: {
             "X-GitHub-Api-Version": apiVersion,
           },
-        }
+        },
       );
 
       let isTargetPr = true;
