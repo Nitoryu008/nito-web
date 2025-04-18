@@ -50,7 +50,7 @@ const ContentsStyle = css({
             <li class={`heading-${depth}`}>
               <a href={`#${slug}`}>{text}</a>
             </li>
-          )
+          ),
       )
     }
   </ul>
@@ -99,7 +99,7 @@ const ContentsStyle = css({
           // アコーディオンを閉じるときの処理
           const closingAnim = contents.animate(
             closingAnimation(contents),
-            animTiming
+            animTiming,
           );
 
           closingAnim.onfinish = () => {
