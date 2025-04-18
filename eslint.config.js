@@ -1,21 +1,33 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
+import typescriptParser from "@typescript-eslint/parser";
+import eslintPluginAstro from "eslint-plugin-astro";
+import panda from "@pandacss/eslint-plugin";
+import { defineConfig, globalIgnores } from "eslint/config";
 
-import { includeIgnoreFile } from "@eslint/compat";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const gitignorePath = path.resolve(__dirname, ".gitignore");
-
-/** @type {import('eslint').Linter.Config[]} */
-export default [
-  { files: ["**/*.{js,mjs,cjs,ts}"] },
-  { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
+export default defineConfig([
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  includeIgnoreFile(gitignorePath),
-  { ignores: ["postcss.config.cjs", "src/env.d.ts"] },
-];
+  ...eslintPluginAstro.configs["flat/recommended"],
+  globalIgnores([
+    "postcss.config.cjs",
+    "src/env.d.ts",
+    ".gitignore",
+    "styled-system/**/*",
+    ".astro/**/*",
+  ]),
+  {
+    files: ["**/*.{js,mjs,cjs,ts.astro}"],
+    plugins: {
+      "@pandacss": panda,
+    },
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.node },
+      parser: typescriptParser,
+    },
+    rules: {
+      ...panda.configs.recommended.rules,
+    },
+  },
+]);
