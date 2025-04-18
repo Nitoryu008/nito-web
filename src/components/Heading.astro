@@ -5,9 +5,14 @@ const heading = css({
   fontFamily: "dots",
   fontSize: "6xl",
   textAlign: "center",
-  overflow: "hidden",
   lineHeight: "1",
   opacity: "0",
+  overflow: "hidden",
+  _hover: {
+    "& > a": {
+      color: "text.gray",
+    },
+  },
 });
 
 interface Props {
@@ -41,7 +46,7 @@ const { class: className, href, ...rest } = Astro.props;
     const headings = gsap.utils.toArray(".heading") as HTMLElement[];
     headings.forEach((target) => {
       const text = splitText(
-        target.hasChildNodes() ? target.children[0] : target,
+        target.hasChildNodes() ? target.children[0] : target
       );
 
       gsap.set(target, {

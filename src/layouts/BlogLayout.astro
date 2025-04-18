@@ -15,12 +15,13 @@ interface Props {
 const { frontmatter } = Astro.props;
 
 const title = css({
-  marginBottom: "10",
+  marginBottom: "20",
   paddingBottom: "6",
   pos: "relative",
   borderBottom: "1px solid {colors.text.dark}",
   fontSize: "4xl",
   textWrap: "unset",
+  fontWeight: "700",
 });
 ---
 
@@ -44,11 +45,8 @@ const title = css({
     <h2 class={title}>
       {frontmatter.title}
     </h2>
-    <div>
-      <ul></ul>
-    </div>
-    <div class={markdown({ type: "blog" })}>
+    <article class={markdown({ type: "blog" })}>
       <slot />
-    </div>
+    </article>
   </Section>
 </PageLayout>

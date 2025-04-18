@@ -2,16 +2,17 @@ import { cva } from "../../styled-system/css";
 
 export const markdown = cva({
   base: {
-    "& img": {
+    "& > p > img": {
       display: "block",
       marginInline: "auto",
     },
-    "& h2": {
+    "& > h2": {
       fontSize: "4xl",
-      fontWeight: "bold",
+      fontWeight: "700",
       paddingBottom: "3",
-      marginTop: "20",
-      marginBottom: "10",
+      marginTop: "32",
+      paddingLeft: "12",
+      marginBottom: "20",
       pos: "relative",
       textWrap: "unset",
       paddingRight: "0",
@@ -19,6 +20,8 @@ export const markdown = cva({
       _before: {
         content: "'＃'",
         paddingRight: "2",
+        pos: "absolute",
+        left: "0",
       },
       _after: {
         content: "''",
@@ -31,26 +34,33 @@ export const markdown = cva({
         transform: "rotate(45deg)",
       },
     },
-    "& h3": {
+    "& > h3": {
       fontSize: "4xl",
       fontWeight: "bold",
       paddingBottom: "3",
-      marginBottom: "10",
+      marginTop: "24",
+      marginBottom: "20",
       borderBottom: "normal",
       pos: "relative",
     },
-    "& a": {
+    "& > a, & > p a, & > ul a, & > ol a": {
       textDecoration: "underline",
       color: "text.link",
+      _hover: {
+        color: "text.gray",
+      },
     },
-    "& > div": {
-      textAlign: "center",
+    "& > p": {
+      lineHeight: "2",
     },
-    "& p": {
-      lineHeight: "1.7",
+    "& > p + p": {
+      marginTop: "8",
     },
     "& pre": {
       padding: "8",
+    },
+    "& code": {
+      fontWeight: "700",
     },
     "& blockquote": {
       lineBreak: "anywhere",
@@ -67,20 +77,28 @@ export const markdown = cva({
     },
     "& .rlc-container": {
       display: "flex",
+      flexDirection: "column-reverse",
+      width: "100%",
       justifyContent: "space-between",
-      height: "15rem",
       color: "text",
       bg: "bg",
       border: "normal",
+      borderColor: "lightgray",
       borderRadius: "3xl",
       textDecoration: "none",
       overflow: "hidden",
+      transition: "border .3s",
+      _hover: {
+        borderColor: "gray",
+        "& .rlc-title": {
+          textDecoration: "underline",
+        },
+      },
       "& .rlc-info": {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         padding: "8",
-        gap: "0",
         marginBottom: "0",
         width: "100%",
         "& .rlc-title": {
@@ -99,6 +117,7 @@ export const markdown = cva({
         "& .rlc-url-container": {
           fontSize: "2xl",
           flexShrink: "0",
+          lineClamp: "1",
           "& .rlc-favicon": {
             display: "none",
           },
@@ -108,27 +127,49 @@ export const markdown = cva({
         },
       },
       "& .rlc-image-container": {
-        height: "100%",
         aspectRatio: "1.91/1",
         "& img": {
-          height: "100%",
+          width: "100%",
           objectFit: "contain",
         },
       },
+      sm: {
+        height: "15rem",
+        flexDirection: "row",
+        "& .rlc-image-container": {
+          "& img": {
+            height: "100%",
+            objectFit: "cover",
+          },
+        },
+        "& .rlc-info": {
+          width: "65%",
+        },
+      },
     },
-  },
-  variants: {
-    type: {
-      blog: {
-        "& p, pre, div, blockquote, .rlc-container": {
-          marginBottom: "8",
+    "& > p > img, > pre, > div, > blockquote, > .rlc-container, > table, > ul, > ol":
+      {
+        marginBlock: "16",
+      },
+    "& table": {
+      borderCollapse: "collapse",
+      "& th, td": {
+        padding: "7",
+        borderBottom: "normal",
+      },
+      "& thead": {
+        "& th, td": {
+          borderBottomWidth: "2px",
         },
       },
-      work: {
-        "& p, pre, div, blockquote, .rlc-container": {
-          marginBottom: "12",
-        },
-      },
+    },
+    "& > ul": {
+      marginLeft: "10",
+      listStyleType: "disc",
+    },
+    "& > ol": {
+      marginLeft: "7",
+      listStyleType: "decimal",
     },
   },
 });

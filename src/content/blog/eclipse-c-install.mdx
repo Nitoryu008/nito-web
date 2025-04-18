@@ -1,0 +1,118 @@
+---
+title: C言語のためのEclipse環境構築
+pubDate: 2025-04-17
+image: "blog/eclipse-c-install.png"
+---
+
+import Contents from "../../components/Contents.astro";
+
+授業でC言語用にEclipseをインストールする必要があったのだが、配布された資料の情報が古く、必要ないと思われる手順もあったため、2025年4月時点での構築手順をまとめた。
+
+<Contents headings={getHeadings()}></Contents>
+
+## Cygwinのインストール
+
+C言語のコンパイル環境としてCygwinを使用するよう指定があったため、今回はCygwinを使う。CygwinはWindows上でLinuxライクな環境を提供するソフトウェアで、C言語プログラムの実行に必要なツールが含まれている。
+
+[Cygwinの公式サイト](https://www.cygwin.com/) にアクセスし、「Cygwin Installer」をクリックしインストーラをダウンロードする。
+
+![](../../assets/blog/eclipse-c-install/cygwin-installer.png)
+
+ダウンロードしたインストーラを実行する。オプションはすべてデフォルトで問題ない。Download Siteは基本的にどれでもいいが、気になる場合はjpドメインのサイトにしておくとよい。
+
+![](../../assets/blog/eclipse-c-install/download-site.png)
+
+Select Packagesの画面が表示されるので、以下のパッケージを選択する。（ViewをCategoryにして、All→Develを選択。）
+
+- gcc-core
+- gcc-g++
+- make
+
+![](../../assets/blog/eclipse-c-install/select-packages.png)
+
+基本的には最新の安定版（testがついていないもの）を選択すれば問題ないだろう。
+
+次へをクリックし、インストールする。
+
+### Pathを通す
+
+Cygwinをインストールしたら、CygwinのbinフォルダをPathに追加する。デフォルトでは`C:\cygwin64\bin`にインストールされる。
+
+Windowsキーを押して「システム環境変数」と入力し、「システム環境変数の編集」を選択する。
+「環境変数(N)...」→システム環境変数の「Path」→「編集(I)...」を選択する。
+
+出てきたウィンドウで「新規(N)」を押し、Cygwinのbinフォルダのパス「`C:\cygwin64\bin`」を追加し、「OK」をクリックする。
+
+残りのウィンドウもすべて「OK」を押して閉じる。
+
+### Cygwinがインストールできているか確認
+
+Windowsキーを押して「cmd」と入力してコマンドプロンプトを開き、以下のコマンドをすべて実行する。
+
+```bash
+where gcc
+where g++
+where make
+```
+
+以下のように表示されれば成功だ。
+
+```bash
+C:\Users\username>where gcc
+C:\cygwin64\bin\gcc.exe
+C:\Users\username>where g++
+C:\cygwin64\bin\g++.exe
+C:\Users\username>where make
+C:\cygwin64\bin\make.exe
+```
+
+## Eclipseのインストール
+
+EclipseはJavaで書かれたIDEで、C/C++の開発環境も提供している。Eclipseをインストールするには、以下の手順を実行する。
+
+1. [Eclipseのダウンロードページ](https://www.eclipse.org/downloads/)にアクセスし、最新のEclipse IDEをダウンロードする。Download x86_64を選択する。
+2. ダウンロードしたインストーラを実行する。`Eclipse IDE for C/C++ Developers`を選択し、インストールする。
+3. インストールできたら、Eclipseを起動する。初回起動時にワークスペースの選択画面が表示されるので、適当なフォルダを選択して「Launch」をクリックする。「Use this as the default and do not ask again」にチェックを入れておくと、次回からはこの画面が表示されなくなる。
+4. Eclipseが起動したら、メニューから「Help」→「Install New Software...」を選択する。
+5. 「Work with:」の欄で「--All Available Sites--」を選択する。しばらく待つと、インストール可能なソフトウェアの一覧が表示されるので、「Programming Languages」→「C/C++ Development Tools SDK」を選択し、画面の指示に従ってインストールする。インストールが完了したら、Eclipseを再起動するよう促されるので再起動する。
+
+### Windows Defenderの除外設定
+
+Eclipseを起動すると、Windows DefenderがEclipseの実行をブロックすることがある。
+起動時に以下のような画面が表示されたら、「Exclude Eclipse IDE from ...」を選択することでEclipseをWindows Defenderのスキャンから除外できる。
+
+![](../../assets/blog/eclipse-c-install/windows-defender.png)
+
+## C Projectの作成
+
+ここからはC言語のプロジェクトを作成する手順を説明する。
+
+1. Eclipseを起動し、「File」→「New」→「C/C++ Project」を選択する。Templateは「C Managed Build」を選択して「Next」をクリックする。
+2. プロジェクト名を入力し、Project Typeは「Executable」→「Empty Project」を、Toolchainは「Cygwin GCC」を選択して「Finish」をクリックする。
+3. プロジェクトが作成されたら、ソースファイルを作成する。左側の「Project Explorer」から一番上のフォルダを右クリックし、「New」→「Source File」を選択する。ファイル名（.cで終わる）を入力し、「Finish」をクリックする。
+4. ソースファイルが作成されたら、エディタにコードを入力する。以下は簡単なHello Worldプログラムの例だ。
+
+```c
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}
+```
+
+5. コードを入力したら、プロジェクトをビルドする。左上の「Build」ボタン（トンカチのボタン）をクリックするか、「Project」→「Build Project」を選択する。ビルドが成功すると、コンソールに「Build finished」と表示される。
+6. ビルドが成功したら、実行する。左上の「Run」ボタン（再生ボタン）をクリックするか、「Run」→「Run」を選択する。コンソールに「Hello, World!」と表示されれば成功だ。
+
+![](../../assets/blog/eclipse-c-install/eclipse-menu.png)
+
+### 補足
+
+一度ビルドした後にソースコードを変更せずにもう一度ビルドすると次のような画面が表示される。これはソースコードの内容が変わっていないためビルドする必要がないという表示だ。ビルドはされないが特に問題はないので無視して構わない。
+![](../../assets/blog/eclipse-c-install/eclipse-build.png)
+
+## あとがき
+
+参考資料ではJDKのインストールも要求されていたが、Javaの開発環境は必要ないため省略した。EclipseにはJREが同梱されているため、JDKをインストールしなくてもEclipseは動作する。
+
+また同様の理由でEclipseのインストール時に選択する「Eclipse IDE for Java Developers」を「Eclipse IDE for C/C++ Developers」に変更している。

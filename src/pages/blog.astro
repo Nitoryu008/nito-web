@@ -1,11 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import Section from "../components/Section.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import BlogItem from "../components/BlogItem.astro";
 import { vstack } from "../../styled-system/patterns";
+import { getPosts } from "../utils";
 
-const blog = await getCollection("blog");
+const blog = await getPosts();
 ---
 
 <PageLayout title={["BLOG"]}>

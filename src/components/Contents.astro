@@ -1,0 +1,118 @@
+---
+import type { MarkdownHeading } from "astro";
+import { css } from "../../styled-system/css";
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+const ContentsStyle = css({
+  marginBlock: "20",
+  padding: "10",
+  border: "normal",
+  pos: "relative",
+  "& summary": {
+    textAlign: "center",
+    fontSize: "4xl",
+    cursor: "pointer",
+  },
+  "& li": {
+    color: "#666",
+    borderRadius: "xl",
+    textDecoration: "underline",
+    _hover: {
+      bg: "#ddd",
+      color: "text",
+    },
+    "& a": {
+      display: "block",
+      padding: "4",
+    },
+  },
+  "& .heading-3": {
+    marginLeft: "8",
+  },
+  "& ul": {
+    marginTop: "10",
+  },
+});
+---
+
+<details class:list={["details", ContentsStyle]} open="true">
+  <summary class="summary"> 目次 </summary>
+  <ul class="contents">
+    {
+      headings.map(
+        ({ depth, slug, text }) =>
+          [2, 3].includes(depth) && (
+            <li class={`heading-${depth}`}>
+              <a href={`#${slug}`}>{text}</a>
+            </li>
+          )
+      )
+    }
+  </ul>
+</details>
+
+<script>
+  // アニメーションの時間とイージング
+  const animTiming = {
+    duration: 300,
+    easing: "ease-in-out",
+  };
+
+  // アコーディオンを閉じるときのキーフレーム
+  const closingAnimation = (contents: HTMLElement) => [
+    {
+      height: contents.offsetHeight + "px",
+      opacity: 1,
+    },
+    {
+      height: 0,
+      opacity: 0,
+    },
+  ];
+
+  // アコーディオンを開くときのキーフレーム
+  const openingAnimation = (contents: HTMLElement) => [
+    {
+      height: 0,
+      opacity: 0,
+    },
+    {
+      height: contents.offsetHeight + "px",
+      opacity: 1,
+    },
+  ];
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".details").forEach(function (el) {
+      const summary = el.querySelector(".summary") as HTMLElement;
+      const contents = el.querySelector(".contents") as HTMLElement;
+      summary.addEventListener("click", (event) => {
+        // デフォルトの挙動を無効化
+        event.preventDefault();
+        // detailsのopen属性を判定
+        if (el.getAttribute("open") !== null) {
+          // アコーディオンを閉じるときの処理
+          const closingAnim = contents.animate(
+            closingAnimation(contents),
+            animTiming
+          );
+
+          closingAnim.onfinish = () => {
+            // アニメーションの完了後にopen属性を取り除く
+            el.removeAttribute("open");
+          };
+        } else {
+          // open属性を付与
+          el.setAttribute("open", "true");
+          // アコーディオンを開くときの処理
+          contents.animate(openingAnimation(contents), animTiming);
+        }
+      });
+    });
+  });
+</script>
