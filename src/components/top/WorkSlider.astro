@@ -69,7 +69,7 @@ const works = await getCollection("work");
   import { Autoplay, Pagination } from "swiper/modules";
   Swiper.use([Autoplay, Pagination]);
 
-  const swiper = new Swiper(".swiper", {
+  new Swiper(".swiper", {
     speed: 1200,
     slidesPerView: "auto",
     centeredSlides: true,
@@ -102,7 +102,7 @@ const works = await getCollection("work");
           from: "start",
           amount: 0.2,
         },
-      }
+      },
     );
   });
 </script>
