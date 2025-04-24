@@ -16,6 +16,7 @@ export default defineConfig([
     ".gitignore",
     "styled-system/**/*",
     ".astro/**/*",
+    "dist",
   ]),
   {
     files: ["**/*.{js,mjs,cjs,ts.astro}"],
