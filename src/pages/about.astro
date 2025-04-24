@@ -79,7 +79,7 @@ const profile_item = vstack({ gap: "6", alignItems: "stretch" });
         >
           <div class={profile_item}>
             <h2 class={heading}># 趣味、好きなもの</h2>
-            <p>プログラミング、自作PC、音ゲー、ベース</p>
+            <p>プログラミング、作曲、音ゲー、ベース</p>
           </div>
           <div class={profile_item}>
             <h2 class={heading}># 触ったことのある言語・技術</h2>
@@ -89,7 +89,7 @@ const profile_item = vstack({ gap: "6", alignItems: "stretch" });
       </div>
     </Section>
     <Section heading="LINKS">
-      <ul class={vstack({ gap: "12", alignItems: "stretch" })}>
+      <ul class={vstack({ gap: "12", alignItems: "stretch", width: "100%" })}>
         {
           links.map((item) => (
             <li>
