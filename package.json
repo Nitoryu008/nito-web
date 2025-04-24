@@ -5,6 +5,7 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "3.1.9",
     "@fontsource/m-plus-1p": "^5.1.0",
+    "@fontsource/slackside-one": "^5.2.5",
     "@fontsource/zen-dots": "^5.1.0",
     "@fontsource/zen-maru-gothic": "^5.1.0",
     "@octokit/core": "^6.1.2",

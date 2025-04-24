@@ -10,7 +10,7 @@ interface Props {
 const { heading, href } = Astro.props;
 ---
 
-<section>
+<section class={css({width: "100%"})}>
   <Heading
     class={css({
       color: "text.dark",

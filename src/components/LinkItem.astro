@@ -21,18 +21,29 @@ const { name, icon, id, link, color } = Astro.props;
 const link_item = css({
   display: "grid",
   gridTemplateColumns: "10% 30% auto",
-  gap: "8",
+  gap: "6",
+  fontSize: "3xl",
   alignItems: "center",
   border: "1px solid var(--color)",
   borderRadius: "3xl",
   padding: "8",
   bg: "bg",
   transition: "transform 0.3s {easings.easeOutExpo}",
+  width :"100%",
   _hover: {
     bg: "var(--color)",
     transform: "scale(1.025)",
     color: "text.light",
   },
+  sm: {
+    fontSize: "4xl",
+    gap: "8"
+  },
+  "&> img":{
+    height: "4rem",
+    width: "4rem",
+    objectFit: "contain"
+  }
 });
 ---
 

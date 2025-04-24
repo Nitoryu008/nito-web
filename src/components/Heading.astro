@@ -45,9 +45,8 @@ const { class: className, href, ...rest } = Astro.props;
   window.addEventListener("load", () => {
     const headings = gsap.utils.toArray(".heading") as HTMLElement[];
     headings.forEach((target) => {
-      const text = splitText(
-        target.hasChildNodes() ? target.children[0] : target,
-      );
+      console.log(target.children)
+      const text = splitText(target.children.length == 0 ? target : target.children[0]);
 
       gsap.set(target, {
         opacity: 1,
