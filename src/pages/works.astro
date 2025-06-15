@@ -1,11 +1,11 @@
 ---
-import { getCollection } from "astro:content";
+import { getWorks } from "../utils";
 import Section from "../components/Section.astro";
 import WorkItem from "../components/WorkItem.astro";
 import { container } from "../../styled-system/patterns";
 import PageLayout from "../layouts/PageLayout.astro";
 
-const works = await getCollection("work");
+const works = await getWorks();
 ---
 
 <PageLayout title={["WORKS"]}>

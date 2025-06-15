@@ -18,6 +18,7 @@ const workCollection = defineCollection({
       description: z.string(),
       icon: image(),
       url: z.string().url().optional(),
+      pubDate: z.date(),
     }),
 });
 

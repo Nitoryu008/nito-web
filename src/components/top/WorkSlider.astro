@@ -1,8 +1,8 @@
 ---
-import { getCollection } from "astro:content";
 import { css } from "../../../styled-system/css";
 import { vstack } from "../../../styled-system/patterns";
 import WorkItem from ".././WorkItem.astro";
+import { getWorks } from "../../utils";
 
 const swiper_container = vstack({
   gap: "16",
@@ -40,7 +40,7 @@ const swiper_pagination = css({
   },
 });
 
-const works = await getCollection("work");
+const works = await getWorks();
 ---
 
 <div class={swiper_container}>
@@ -102,7 +102,7 @@ const works = await getCollection("work");
           from: "start",
           amount: 0.2,
         },
-      },
+      }
     );
   });
 </script>
