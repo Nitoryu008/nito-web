@@ -171,5 +171,8 @@ export const markdown = cva({
       marginLeft: "7",
       listStyleType: "decimal",
     },
+    "& > .button_container": {
+      textAlign: "center",
+    },
   },
 });
