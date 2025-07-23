@@ -28,7 +28,7 @@ const fluid_container = css({
 <TopSection heading="HISTORY" href="/history" class={section}>
   <ul>
     {
-      histories.map((item) => (
+      histories.slice(0, 6).map((item) => (
         <li>
           <HistoryItem date={item.date}>{item.title}</HistoryItem>
         </li>
