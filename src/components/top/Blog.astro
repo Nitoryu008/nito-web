@@ -4,7 +4,7 @@ import BlogItem from "../BlogItem.astro";
 import TopSection from "./TopSection.astro";
 import { getPosts } from "../../utils";
 
-const blog = await getPosts();
+const blog = (await getPosts()).slice(0, 5);
 
 const section = container({
   paddingInline: "px.container",
