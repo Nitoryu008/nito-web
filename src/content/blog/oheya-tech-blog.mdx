@@ -61,7 +61,6 @@ https://qwik.dev/docs/concepts/resumable/
 
 https://zenn.dev/mizchi/articles/micro-frontend-qwik
 
-
 ## Honoを使ってWeb標準に準拠したAPIを書く
 
 Qwik Cityではサーバーサイドの処理を`routeLoader$`や`routeAction$`内に書きます。
@@ -75,7 +74,7 @@ export const useUsers = routeLoader$(async (requestEvent) => {
   const userList = await db.users.list();
   return userList;
 });
- 
+
 export const useAddUser = routeAction$(async (data, requestEvent) => {
   // POST, PUT, DELETEに相当する処理 (擬似コード)
   const userID = await db.users.add({
@@ -87,11 +86,11 @@ export const useAddUser = routeAction$(async (data, requestEvent) => {
     userID,
   };
 });
- 
+
 export default component$(() => {
   const userList = useUsers();
   const addUser = useAddUser();
- 
+
   ...
 });
 ```
@@ -122,6 +121,7 @@ export function createApiClient(event: RequestEventCommon) {
   });
 }
 ```
+
 ```ts
 // src/routes/[userId]/index.tsx
 export const useProfile = routeLoader$<ProfileLoaderData>(async (event) => {
@@ -139,7 +139,6 @@ export const useProfile = routeLoader$<ProfileLoaderData>(async (event) => {
 ```
 
 Workersなどのエッジランタイムではグローバルに環境変数が存在せず、ハンドラの引数として環境変数が渡されることがあります。そのためQwik Cityでは、Loader/Actionの引数`event`を経由して環境変数にアクセスします。この制約があるため、API Clientは各Loader/Actionで初期化しています。
-
 
 ## 画像周りの話
 

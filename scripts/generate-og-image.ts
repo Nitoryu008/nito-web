@@ -84,7 +84,9 @@ if (!args) {
 
     // 古いOGP画像が存在していたら消す
     if (typeof oldImagePath == "string") {
-      const oldImageFile = file(join(args.workspacePath, "public", oldImagePath));
+      const oldImageFile = file(
+        join(args.workspacePath, "public", oldImagePath),
+      );
 
       if (await oldImageFile.exists()) {
         oldImageFile.delete();
