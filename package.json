@@ -42,6 +42,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "generate-og-image": "bun ./scripts/generate-og-image.ts",
     "format:fix": "prettier --cache --write .",
     "format:check": "prettier --cache --check .",
     "eslint:fix": "eslint --cache --fix .",
