@@ -1,0 +1,179 @@
+---
+title: Oheyaで使われている技術
+pubDate: 2026-06-05T01:50:56.334Z
+fmContentType: blog
+image: blog/9124d66b-e810-4e21-9e04-e86d6fe9720f.png
+---
+
+import Contents from "../../components/Contents.astro";
+
+先日、「Oheya」というWebアプリをリリースしました。自分の好きな音楽や写真を貼るだけの非常にシンプルなアプリです。
+
+https://oheya.nito008.com
+
+今回はこのアプリの技術的な話をしていこうと思います。
+
+↓GitHubリポジトリはこちら
+
+https://github.com/nito-008/oheya
+
+<Contents headings={getHeadings()}></Contents>
+
+## 概観
+
+使用している技術・サービスをざっくりまとめると、次のようになります。
+
+- Cloudflare Workers: Cloudflareが提供するエッジランタイム。アプリのデプロイ先。
+- Cloudflare R2: Cloudflareが提供するオブジェクトストレージ。画像の保存先。
+- Turso: SQLiteベースのデータベースサービス。
+- Drizzle: Tursoとのやりとりを抽象化するORM。
+- Qwik/Qwik City: SSRを前提としたWebフレームワーク。高度な最適化が施されているのが特徴（後述）。
+- Hono: APIの型表現をWeb標準のResponse/HTTP Statusに寄せるために使用（後述）。
+- QwikAuth(Auth.js): 認証フレームワーク。
+
+## Tursoについて
+
+データベースには[Turso](https://turso.tech/)というサービスを使っています。無料枠が5GB・5億行読み取り/月と非常に大きいため採用しました。SQLiteベースのためローカルでの開発時（特に開発初期のDBスキーマが安定しない時期）に気軽にDBを破壊できるのも便利です。
+
+他サービスとの無料枠の比較については以下の記事が参考になりました。
+
+https://zenn.dev/yamato_snow/articles/c063631a4aeaf1
+
+## Qwik/Qwik Cityについて
+
+アプリケーション全体はQwikというWebフレームワークの上に実装されています。使い慣れているReact/TanStack Routerでも良かったのですが、せっかくなら使ったことのないフレームワークを試したいと思い採用しました。
+
+QwikはSSRを前提としたWebフレームワークです。パッと見た感じはReactと似ていますが、その内部実装は大きく異なります。
+
+従来のSSRフレームワーク(Next.jsなど)では、初期ロード時に全てのJavaScriptをダウンロードし、イベントリスナーやコンポーネントツリーをクライアント側で再構築しますが、Qwikではサーバー側で実行した処理をすべてHTML内にシリアライズして一時停止し、クライアント側で再開します(`Resumable`)。
+
+イベントリスナー単位でJavaScriptを細切れにし、必要になった際に初めてダウンロードするため、最初にロードされるのは単なるHTMLファイル+コア機能を含む1kbほどのJavaScriptファイルのみであり、初期表示速度において他のフレームワーク(数十から数百kb)より圧倒的に優位です。
+
+また、Reactが仮想DOMへレンダリングしその差分を実際のDOMに反映しているのに対し、QwikではSignalベースの状態管理を採用しているためコンポーネントの再実行が不要であり、CPU・メモリリソースを節約できるという利点もあります。
+
+内部実装を理解せずにReactのノリで書くと動かないこともありますが、その代わりに究極のパフォーマンスを追求できるのが面白いです。
+
+Qwik CityはQwikのメタフレームワークで、ReactにおけるNext.jsやRemixに相当します。File-based RoutingやServer Actionsなどの機能があります。
+
+Qwik/Qwik Cityについて詳しく知りたい方は以下の記事がおすすめです。
+
+https://qwik.dev/docs/concepts/resumable/
+
+https://zenn.dev/mizchi/articles/micro-frontend-qwik
+
+
+## Honoを使ってWeb標準に準拠したAPIを書く
+
+Qwik Cityではサーバーサイドの処理を`routeLoader$`や`routeAction$`内に書きます。
+
+```tsx
+import { component$ } from '@builder.io/qwik';
+import { routeLoader$, routeAction$ } from '@builder.io/qwik-city';
+
+export const useUsers = routeLoader$(async (requestEvent) => {
+  // GETに相当する処理 (擬似コード)
+  const userList = await db.users.list();
+  return userList;
+});
+ 
+export const useAddUser = routeAction$(async (data, requestEvent) => {
+  // POST, PUT, DELETEに相当する処理 (擬似コード)
+  const userID = await db.users.add({
+    firstName: data.firstName,
+    lastName: data.lastName,
+  });
+  return {
+    success: true,
+    userID,
+  };
+});
+ 
+export default component$(() => {
+  const userList = useUsers();
+  const addUser = useAddUser();
+ 
+  ...
+});
+```
+
+今回は構成をシンプルにするためにバックエンドを持たせず、LoaderやActionを活用してサーバーサイドの処理を実装しました。とはいえ、LoaderやActionにDB関連の処理を直接書くと同じ処理が複数箇所で実装されたり、脆弱性の温床になったりする予感がしたため、サーバーサイドの処理はHonoを使ってREST APIとして実装することにしました。
+
+HonoはWeb標準に則った、非常に軽量かつシンプルなエッジランタイム向けWeb フレームワークです。直感的に書ける、かつWeb標準のRequest/Response/Status Codeを使ってやり取りができるところが気に入っています。Next.jsのRoute Handlers内でHonoを活用している以下の記事に着想を得て、Honoで実装したAPIを内部的に呼び出しています。
+
+https://zenn.dev/chot/articles/e109287414eb8c
+
+Hono RPCを使うと型安全にAPIを呼び出せるのも便利です。次のようにAPI Clientを作成するファクトリ関数を用意し、各Loader/Actionでclientを初期化しています。
+
+```ts
+// src/lib/api/index.ts
+import type { Session } from "@auth/qwik";
+import type { RequestEventCommon } from "@builder.io/qwik-city";
+import { hc } from "hono/client";
+import { type AppType, app } from "~/hono/app";
+import { getPlatformEnv } from "~/lib/platform-env";
+
+export function createApiClient(event: RequestEventCommon) {
+  return hc<AppType>(event.url.origin, {
+    fetch: (input: RequestInfo | URL, init?: RequestInit) =>
+      app.fetch(new Request(input, init), {
+        ...getPlatformEnv(event),
+        session: event.sharedMap.get("session") as Session | null,
+      }),
+  });
+}
+```
+```ts
+// src/routes/[userId]/index.tsx
+export const useProfile = routeLoader$<ProfileLoaderData>(async (event) => {
+  // eventに環境変数が入っているため各Loader/Actionで初期化が必要
+  const client = createApiClient(event);
+  const publicId = event.params.userId;
+
+  // RPCによる呼び出し
+  const roomRes = await client.api.users[":publicId"].room.$get({
+    param: { publicId },
+  });
+
+  ...
+}
+```
+
+Workersなどのエッジランタイムではグローバルに環境変数が存在せず、ハンドラの引数として環境変数が渡されることがあります。そのためQwik Cityでは、Loader/Actionの引数`event`を経由して環境変数にアクセスします。この制約があるため、API Clientは各Loader/Actionで初期化しています。
+
+
+## 画像周りの話
+
+### 画像の最適化
+
+基本的にはユーザーがアップロードした画像を圧縮率が高いwebpに変換してR2に保存しています。変換処理ではCloudflare Imagesなどの画像変換・ホスティングサービスも検討したのですが、~~貧乏学生のため~~できるだけ安く（あわよくば無料で）画像を変換したいと考えました。そこで次のような手法をとっています。
+
+1. ブラウザのCanvas APIを使用して画像のトリミング・webp変換を試みる。
+2. もしCanvas APIがwebpに対応していない場合（Safariなど）はWasmライブラリ([@jsquash/webp](https://github.com/jamsinclair/jSquash/tree/main/packages/webp))を使用してwebp変換を試みる。
+3. それもダメだった場合はCanvas APIのjpeg変換にfallbackする。
+4. 変換した画像を`/api/images`エンドポイントにPOSTする。
+
+クライアント側で変換処理をすることでコストゼロで画像の最適化ができました。
+
+### ユーザーごとのOGP画像生成
+
+Oheyaではユーザーごとに次のようなOGP画像が生成されます。
+
+![](../../assets/blog/oheya-tech-blog/og-image.jpeg)
+
+OGP画像のテンプレートを用意し、クライアント側で画像をjpegに変換しています（先ほどの手順3と同様）。まだwebpのOGP画像に対応しているサービスが少ないためjpegにしています。
+
+## 認証について
+
+認証ではQwik Authを使っています。中身はAuth.jsのQwik統合でセッションベースの認証となっています。
+
+## CI/CD
+
+GitHub Actionsでpush/PR作成時に自動でpreview環境へデプロイされるようになっています。production環境はworkflow dispatchでデプロイとDBのmigrationが実行されるようになっています。
+
+## 感想コーナー
+
+Qwikの使い心地とパフォーマンスが案外良かったので今後も使うかもしれません。QwikのエコシステムはReactほど充実してはいませんが、フレームワークに依存しないライブラリを使ったり、独自実装したりすれば良いでしょう。（昨今のコーディングエージェントの普及で独自実装の壁はかなり低くなっていると思います。）
+
+Oheyaではいいねなどのユーザー交流が発生する機能はあえて持たせていません。往年の個人サイトのように自分の好きな音楽や写真を備忘録的に貼れるサイトとして使ってもらえればと思います。たまに思い出した時に見てみると過去の自分がどんなものに触れていたのかが分かって面白いかもしれません。
+
+今後も自分の思想を詰め込んだサービスをゆるく作っていきたいです。
